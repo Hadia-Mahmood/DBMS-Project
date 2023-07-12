@@ -233,59 +233,65 @@ app.post("/register",function(req,res){
 
 
 /////////////////////////////////////////// CUSTOMER LOGIN ///////////////////////////////////////////////////
-app.post("/customerLogin",function(req,res){
+app.post("/customerLogin", function (req, res) {
     //getting data from form//
-    var customerEmail=String(req.body.email);
-    var customerPassword=String(req.body.password);
-    console.log(customerEmail,customerPassword);
+    var customerEmail = String(req.body.email);
+    var customerPassword = String(req.body.password);
+    console.log(customerEmail, customerPassword);
 
     //getting data from database
-    var sql="SELECT * FROM user_info WHERE email = '"+customerEmail+"' ";
-    
+    var sql = "SELECT * FROM user_info WHERE email = '" + customerEmail + "' ";
+
 
     // checking database and frontend email
-    connection.query(sql,function(error,result){
-        if (error) {console.log(error);}
-        else{
+    connection.query(sql, function (error, result) {
+        if (error) { console.log(error); }
+        else {
             //    no email found
-            if (result.length === 0 ){
+            if (result.length === 0) {
                 console.log('not a match');
-                res.redirect('/');
+                // res.redirect('/');
+                res.send('error');
             }
             // email found
-            else{
+            else {
                 //check password
-                bcrypt.compare(customerPassword,result[0].password).then(isMatch=>{
-                        //   if  passwords not match
-                          if(isMatch===false){
-                            console.log('not a match');
-                            res.redirect('/');
-                            }
-
-                            // passwords match
-                            else{
-                
-                                     console.log (result);
-                                    //  creating cookie 
-                                     const accessToken = createTokens(result[0]);
-                                        // STORE THIS COOKIE IN USERS BROWSER 
-                                     res.cookie("access-token", accessToken, {
-                                                // EXPIRATION OF THIS COOKIE IN MILI SECONDS = 30 DAYS EXPIRATION TIME 
-                                                 maxAge: 60 * 60 * 24 * 30 * 1000,
-                                                 httpOnly: true, 
-                                                    });
-                                      
-                                     res.redirect('/customerpage');
-                                            };  
-                        })
+                bcrypt.compare(customerPassword, result[0].password).then(isMatch => {
+                    //   if  passwords not match
+                    if (isMatch === false) {
+                        console.log('not a match');
+                        // res.redirect('/');
+                        res.send('error');
 
 
-                
+                    }
+
+                    // passwords match
+                    else {
+
+                        console.log(result);
+                        //  creating cookie 
+                        const accessToken = createTokens(result[0]);
+                        // STORE THIS COOKIE IN USERS BROWSER 
+                        res.cookie("access-token", accessToken, {
+                            // EXPIRATION OF THIS COOKIE IN MILI SECONDS = 30 DAYS EXPIRATION TIME 
+                            maxAge: 60 * 60 * 24 * 30 * 1000,
+                            httpOnly: true,
+                        });
+
+                        // res.redirect('/customerpage');
+                        res.send('success')
+                    };
+                })
+
+
+
             };
         }
-       
+
     });
 });
+
 
 
 // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

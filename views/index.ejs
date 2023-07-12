@@ -140,115 +140,121 @@
   </section>
 
 
-  <%  const capitalizeFirstLetter = string => `${string.charAt(0).toUpperCase()}${string.slice(1)}`; %>
+  <% const capitalizeFirstLetter=string=> `${string.charAt(0).toUpperCase()}${string.slice(1)}`; %>
 
-  <section id="trending-flights">
-    <div class="trending-flights">
-      <% for (let i=0; i < flights.length; i++) { %>
-        <% if (i % 3===0) { %>
-          <div class="row" style="margin-top: 6%;">
-            <% } %>
-              <div class="col-lg-4">
-                <%const date=new Date(flights[i].date) %>
-                  <% const formattedDate=`${date.getDate()} ${date.toLocaleString('default', { month: 'short' })}
-                    ${date.getFullYear()}`; %>
-                    <div class="card" style="width: 300px;">
-                      <img src="images/flights/<%= flights[i].destination %>.jpg" style="height: 30vh;"
-                        class="card-img-top" alt="Sample Image">
-                      <div class="card-body text-center">
-                        <span class="flight-id">Flight ID: <%= flights[i].flight_id %></span>
-                        <span class="to">To: <%=capitalizeFirstLetter(flights[i].destination) %></span>
-                        <span class="date">Date: <%= formattedDate %></span>
-                        <span class="time">Time: <%= flights[i].departure_time %></span>
-                        <a href="#" class="btn btn-primary btn-outline-dark">Book Now</a>
-                        <div class="price">
-                          <span class="discount-price">$<%= (flights[i].price) - ((flights[i].price*flights[i].discount)/100) %></span>
-                          <span class="original-price">$<%= flights[i].price %></span>
+    <section id="trending-flights">
+      <div class="trending-flights">
+        <% for (let i=0; i < flights.length; i++) { %>
+          <% if (i % 3===0) { %>
+            <div class="row" style="margin-top: 6%;">
+              <% } %>
+                <div class="col-lg-4">
+                  <%const date=new Date(flights[i].date) %>
+                    <% const formattedDate=`${date.getDate()} ${date.toLocaleString('default', { month: 'short' })}
+                      ${date.getFullYear()}`; %>
+                      <div class="card" style="width: 300px;">
+                        <img src="images/flights/<%= flights[i].destination %>.jpg" style="height: 30vh;"
+                          class="card-img-top" alt="Sample Image">
+                        <div class="card-body text-center">
+                          <span class="flight-id">Flight ID: <%= flights[i].flight_id %></span>
+                          <span class="to">To: <%=capitalizeFirstLetter(flights[i].destination) %></span>
+                          <span class="date">Date: <%= formattedDate %></span>
+                          <span class="time">Time: <%= flights[i].departure_time %></span>
+                          <a href="#" class="btn btn-primary btn-outline-dark">Book Now</a>
+                          <div class="price">
+                            <span class="discount-price">$<%= (flights[i].price) -
+                                ((flights[i].price*flights[i].discount)/100) %></span>
+                            <span class="original-price">$<%= flights[i].price %></span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-              </div>
-              <% if ((i + 1) % 3===0 || i===flights.length - 1) { %>
-          </div>
-          <% } %>
+                </div>
+                <% if ((i + 1) % 3===0 || i===flights.length - 1) { %>
+            </div>
             <% } %>
-    </div>
-  </section>
-  <section id="footer">
+              <% } %>
+      </div>
+    </section>
+    <section id="footer">
 
 
-    <!-- Remove the container if you want to extend the Footer to full width. -->
-    <div class="my-5" style="margin-bottom:0 !important; margin: auto;">
+      <!-- Remove the container if you want to extend the Footer to full width. -->
+      <div class="my-5" style="margin-bottom:0 !important; margin: auto;">
 
-      <footer class="text-white text-center text-lg-start" style="background-color: rgb(20, 42, 61) !important;">
-        <!-- Grid container -->
-        <div class="container p-4" style="align-items: center; margin: auto;">
-          <!--Grid row-->
-          <div class="row mt-4" style="margin: auto; justify-content:center;">
-            <!--Grid column-->
-            <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
-              <h5 class="text-uppercase mb-4" style="font-size: 4rem;">About company</h5>
+        <footer class="text-white text-center text-lg-start" style="background-color: rgb(20, 42, 61) !important;">
+          <!-- Grid container -->
+          <div class="container p-4" style="align-items: center; margin: auto;">
+            <!--Grid row-->
+            <div class="row mt-4" style="margin: auto; justify-content:center;">
+              <!--Grid column-->
+              <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                <h5 class="text-uppercase mb-4" style="font-size: 4rem;">About company</h5>
 
-              <p style="font-size: 1.5rem;">
-                SkyMate is a leading airline company dedicated to providing exceptional travel experiences to passengers around the world. With a commitment to safety, comfort, and convenience, SkyMate offers a wide range of domestic and international flights to various destinations. 
-              </p>
+                <p style="font-size: 1.5rem;">
+                  SkyMate is a leading airline company dedicated to providing exceptional travel experiences to
+                  passengers around the world. With a commitment to safety, comfort, and convenience, SkyMate offers a
+                  wide range of domestic and international flights to various destinations.
+                </p>
 
-              <p style="font-size: 1.5rem;">
-                Our focus on innovation and customer satisfaction has earned us a reputation as a trusted and preferred choice among travelers. Experience the joy of flying with SkyMate and discover a world of possibilities in the skies.
-              </p>
+                <p style="font-size: 1.5rem;">
+                  Our focus on innovation and customer satisfaction has earned us a reputation as a trusted and
+                  preferred choice among travelers. Experience the joy of flying with SkyMate and discover a world of
+                  possibilities in the skies.
+                </p>
 
-              <div class="mt-4">
-                <!-- Facebook -->
-                <a type="button" class="btn btn-floating btn-warning btn-lg"><i class="fab fa-facebook-f"></i></a>
-                <!-- Dribbble -->
-                <a type="button" class="btn btn-floating btn-warning btn-lg"><i class="fab fa-dribbble"></i></a>
-                <!-- Twitter -->
-                <a type="button" class="btn btn-floating btn-warning btn-lg"><i class="fab fa-twitter"></i></a>
-                <!-- Google + -->
-                <a type="button" class="btn btn-floating btn-warning btn-lg"><i class="fab fa-google-plus-g"></i></a>
-                <!-- Linkedin -->
+                <div class="mt-4">
+                  <!-- Facebook -->
+                  <a type="button" class="btn btn-floating btn-warning btn-lg"><i class="fab fa-facebook-f"></i></a>
+                  <!-- Dribbble -->
+                  <a type="button" class="btn btn-floating btn-warning btn-lg"><i class="fab fa-dribbble"></i></a>
+                  <!-- Twitter -->
+                  <a type="button" class="btn btn-floating btn-warning btn-lg"><i class="fab fa-twitter"></i></a>
+                  <!-- Google + -->
+                  <a type="button" class="btn btn-floating btn-warning btn-lg"><i class="fab fa-google-plus-g"></i></a>
+                  <!-- Linkedin -->
+                </div>
               </div>
-            </div>
-            <!--Grid column-->
+              <!--Grid column-->
 
-            <!--Grid column-->
-            
-            <div class="col-lg-4 col-md-6 mb-4 mb-md-0" style="margin-left: 8rem;" >
-              <h5 class="text-uppercase mb-4" style="font-size: 4rem;">Our Contacts</h5>
-              <ul class="fa-ul" style= "margin-top: 2rem;">
-                <li class="mb-3" style="font-size: 1.7rem;">
-                  <span class="fa-li"><i class="fas fa-home"></i></span><span class="ms-2">New York, NY 10012, US</span>
-                </li>
-                <li class="mb-3" style="font-size: 1.7rem;">
-                  <span class="fa-li"><i class="fas fa-envelope"></i></span><span class="ms-2">info@example.com</span>
-                </li>
-                <li class="mb-3" style="font-size: 1.7rem;">
-                  <span class="fa-li"><i class="fas fa-phone"></i></span><span class="ms-2">+ 01 234 567 88</span>
-                </li>
-                <li class="mb-3" style="font-size: 1.7rem;">
-                  <span class="fa-li"><i class="fas fa-print"></i></span><span class="ms-2">+ 01 234 567 89</span>
-                </li>
-              </ul>
+              <!--Grid column-->
+
+              <div class="col-lg-4 col-md-6 mb-4 mb-md-0" style="margin-left: 8rem;">
+                <h5 class="text-uppercase mb-4" style="font-size: 4rem;">Our Contacts</h5>
+                <ul class="fa-ul" style="margin-top: 2rem;">
+                  <li class="mb-3" style="font-size: 1.7rem;">
+                    <span class="fa-li"><i class="fas fa-home"></i></span><span class="ms-2">New York, NY 10012,
+                      US</span>
+                  </li>
+                  <li class="mb-3" style="font-size: 1.7rem;">
+                    <span class="fa-li"><i class="fas fa-envelope"></i></span><span class="ms-2">info@example.com</span>
+                  </li>
+                  <li class="mb-3" style="font-size: 1.7rem;">
+                    <span class="fa-li"><i class="fas fa-phone"></i></span><span class="ms-2">+ 01 234 567 88</span>
+                  </li>
+                  <li class="mb-3" style="font-size: 1.7rem;">
+                    <span class="fa-li"><i class="fas fa-print"></i></span><span class="ms-2">+ 01 234 567 89</span>
+                  </li>
+                </ul>
+              </div>
+              <!--Grid column-->
             </div>
-            <!--Grid column-->
+            <!--Grid row-->
           </div>
-          <!--Grid row-->
-        </div>
-        <!-- Grid container -->
+          <!-- Grid container -->
 
-        <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-          © 2020 Copyright:
-          <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
-        </div>
-        <!-- Copyright -->
-      </footer>
+          <!-- Copyright -->
+          <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2020 Copyright:
+            <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+          </div>
+          <!-- Copyright -->
+        </footer>
 
-    </div>
-    <!-- End of .container -->  
+      </div>
+      <!-- End of .container -->
 
 
-  </section>
+    </section>
 
 
 
@@ -256,361 +262,361 @@
 
 
 
-  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-    tabindex="-1" style="border-radius: 55px !important;">
-    <div class="modal-dialog">
-      <div class="modal-content modal-content-1">
-        <!-- <div class="modal-header">
+    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+      tabindex="-1" style="border-radius: 55px !important;">
+      <div class="modal-dialog">
+        <div class="modal-content modal-content-1">
+          <!-- <div class="modal-header">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div> -->
-        <div class="modal-body" style="background-color: rgb(20, 42, 61) !important; padding: 3rem 3rem;">
-          <section id="account-form" >
-            <h1 class="modal-title fs-5" id="exampleModalToggleLabel">SIGN IN AS ADMIN</h1>
+          <div class="modal-body" style="background-color: rgb(20, 42, 61) !important; padding: 3rem 3rem;">
+            <section id="account-form">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel">SIGN IN AS ADMIN</h1>
 
 
-            <!-- //////////////////                    ADMIN SIGN IN                      ////////////////////////////// -->
-            <!-- change start -->
-            <!-- making post request to signin route -->
-            <form class="form" action="/adminsignin" method="post">
-              <!-- change end -->
-              <div class="flex-column">
-                <label style="font-size: 2rem;">Email</label>
-              </div>
-              <div class="inputForm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 32 32" height="20">
-                  <g data-name="Layer 3" id="Layer_3">
-                    <path
-                      d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z">
-                    </path>
-                  </g>
-                </svg>
-                <!-- change start -->
-                <input style="font-size: 1.5rem;" name="email" placeholder="Enter your Email" class="input-2"
-                  type="text">
-                <!-- change end  -->
-              </div>
-
-              <div class="flex-column">
-                <label style="font-size: 2rem;">Password </label>
-              </div>
-              <div class="inputForm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="-64 0 512 512" height="20">
-                  <path
-                    d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0">
-                  </path>
-                  <path
-                    d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0">
-                  </path>
-                </svg>
-                <!-- change start -->
-                <input style="font-size: 1.5rem;" name="password" placeholder="Enter your Password" class="input-2"
-                  type="password">
+              <!-- //////////////////                    ADMIN SIGN IN                      ////////////////////////////// -->
+              <!-- change start -->
+              <!-- making post request to signin route -->
+              <form class="form" action="/adminsignin" method="post">
                 <!-- change end -->
-              </div>
-              <!-- CHANGE START (REMOVE THIS PART) -->
-              <!-- <div class="flex-row">
+                <div class="flex-column">
+                  <label style="font-size: 2rem;">Email</label>
+                </div>
+                <div class="inputForm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 32 32" height="20">
+                    <g data-name="Layer 3" id="Layer_3">
+                      <path
+                        d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z">
+                      </path>
+                    </g>
+                  </svg>
+                  <!-- change start -->
+                  <input style="font-size: 1.5rem;" name="email" placeholder="Enter your Email" class="input-2"
+                    type="text">
+                  <!-- change end  -->
+                </div>
+
+                <div class="flex-column">
+                  <label style="font-size: 2rem;">Password </label>
+                </div>
+                <div class="inputForm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="-64 0 512 512" height="20">
+                    <path
+                      d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0">
+                    </path>
+                    <path
+                      d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0">
+                    </path>
+                  </svg>
+                  <!-- change start -->
+                  <input style="font-size: 1.5rem;" name="password" placeholder="Enter your Password" class="input-2"
+                    type="password">
+                  <!-- change end -->
+                </div>
+                <!-- CHANGE START (REMOVE THIS PART) -->
+                <!-- <div class="flex-row">
                 <div>
                   <input type="radio">
                   <label>Remember me </label>
                 </div>
                 <span class="span">Forgot password?</span>
               </div> -->
-              <!-- CHANGE END  -->
+                <!-- CHANGE END  -->
 
-              <!-- change start -->
-              <button class="button-submit" name="submit" type="submit">Sign In</button>
-              <!-- change end -->
-            </form>
-          </section>
-        </div>
-        <!-- <div class="modal-footer">
+                <!-- change start -->
+                <button class="button-submit" name="submit" type="submit">Sign In</button>
+                <!-- change end -->
+              </form>
+            </section>
+          </div>
+          <!-- <div class="modal-footer">
           <button class="btn-2 btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">SIGN IN AS
             USER</button>
         </div> -->
+        </div>
       </div>
     </div>
-  </div>
-  <!-- /////////////////                  CUSTOMER SIGN  IN                ////////////////////////////////// -->
-  <div class="modal fade" id="exampleModalToggle2" aria-hidden="false" aria-labelledby="exampleModalToggleLabel2"
-    tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-body"  style="background-color: rgb(20, 42, 61) !important; padding: 3rem 3rem;">
-          <section id="account-form">
-            <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Sign In As USER</h1>
-            <!-- change start -->
-            <form class="form" action="/customerLogin" method="post">
-            <!-- <form class="form" onsubmit="return userLogin()"> -->
-              <!-- end -->
-
-              <div class="flex-column">
-                <label style="font-size: 2rem;">Email</label>
-              </div>
-              <div class="inputForm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 32 32" height="20">
-                  <g data-name="Layer 3" id="Layer_3">
-                    <path
-                      d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z">
-                    </path>
-                  </g>
-                </svg>
-                <!-- change start -->
-                <input style="font-size: 1.5rem;" id="useremail" placeholder="Enter your Email" class="input-2"
-                  name="email" type="text">
-                <!-- change end -->
-              </div>
-
-              <div class="flex-column">
-                <label style="font-size: 2rem;">Password </label>
-              </div>
-              <div class="inputForm">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="-64 0 512 512" height="20">
-                  <path
-                    d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0">
-                  </path>
-                  <path
-                    d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0">
-                  </path>
-                </svg>
-                <!-- change start -->
-                <input style="font-size: 1.5rem;" id="userpass" name="password" placeholder="Enter your Password"
-                  class="input-2" type="password">
-
-                <!-- change end -->
-              </div>
-              <div id="errormsg">
-
-              </div>
+    <!-- /////////////////                  CUSTOMER SIGN  IN                ////////////////////////////////// -->
+    <div class="modal fade" id="exampleModalToggle2" aria-hidden="false" aria-labelledby="exampleModalToggleLabel2"
+      tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-body" style="background-color: rgb(20, 42, 61) !important; padding: 3rem 3rem;">
+            <section id="account-form">
+              <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Sign In As USER</h1>
               <!-- change start -->
-              <button class="button-submit" name="submit" type="submit">Sign In</button>
-              <!-- change end -->
+              <!-- <form class="form" action="/customerLogin" method="post"> -->
+                <form class="form" onsubmit="return userLogin()">
+                <!-- end -->
+
+                <div class="flex-column">
+                  <label style="font-size: 2rem;">Email</label>
+                </div>
+                <div class="inputForm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 32 32" height="20">
+                    <g data-name="Layer 3" id="Layer_3">
+                      <path
+                        d="m30.853 13.87a15 15 0 0 0 -29.729 4.082 15.1 15.1 0 0 0 12.876 12.918 15.6 15.6 0 0 0 2.016.13 14.85 14.85 0 0 0 7.715-2.145 1 1 0 1 0 -1.031-1.711 13.007 13.007 0 1 1 5.458-6.529 2.149 2.149 0 0 1 -4.158-.759v-10.856a1 1 0 0 0 -2 0v1.726a8 8 0 1 0 .2 10.325 4.135 4.135 0 0 0 7.83.274 15.2 15.2 0 0 0 .823-7.455zm-14.853 8.13a6 6 0 1 1 6-6 6.006 6.006 0 0 1 -6 6z">
+                      </path>
+                    </g>
+                  </svg>
+                  <!-- change start -->
+                  <input style="font-size: 1.5rem;" id="useremail" placeholder="Enter your Email" class="input-2"
+                    name="email" type="text">
+                  <!-- change end -->
+                </div>
+
+                <div class="flex-column">
+                  <label style="font-size: 2rem;">Password </label>
+                </div>
+                <div class="inputForm">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="-64 0 512 512" height="20">
+                    <path
+                      d="m336 512h-288c-26.453125 0-48-21.523438-48-48v-224c0-26.476562 21.546875-48 48-48h288c26.453125 0 48 21.523438 48 48v224c0 26.476562-21.546875 48-48 48zm-288-288c-8.8125 0-16 7.167969-16 16v224c0 8.832031 7.1875 16 16 16h288c8.8125 0 16-7.167969 16-16v-224c0-8.832031-7.1875-16-16-16zm0 0">
+                    </path>
+                    <path
+                      d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0">
+                    </path>
+                  </svg>
+                  <!-- change start -->
+                  <input style="font-size: 1.5rem;" id="userpass" name="password" placeholder="Enter your Password"
+                    class="input-2" type="password">
+
+                  <!-- change end -->
+                </div>
+                <div id="errormsg" style="color: white; font-size: 1.3rem;">
+
+                </div>
+                <!-- change start -->
+                <button class="button-submit" name="submit" type="submit">Sign In</button>
+                <!-- change end -->
 
 
-              <p class="p">Don't have an account? <a href="account.html"><span style="font-size: 2rem;"
-                    class="span">Sign Up</span></a>
+                <p class="p">Don't have an account? <a href="account.html"><span style="font-size: 2rem;"
+                      class="span">Sign Up</span></a>
 
-              </p>
-            </form>
-          </section>
-        </div>
-        <!-- <div class="modal-footer">
+                </p>
+              </form>
+            </section>
+          </div>
+          <!-- <div class="modal-footer">
           <button class="btn-2 btn-primary btn-outline-dark" data-bs-target="#exampleModalToggle"
             data-bs-toggle="modal">Sign in as Admin</button>
         </div> -->
+        </div>
       </div>
     </div>
-  </div>
 
-  <script>
+    <script>
 
-    function load_data(query = '') {
-      fetch('/get_data?search_query=' + query)
-        .then(function (response) {
-          if (!response.ok) {
-            throw new Error('Network response was not ok.');
-          }
-          return response.json();
-        })
-        .then(function (responseData) {
-          var html = '<ul class="list-group">';
-
-          if (responseData.length > 0) {
-            for (var count = 0; count < responseData.length; count++) {
-              var regular_expression = new RegExp('(' + query + ')', 'gi');
-
-              html += '<a href="#" class="list-group-item list-group-item-action" onclick="get_text(this); return false;">' + responseData[count].source.replace(regular_expression, '<span class="text-primary fw-bold">$1</span>') + '</a>';
+      function load_data(query = '') {
+        fetch('/get_data?search_query=' + query)
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error('Network response was not ok.');
             }
-          } else {
-            html += '<a href="#" class="list-group-item list-group-item-action disabled">No Data Found</a>';
-          }
+            return response.json();
+          })
+          .then(function (responseData) {
+            var html = '<ul class="list-group">';
 
-          html += '</ul>';
+            if (responseData.length > 0) {
+              for (var count = 0; count < responseData.length; count++) {
+                var regular_expression = new RegExp('(' + query + ')', 'gi');
 
-          document.getElementById('search_result').innerHTML = html;
-        })
-        .catch(function (error) {
-          console.error('Error:', error);
-          document.getElementById('search_result').innerHTML = 'Error occurred while fetching data.';
-        });
-    }
-
-    var search_element = document.getElementById("autocomplete_search");
-
-    search_element.onkeyup = function () {
-
-      var query = search_element.value;
-      console.log(query);
-      load_data(query);
-
-    };
-
-    search_element.onfocus = function () {
-
-      var query = search_element.value;
-      console.log(query);
-      load_data(query);
-
-    };
-
-    function get_text(event) {
-      var source = event.textContent;
-
-      console.log(source);
-
-      document.getElementById('autocomplete_search').value = source;
-
-      document.getElementById('search_result').innerHTML = '';
-    }
-
-
-
-
-    //////////////////////////////////////////////////////////////////////////////////
-    function load_data2(query = '') {
-      fetch('/get_data2?search_query=' + query)
-        .then(function (response) {
-          if (!response.ok) {
-            throw new Error('Network response was not ok.');
-          }
-          return response.json();
-        })
-        .then(function (responseData) {
-          var html = '<ul class="list-group">';
-
-          if (responseData.length > 0) {
-            for (var count = 0; count < responseData.length; count++) {
-              var regular_expression = new RegExp('(' + query + ')', 'gi');
-
-              html += '<a href="#" class="list-group-item list-group-item-action" onclick="get_text2(this); return false;">' + responseData[count].destination.replace(regular_expression, '<span class="text-primary fw-bold">$1</span>') + '</a>';
+                html += '<a href="#" class="list-group-item list-group-item-action" onclick="get_text(this); return false;">' + responseData[count].source.replace(regular_expression, '<span class="text-primary fw-bold">$1</span>') + '</a>';
+              }
+            } else {
+              html += '<a href="#" class="list-group-item list-group-item-action disabled">No Data Found</a>';
             }
-          } else {
-            html += '<a href="#" class="list-group-item list-group-item-action disabled">No Data Found</a>';
-          }
 
-          html += '</ul>';
+            html += '</ul>';
 
-          document.getElementById('search_result2').innerHTML = html;
-        })
-        .catch(function (error) {
-          console.error('Error:', error);
-          document.getElementById('search_result2').innerHTML = 'Error occurred while fetching data.';
-        });
-    }
-
-    var search_element2 = document.getElementById("autocomplete_search2");
-
-    search_element2.onkeyup = function () {
-      var query = search_element2.value;
-      load_data2(query);
-    };
-
-    search_element2.onfocus = function () {
-      var query = search_element2.value;
-      load_data2(query);
-    };
-
-    function get_text2(event) {
-      var destination = event.textContent;
-      document.getElementById('autocomplete_search2').value = destination;
-      document.getElementById('search_result2').innerHTML = '';
-      return false;
-    }
-
-
-
-    document.addEventListener('click', function (event) {
-      var searchBox1 = document.getElementById('autocomplete_search');
-      var searchBox2 = document.getElementById('autocomplete_search2');
-
-      var searchResult1 = document.getElementById('search_result');
-      var searchResult2 = document.getElementById('search_result2');
-
-      // Check if the click event occurred outside the search boxes and their suggestion boxes
-      if (event.target !== searchBox1 && event.target !== searchBox2 && !searchBox1.contains(event.target) && !searchBox2.contains(event.target)) {
-        searchResult1.innerHTML = '';
-        searchResult2.innerHTML = '';
+            document.getElementById('search_result').innerHTML = html;
+          })
+          .catch(function (error) {
+            console.error('Error:', error);
+            document.getElementById('search_result').innerHTML = 'Error occurred while fetching data.';
+          });
       }
-    });
 
+      var search_element = document.getElementById("autocomplete_search");
 
+      search_element.onkeyup = function () {
 
+        var query = search_element.value;
+        console.log(query);
+        load_data(query);
 
+      };
 
-    ////////////////////////////navbar opacity//////////////////////////////////////////////////////
-    window.addEventListener('scroll', function () {
-      var titleSection = document.getElementById('title');
-      var navbar = document.querySelector('.navbar');
+      search_element.onfocus = function () {
 
-      // Get the bottom position of the title section
-      var titleBottom = titleSection.offsetTop + titleSection.offsetHeight;
+        var query = search_element.value;
+        console.log(query);
+        load_data(query);
 
-      // Get the scroll position
-      var scrollPosition = window.scrollY;
+      };
 
-      // Check if the scroll position has passed the title section
-      if (scrollPosition > titleBottom) {
-        // Add a CSS class to update the navbar opacity
-        navbar.classList.add('navbar-scrolled');
-      } else {
-        // Remove the CSS class to revert back to the initial opacity
-        navbar.classList.remove('navbar-scrolled');
+      function get_text(event) {
+        var source = event.textContent;
+
+        console.log(source);
+
+        document.getElementById('autocomplete_search').value = source;
+
+        document.getElementById('search_result').innerHTML = '';
       }
-    });
 
 
 
 
-    // DROPDOWN ON HOVER
+      //////////////////////////////////////////////////////////////////////////////////
+      function load_data2(query = '') {
+        fetch('/get_data2?search_query=' + query)
+          .then(function (response) {
+            if (!response.ok) {
+              throw new Error('Network response was not ok.');
+            }
+            return response.json();
+          })
+          .then(function (responseData) {
+            var html = '<ul class="list-group">';
+
+            if (responseData.length > 0) {
+              for (var count = 0; count < responseData.length; count++) {
+                var regular_expression = new RegExp('(' + query + ')', 'gi');
+
+                html += '<a href="#" class="list-group-item list-group-item-action" onclick="get_text2(this); return false;">' + responseData[count].destination.replace(regular_expression, '<span class="text-primary fw-bold">$1</span>') + '</a>';
+              }
+            } else {
+              html += '<a href="#" class="list-group-item list-group-item-action disabled">No Data Found</a>';
+            }
+
+            html += '</ul>';
+
+            document.getElementById('search_result2').innerHTML = html;
+          })
+          .catch(function (error) {
+            console.error('Error:', error);
+            document.getElementById('search_result2').innerHTML = 'Error occurred while fetching data.';
+          });
+      }
+
+      var search_element2 = document.getElementById("autocomplete_search2");
+
+      search_element2.onkeyup = function () {
+        var query = search_element2.value;
+        load_data2(query);
+      };
+
+      search_element2.onfocus = function () {
+        var query = search_element2.value;
+        load_data2(query);
+      };
+
+      function get_text2(event) {
+        var destination = event.textContent;
+        document.getElementById('autocomplete_search2').value = destination;
+        document.getElementById('search_result2').innerHTML = '';
+        return false;
+      }
 
 
-    document.addEventListener("DOMContentLoaded", function(){
-    // make it as accordion for smaller screens
-    if (window.innerWidth > 992) {
-    
-        document.querySelectorAll('.navbar .nav-item').forEach(function(everyitem){
-    
-            everyitem.addEventListener('mouseover', function(e){
-    
-                let el_link = this.querySelector('a[data-bs-toggle]');
-    
-                if(el_link != null){
-                    let nextEl = el_link.nextElementSibling;
-                    el_link.classList.add('show');
-                    nextEl.classList.add('show');
-                }
-    
+
+      document.addEventListener('click', function (event) {
+        var searchBox1 = document.getElementById('autocomplete_search');
+        var searchBox2 = document.getElementById('autocomplete_search2');
+
+        var searchResult1 = document.getElementById('search_result');
+        var searchResult2 = document.getElementById('search_result2');
+
+        // Check if the click event occurred outside the search boxes and their suggestion boxes
+        if (event.target !== searchBox1 && event.target !== searchBox2 && !searchBox1.contains(event.target) && !searchBox2.contains(event.target)) {
+          searchResult1.innerHTML = '';
+          searchResult2.innerHTML = '';
+        }
+      });
+
+
+
+
+
+      ////////////////////////////navbar opacity//////////////////////////////////////////////////////
+      window.addEventListener('scroll', function () {
+        var titleSection = document.getElementById('title');
+        var navbar = document.querySelector('.navbar');
+
+        // Get the bottom position of the title section
+        var titleBottom = titleSection.offsetTop + titleSection.offsetHeight;
+
+        // Get the scroll position
+        var scrollPosition = window.scrollY;
+
+        // Check if the scroll position has passed the title section
+        if (scrollPosition > titleBottom) {
+          // Add a CSS class to update the navbar opacity
+          navbar.classList.add('navbar-scrolled');
+        } else {
+          // Remove the CSS class to revert back to the initial opacity
+          navbar.classList.remove('navbar-scrolled');
+        }
+      });
+
+
+
+
+      // DROPDOWN ON HOVER
+
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // make it as accordion for smaller screens
+        if (window.innerWidth > 992) {
+
+          document.querySelectorAll('.navbar .nav-item').forEach(function (everyitem) {
+
+            everyitem.addEventListener('mouseover', function (e) {
+
+              let el_link = this.querySelector('a[data-bs-toggle]');
+
+              if (el_link != null) {
+                let nextEl = el_link.nextElementSibling;
+                el_link.classList.add('show');
+                nextEl.classList.add('show');
+              }
+
             });
-            everyitem.addEventListener('mouseleave', function(e){
-                let el_link = this.querySelector('a[data-bs-toggle]');
-    
-                if(el_link != null){
-                    let nextEl = el_link.nextElementSibling;
-                    el_link.classList.remove('show');
-                    nextEl.classList.remove('show');
-                }
-    
-    
+            everyitem.addEventListener('mouseleave', function (e) {
+              let el_link = this.querySelector('a[data-bs-toggle]');
+
+              if (el_link != null) {
+                let nextEl = el_link.nextElementSibling;
+                el_link.classList.remove('show');
+                nextEl.classList.remove('show');
+              }
+
+
             })
-        });
-    
-    }
-    // end if innerWidth
-    }); 
+          });
+
+        }
+        // end if innerWidth
+      });
     // DOMContentLoaded  end
 
 
 
 
-  </script>
+    </script>
 
 
 
 
-  <!--  -->
+    <!--  -->
 
-  <!-- Bootstrap5 script -->
-  <!-- Bootstrap JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap5 script -->
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 
 
