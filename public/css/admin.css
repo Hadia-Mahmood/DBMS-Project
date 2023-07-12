@@ -32,7 +32,7 @@ body {
 
 
 #title{
-    margin-bottom: 3% !important;
+    margin-bottom:7% !important;
 }
 
 .container-fluid-1 {
@@ -195,6 +195,8 @@ h3 {
 
 
   .card {
+    margin: 5%;
+    box-shadow: 3px 3px 3px black !important;
     width: 350px;
     height: 270px;
     background-image: linear-gradient(-45deg, #2c2f63 0%, #152238 100% );
@@ -220,6 +222,7 @@ h3 {
   }
   
   .heading{
+
     font-size: 24px;
     /* font-family: var(--secondary-font); */
     font-family: 'Belanosima', sans-serif;
@@ -316,7 +319,7 @@ h3 {
     width: 100%;
     height: 100%;
     background-blend-mode: overlay;
-    background-image: url(/public/images/card-img.jpg);
+    background-image: url(../images//card-img.jpg);
     background-size: cover;
     background-color: rgba(0, 0, 0, 0.5);
     background-position: center;
@@ -384,7 +387,7 @@ h3 {
   width: 100%;
   height: 100%;
   background-blend-mode: overlay;
-  background-image: url(/public/images/card-2-2.jpg);
+  background-image: url(../images//card-2-2.jpg);
   background-color: rgba(0, 0, 0, 0.5);
   background-position: top;
   background-size: 115%;
@@ -436,7 +439,7 @@ h3 {
   width: 100%;
   height: 100%;
   background-blend-mode: overlay;
-  background-image: url(/public/images/card-3.jpg);
+  background-image: url(../images/card-3.jpg);
   background-color: rgba(0, 0, 0, 0.5);
   /* background-position: top;
   background-size: 115%; */
@@ -453,4 +456,54 @@ h3 {
   -webkit-transform: translate(-50%, -50%) scale(2);
       -ms-transform: translate(-50%, -50%) scale(2);
           transform: translate(-50%, -50%) scale(2);
+}
+
+
+.loader {
+  display: block;
+ --height-of-loader: 4px;
+ --loader-color: #0071e2;
+ width: 130px;
+ height: var(--height-of-loader);
+ border-radius: 30px;
+ background-color: rgba(0,0,0,0.2);
+ position: relative;
+}
+
+.loader::before {
+ content: "";
+ position: absolute;
+ background: var(--loader-color);
+ top: 0;
+ left: 0;
+ width: 0%;
+ height: 100%;
+ border-radius: 30px;
+ -webkit-animation: moving 1s ease-in-out infinite;
+         animation: moving 1s ease-in-out infinite;
+ ;
+}
+
+@-webkit-keyframes moving {
+ 50% {
+  width: 100%;
+ }
+
+ 100% {
+  width: 0;
+  right: 0;
+  left: unset;
+ }
+}
+
+@keyframes moving {
+ 50% {
+  width: 100%;
+ }
+
+ 100% {
+  width: 0;
+  right: 0;
+  left: unset;
+ }
 }
