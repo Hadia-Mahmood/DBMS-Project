@@ -13,31 +13,12 @@
      <h3>UPDATE FLIGHT</h3>
      <form action="" method="post">
         <div class="form">
-             
-            
             <input name="flight_id" value="<%= flights[0].flight_id %>"  type="hidden">
-
-
             <label for="">Date </label>
             <input name="Date" value="<%= flights[0].date %>" placeholder="mm/dd/yyyy" type="date" required>
 
             <label for="">Airplane Name </label>
-           
-            
-            <select id="myDropdown">
-                <option value="PK-100">PK-100</option>
-                <option value="PK-101">PK-101</option>
-                <option value="PK-102">PK-102</option>
-                <option value="PK-103">PK-103</option>
-                <option value="PK-104">PK-104</option>
-                <option value="PK-105">PK-105</option>
-                <option value="PK-106">PK-106</option>
-
-                
-            </select>
-              
-            <input type="hidden" id="selectedValueInput" value="<%= flights[0].airplane_name %>"  name="AirplaneName" placeholder="AirplaneName" required readonly>
-
+            <input type="text"  value="<%= flights[0].airplane_name %>"   name="AirplaneName" placeholder="AirplaneName" required >
 
             <label for="">Status </label>
             <input name="status" type="text" value="<%= flights[0].status %>"  placeholder="status" required >

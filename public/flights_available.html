@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Search Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="css/flights_available.css"> -->
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Sen:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Sen:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Ysabeau+SC:wght@500&display=swap');
+
+        /* Custom styles */
+        .col-md-10 {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 10px;
+
+        }
+
+        .flight-card {
+            border: 1px solid #ccc;
+            padding: 10px;
+            padding-bottom: 0px;
+            margin-bottom: 10px;
+            background-color: #f7f7f7;
+        }
+
+        .flight-card h4 {
+            margin: 0 0 0 15px;
+            color: #0062ad;
+            font-size: 24px;
+        }
+
+        .flight-card .card-body {
+            padding: 0;
+
+        }
+
+        .flight-card p {
+            margin: 5px 0;
+            color: #666;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1.3fr 1.3fr 0.8fr 0.8fr;
+            padding: 10px 20px 20px 20px;
+        }
+
+        .flight-card p:last-child {
+            margin-bottom: 10px;
+        }
+
+        .flight-card .card-text {
+            margin-bottom: 0;
+            font-family: 'Playfair Display', serif;
+            font-size: larger;
+
+        }
+
+        /* .head-statement {} */
+
+        .navbar-brand {
+            font-family: 'Sen', sans-serif;
+            font-size: 2rem;
+            margin-left: 8%;
+        }
+
+        .navbar {
+            background-color: #31658f;
+
+        }
+
+        #navbarNav {
+            margin-right: 10%;
+            display: flex;
+            flex-direction: row-reverse;
+        }
+
+        .nav-item > a{
+            font-size: 20px;
+        }
+
+        button.btn {
+            display: block;
+            margin: 0 auto;
+            padding: 0.6em 2em;
+            border: none;
+            outline: none;
+            color: rgb(255, 255, 255);
+            background: #111111;
+            cursor: pointer;
+            position: relative;
+            z-index: 0;
+            border-radius: 10px;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+
+        button.btn:before {
+            content: "";
+            background: linear-gradient(45deg,
+                    #ff0000,
+                    #ff7300,
+                    #fffb00,
+                    #48ff00,
+                    #00ffd5,
+                    #002bff,
+                    #7a00ff,
+                    #ff00c8,
+                    #ff0000);
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            background-size: 400%;
+            z-index: -1;
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+            width: calc(100% + 4px);
+            height: calc(100% + 4px);
+            animation: glowing-button-85 20s linear infinite;
+            transition: opacity 0.3s ease-in-out;
+            border-radius: 10px;
+        }
+
+        @keyframes glowing-button-85 {
+            0% {
+                background-position: 0 0;
+            }
+
+            50% {
+                background-position: 400% 0;
+            }
+
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        button.btn:after {
+            z-index: -1;
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #1342a7;
+            left: 0;
+            top: 0;
+            border-radius: 10px;
+            color: whitesmoke;
+        }
+
+        .grid-item3,
+        .grid-item4 {
+            background-color: #cfc7f8;
+            background-image: linear-gradient(315deg, #cfc7f8 0%, #ebbba7 74%);
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            width: 160px;
+            border: 2px solid rgb(200, 200, 200);
+            box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+            border-radius: 15px;
+            padding: 10px 20px 0px 20px;
+            font-weight: bold;
+            color: #3e3d3d;
+            
+        }
+
+        .form-check-label{
+            font-family: 'Ysabeau SC', sans-serif;
+        }
+
+        input[type=radio]{
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+        }
+
+    
+    </style>
+</head>
+
+<body>
+    <!-- Navigation bar -->
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">SkyMate</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                </li> -->
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Heading -->
+        <h2 class="head-statement my-4">Searched results for flights available on <span id="searched_date">[Date]</span>
+        </h2>
+
+        <!-- Flight cards -->
+        <div class="row">        
+            <div class="col-md-10 flight-card card">
+
+                <div class="card-body">
+                    <h4 class="card-title">Flight ID: XYZ123</h4>
+                    <div class="grid-container">
+                        <div class="grid-item1">
+                            <p class="card-text source">Source: Taumatawhdjfhd</p>
+                            <p class="card-text destination">Destination: City B</p>
+                            <p class="card-text duration">Duration: 2 hours</p>
+                        </div>
+                        <div class="grid-item2">
+                            <p class="card-text date">Date of Departure: [date]</p>
+                            <p class="card-text departure_time">Departure Time: 10:00 AM</p>
+                            <p class="card-text arrival_time">Arrival Time: 12:00 PM</p>
+                        </div>
+
+                        <div class="grid-item3">
+                            <div class="card-body">
+                                <!-- <h4 class="card-title">Title</h4> -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="radiobutton" id="radio1">
+                                    <label class="form-check-label" for="radio1">BUSINESS</label>
+                                </div>
+                                <p class="card-text price_business">Price: $556</p>
+                            </div>
+                        </div>
+
+                        <div class="grid-item4">
+                            <div class="card-body">
+                                <!-- <h4 class="card-title">Title</h4> -->
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="radiobutton" id="radio2">
+                                    <label class="form-check-label" for="radio2">ECONOMY</label>
+                                </div>
+                                <p class="card-text price_economy">Price: $460</p>
+                            </div>
+                        </div>
+
+                        <!-- <p class="card-text class">Bussiness <br> Class</p> -->
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="booking.html"><button class="btn btn-primary">Select Flight</button></a>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+    // document.getElementById("searched_date").innerHTML = Date();
+
+    </script>
+</body>
+
+</html>
