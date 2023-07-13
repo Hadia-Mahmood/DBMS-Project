@@ -81,6 +81,14 @@ app.get("/adminpage", validateToken ,function(req,res){
     // ********************************
  });
 
+ //  this page will only be available if user is authenticated ///
+app.get("/dashboard", validateToken ,function(req,res){
+    // res.sendFile(staticPath+'/admin.html');
+
+    res.render('dashboard');
+    // ********************************
+ });
+
 //  this page will only be available if user is authenticated ///
 app.get("/customerpage", validateToken ,function(req,res){
     // res.sendFile(staticPath+'/customer.html');
@@ -125,7 +133,7 @@ app.post("/adminsignin",function(req,res){
                          httpOnly: true, 
                             });
               // change this to render to route////////////////////////////////
-                res.redirect('/adminpage');
+                res.redirect('/dashboard');
                 
             }
             else{

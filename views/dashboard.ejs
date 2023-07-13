@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkyMate</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+
+    <!-- Bootstrap5 cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/ab0ab137d9.js" crossorigin="anonymous"></script>
+
+    <!-- Css StyleSheets -->
+    <link rel="stylesheet" href="./css/admin.css">
+
+
+</head>
+
+<body class="home">
+    <!-- Navbar Code -->
+    <section id="title">
+        <div id="header">
+            <nav class="navbar navbar-expand-lg sticky-top">
+                <a href="" class="navbar-brand" style="color: #F3FBFB;">SkyMate</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-stream"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="/logout" method="post">
+                                <button name="submit" class="beautiful-button" type="submit">LOG OUT</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar Code End -->
+
+    </section>
+
+
+
+
+
+    <section id="features" style="position: relative;margin: auto 13%;">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="img-div">
+                        <img src="images/users.png" style="width: 30%; margin: 0%;" alt="" >
+                    </div>
+                    <h1 class="heading">USER DETAILS</h1>
+                    <div class="loader"></div>
+                    <p class="para">Click here to access user details and manage user information.
+                    </p>
+                    <div class="overlay"></div>
+                    <button  class="card-btn">Click &nbsp <i class="fa-solid fa-magnifying-glass fa-rotate-90" style="color: #001842;"></i></button>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card card-2">
+                    <div class="img-div">
+                        <img src="images/globe.png" style="width: 25%; margin: 0%; color: #F3FBFB;" alt="" >
+                    </div>
+                    <h1 class="heading">CREATE FLIGHTS</h1>
+                    <div class="loader"></div>
+                    <p class="para"><i class="fi fi-br-check-circle"></i>Click here to add more flights in your system.
+                    </p>
+                    <div class="overlay-2"></div>
+                    <button onClick="window.location.href='/adminpage'" class="card-btn">Click &nbsp <i class="fa-solid fa-circle-plus fa-rotate-90" style="color: #001842;"></i></button>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card card-3">
+                    <div class="img-div">
+                        <img src="images/globe-2.png" style="width: 25%; margin: 0%;" alt="" >
+                    </div>
+                    <h1 class="heading">FLIGHT RECORDS</h1>
+                    <div class="loader"></div>
+                    <p class="para">Click here to access and update flights record.
+                    </p>
+                    <div class="overlay-3"></div>
+                    <button onClick="window.location.href='/admincrudoperations'" class="card-btn">Click &nbsp <i class="fa-solid fa-pen-to-square" style="color: #001842;"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+<!-- Bootstrap5 script -->
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
