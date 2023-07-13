@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skymateUsersWithoutBooking</title>
+</head>
+
+<body>
+    <h1>SEARCH USERS HERE </h1>
+    <form action="usersearch" method="get">
+        <input type="search" name="customerid" placeholder="Search CUSTOMER ID ">
+        <input type="search" name="firstname" placeholder="FIRST NAME ">
+        <input type="search" name="lastname" placeholder="LAST NAME ">
+        
+        <input type="search" name="email" placeholder="EMAIL">
+       
+        <input type="submit" value="Search">
+    </form>
+    
+    <!-- DISPLAY ALL users  -->
+    <H1>USERS </H1>
+    <table border="1" width="100%">
+        <tr>
+            <th>CUSTOMER ID</th>
+            <th>FIRST NAME</th>
+            <th>LAST NAME</th>
+            <th>EMAIL</th>
+        </tr>
+
+        <% if (users.length>0){%>
+            <% for(var i=0;i<users.length;i++){ %>
+                <h3>NO BOOKING DONE YET</h3>
+                <tr>
+                            <td><%- users[i].customer_id %></td>
+                            <td><%- users[i].first_name %></td>
+                            <td><%- users[i].last_name %></td>
+                            <td><%- users[i].email %></td>
+                            
+                </tr>
+                <% } %>
+
+                    <% } else { %>
+                        <h1>NO USER AVAILABLE</h1>
+
+                        <% } %>
+    </table>
+</body>
+
+</html>

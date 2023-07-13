@@ -68,7 +68,7 @@
             <input name="BPrice" placeholder="min 50000 max 400000" type="number" min="50000" max="400000" required>
 
             <label for="">Discount </label>
-            <input name="BDiscount" placeholder=" max 60" type="number"  max="60" required>
+            <input name="BDiscount" placeholder=" min 0 max 60" type="number" min="0"  max="60" required>
 
 
             <H4>ENTER ECONOMY CLASS DETAILS</H4>
@@ -80,7 +80,7 @@
             <input name="EPrice" placeholder="min=50000 max=400000" type="number" min="50000" max="400000" required>
 
             <label for="">Discount </label>
-            <input name="EDiscount" placeholder="max=60" type="number"  max="60" required>
+            <input name="EDiscount" placeholder=" min=0 max=60" type="number"  min="0" max="60" required>
               
 
         </div>
@@ -89,12 +89,27 @@
      </form>
      <br>
      <hr>
-     <h1>DELETE UPDATE OR SEARCH FLIGHT BY CLICKING ON THIS BUTTON</h1>
+     <h1>DELETE UPDATE FLIGHT BY CLICKING ON THIS BUTTON</h1>
      <form action="/admincrudoperations" method="get">
         <button name="submit" type="submit">delete update or search flight</button>
     </form>
 
      <br>
+     <hr>
+     <h1>SEARCH  FLIGHT BY CLICKING ON THIS BUTTON</h1>
+     <form action="/flightsearch" method="get">
+        <button name="submit" type="submit">SEARCH</button>
+    </form>
+     <br>
+     <hr>
+     <h1>Skymate Users</h1>
+     <form action="/usersearch" method="get">
+        <button name="submit" type="submit">CLICK HERE </button>
+    </form>
+
+     <br>
+
+
     <hr>
     <h1>LOGOUT</h1>
     <form action="/logout" method="post">

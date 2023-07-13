@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>skymateUsers</title>
+</head>
+
+<body>
+    <!-- ADMIN can search a customer on the basis of  customer id ,first name, lastname , email -->
+    <h1>SEARCH USERS  HERE </h1>
+    <form action="usersearch" method="get">
+        <input type="search" name="customerid" placeholder="Search CUSTOMER ID ">
+        <input type="search" name="firstname" placeholder="FIRST NAME ">
+        <input type="search" name="lastname" placeholder="LAST NAME ">
+        <!-- <input type="search" name="FLIGHTID" placeholder="FLIGHT ID "> -->
+        <input type="search" name="email" placeholder="EMAIL">
+       
+        <input type="submit" value="Search">
+    </form>
+    <br>
+    <!-- DISPLAY ALL users  -->
+    <H1>USER LIST </H1>
+    <table border="1" width="100%">
+        <tr>
+            <th>CUSTOMER ID</th>
+            <th>FIRST NAME</th>
+            <th>LAST NAME</th>
+            
+            <th>EMAIL</th>
+            <th>BOOKED FLIGHT ID</th>
+            <th>TICKET ID</th>
+            <th>CLASS</th>
+            <th>PASSENGER NAME</th>
+            <th>PASSENGER CONTACT NUMBER</th>
+        </tr>
+
+        <% if (users.length>0){%>
+            <% for(var i=0;i<users.length;i++){ %>
+                <tr>
+                            <td><%- users[i].customer_id %></td>
+                            <td><%- users[i].first_name %></td>
+                            <td><%- users[i].last_name %></td>
+                            
+                            <td><%- users[i].email %></td>
+                            <td><%- users[i].flightID %></td>
+                            <td><%- users[i].ticket_id %></td>
+                            <td><%- users[i].class %></td>
+                            <td><%- users[i].passengerName %></td>
+                            <td><%- users[i].contact_number %></td>
+                </tr>
+                <% } %>
+
+                    <% } else { %>
+                        <h1>NO USER AVAILABLE</h1>
+
+                        <% } %>
+    </table>
+</body>
+
+</html>

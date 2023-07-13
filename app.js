@@ -448,6 +448,105 @@ app.post("/updateflight",function(req,res){
     });
 
 
+
+    // ********* ADMIN SEARCH FLIGHT
+
+app.get("/flightsearch",function(req,res){
+        //getting data from form//
+        var flightid=req.query.flightid;
+        var source =req.query.source;
+        var destination=req.query.destination;
+        var flightclass=req.query.class;
+        var price=req.query.price;
+        var discount =req.query.discount;
+        var airplaneName=req.query.airplaneName;
+        var date=req.query.date;
+
+        var sql= "select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,f.airplane_name,f.status,f.terminal,c.class,c.total_seats,c.seats_left,c.price,c.discount from flight f INNER JOIN class c  ON f.flight_id = c.flight_id where f.flight_id LIKE'%"+flightid+"%' AND f.source LIKE'%"+source+"%'  AND f.destination LIKE'%"+destination+"%'  AND  c.class LIKE'%"+flightclass+"%'  AND c.price LIKE'%"+price+"%' AND c.discount LIKE'%"+discount+"%'  AND f.airplane_name LIKE'%"+airplaneName+"%'AND f.date LIKE'%"+date+"%'";
+        
+        connection.query(sql,function(error,result){
+            if (error) {
+                console.log(error);
+                var error= 'sorry please search again';
+                res.render("message",{display:error});
+            }
+            else{
+                // res.render("searchFlight",{flights:result});
+                res.render("admincrudoperations",{flights:result});
+            }
+            
+        });
+            
+        });
+    
+    // *********************************************************************************
+
+            
+
+
+app.get("/usersearch",function(req,res){
+        
+    var customerid=req.query.customerid;
+    var firstname=req.query.firstname;
+    var lastname=req.query.lastname;
+    // var flightid=req.query.FLIGHTID;
+    var email=req.query.email;
+  
+    
+    var sql= "SET SQL_MODE ='';select  f.flightID   from customer c inner join customer_booked_flights f  on c.customer_id =f.customer_ID inner join user u on c.customer_id = u.ID where c.customer_id  LIKE'%"+customerid+"%'AND c.first_name LIKE'%"+firstname+"%'AND c.last_name LIKE'%"+lastname+"%'  AND u.email LIKE'%"+email+"%'  ;";
+    
+    connection.query(sql,function(error,result){
+        if (error) {
+            console.log(error);
+            var error= 'sorry please search again';
+            res.render("message",{display:error});
+        }
+        if (result[1].length===0){
+            console.log('yes');
+            var sql="select c.customer_id ,c.first_name ,c.last_name, u.email from customer c  inner join user u on c.customer_id = u.ID where c.customer_id  LIKE'%"+customerid+"%'AND c.first_name LIKE'%"+firstname+"%'AND c.last_name LIKE'%"+lastname+"%'  AND u.email LIKE'%"+email+"%'";
+            connection.query(sql,function(error,result){
+                            if (error) {
+                                console.log(error);
+                                var error= 'sorry please search again';
+                                res.render("message",{display:error});
+                            }
+                            else{
+                                console.log(result);
+                                res.render("nobookingusers",{users:result});
+
+                            }
+                            
+                        });
+            
+        }
+
+        
+        else{
+            var sql="select c.customer_id,c.first_name,c.last_name  ,t.ticket_id,t.passengerName, t.flightID, t.class, u.email ,pcn.contact_number from ticket t inner join  customer c on  t.customerID=c.customer_id inner join  user u  on t.customerID = u.ID inner join  passenger_contact_number pcn  on t.ticket_id = pcn.ticket_id where t.customerID LIKE'%"+customerid+"%'AND c.first_name LIKE'%"+firstname+"%'  AND c.last_name LIKE'%"+lastname+"%'  AND u.email LIKE'%"+email+"%'";
+            connection.query(sql,function(error,result){
+                            if (error) {
+                                console.log(error);
+                                var error= 'sorry please search again';
+                                res.render("message",{display:error});
+                            }
+                            else{
+                                console.log(result);
+                                res.render("skymateusers",{users:result});
+
+                            }
+                            
+                        });
+            
+           
+        }
+        
+    });
+        
+    });    
+
+
+
+
 // ***********************************
 
 
