@@ -81,13 +81,7 @@ app.get("/adminpage", validateToken ,function(req,res){
     // ********************************
  });
 
-//  //  this page will only be available if user is authenticated ///
-// app.get("/dashboard", validateToken ,function(req,res){
-//     // res.sendFile(staticPath+'/admin.html');
 
-//     res.render('dashboard');
-//     // ********************************
-//  });
 
 //  this page will only be available if user is authenticated ///
 app.get("/customerpage", validateToken ,function(req,res){
@@ -317,26 +311,41 @@ app.post('/logout', (req, res) => {
 
 // ADMIN DASHBOARD
 
-app.get('/dashboard',validateToken, (req, res) => {
-    // Query to fetch the admin ID from the "admin" table
-    const query = 'SELECT Admin_id FROM admin';
+app.get('/dashboard', (req, res) => {
+    const adminQuery = 'SELECT Admin_id FROM admin';
+    const customerQuery = 'SELECT COUNT(*) AS customerCount FROM customer';
+    const customerFlightQuery = 'SELECT COUNT(*) AS customerFlightCount FROM customer_booked_flights';
   
-    connection.query(query, (error, results) => {
-      if (error) {
-        console.error(error);
-        // Handle the error appropriately, e.g., return an error page
-        var error= 'stay tight.. we are fixing the error';
-            res.render("message",{display:error});
+    connection.query(adminQuery, (error1, results1) => {
+      if (error1) {
+        console.error(error1);
+        return res.render('error');
       }
-
   
-      // Assuming there is only one admin ID in the "admin" table
-      const adminId = results[0].Admin_id;
+      const adminId = results1[0].Admin_id;
   
-      res.render('dashboard', { adminId: adminId});
+      connection.query(customerQuery, (error2, results2) => {
+        if (error2) {
+          console.error(error2);
+          return res.render('error');
+        }
+  
+        const customerCount = results2[0].customerCount;
+  
+        connection.query(customerFlightQuery, (error3, results3) => {
+          if (error3) {
+            console.error(error3);
+            return res.render('error');
+          }
+  
+          const customerFlightCount = results3[0].customerFlightCount;
+  
+          res.render("dashboard", { adminId: adminId, customerCount: customerCount, customerFlightCount: customerFlightCount });
+        });
+      });
     });
   });
-
+  
 
 // admin page :   creating new flights ////////////////////////////
 
