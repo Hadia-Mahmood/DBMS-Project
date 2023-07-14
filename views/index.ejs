@@ -119,25 +119,29 @@
   </div>
 
   <section id="SEARCH_PORTION">
+    <form action="/availableflights" method="get">
     <div class="search-bar row" style="margin-bottom: 5%;">
+
       <div class="col-4">
-        <input id="autocomplete_search" class="input input-alt form-control form-control-lg" placeholder="✈ Source"
+        <input id="autocomplete_search" name="source" class="input input-alt form-control form-control-lg" placeholder="✈ Source"
           required="" type="text">
         <div id="search_result" class="suggestion-box"></div>
 
       </div>
       <div class="form-group col-4">
-        <input id="autocomplete_search2" class="input input-alt" placeholder="✈  DESTINATION" required="" type="text">
+        <input id="autocomplete_search2" class="input input-alt" name="destination" placeholder="✈  DESTINATION" required="" type="text">
         <div id="search_result2" class="suggestion-box"></div>
       </div>
-      <div class="form-group col-4 ">
-        <input class="input input-alt" placeholder="DEPARTURE DATE" required="" type="date"
+      <div  class="form-group col-4 ">
+        <input name="departureDate" class="input input-alt" placeholder="DEPARTURE DATE" <% const today = new Date().toISOString().split('T')[0]; %>
+        min="<%= today %>"  required="" type="date"
           style="color:#152238; font-size: 1.8rem; opacity: 0.9;">
         <span class="input-border input-border-alt"></span>
       </div>
     </div>
     <button class="btn-submit"> SUBMIT
     </button>
+  </form>
   </section>
 
 
@@ -159,6 +163,7 @@
                         <div class="card-body text-center">
                           <span class="flight-id">Flight ID: <%= flights[i].flight_id %></span>
                           <span class="to">To: <%=capitalizeFirstLetter(flights[i].destination) %></span>
+                          <span class="flight_class">Class: <%= flights[i].class %></span>
                           <span class="date">Date: <%= formattedDate %></span>
                           <span class="time">Time: <%= flights[i].departure_time %></span>
                           <a href="#" class="btn btn-primary btn-outline-dark">Book Now</a>

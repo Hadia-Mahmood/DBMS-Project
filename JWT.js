@@ -27,8 +27,7 @@ const validateToken = (req, res, next) => {
   const accessToken = req.cookies["access-token"];
 //   if user browser has no token  it means he has not logged in 
   if (!accessToken)
-    return res.redirect("/");
-
+    return res.redirect("/SIGNIN_UP_FIRST");
   try {
     
     // try to verify if token is valid 
