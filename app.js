@@ -81,13 +81,13 @@ app.get("/adminpage", validateToken ,function(req,res){
     // ********************************
  });
 
- //  this page will only be available if user is authenticated ///
-app.get("/dashboard", validateToken ,function(req,res){
-    // res.sendFile(staticPath+'/admin.html');
+//  //  this page will only be available if user is authenticated ///
+// app.get("/dashboard", validateToken ,function(req,res){
+//     // res.sendFile(staticPath+'/admin.html');
 
-    res.render('dashboard');
-    // ********************************
- });
+//     res.render('dashboard');
+//     // ********************************
+//  });
 
 //  this page will only be available if user is authenticated ///
 app.get("/customerpage", validateToken ,function(req,res){
@@ -101,7 +101,10 @@ app.get("/bookingpage", validateToken ,function(req,res){
     res.sendFile(path.join(__dirname,'public','booking.html'));
 
  }); 
-
+// to go to  home search bar section 
+app.get("/homepagesearchbar",function(req,res){
+    res.redirect("/")
+});
 
 ///////////////////////////////////////// admin sign in///////////////////////////////////////
 app.post("/adminsignin",function(req,res){
@@ -138,7 +141,9 @@ app.post("/adminsignin",function(req,res){
             }
             else{
                 console.log('not a match');
-                res.redirect('/');
+                var error= ' wrong password email combination ';
+                res.render("message",{display:error});
+                
                 
             };
         }
@@ -178,7 +183,7 @@ app.get('/get_data2', function (req, res) {
 });
 
 
-module.exports = router;
+// module.exports = router;
 
 
 // Execute the query for trending flights
@@ -258,7 +263,6 @@ app.post("/customerLogin", function (req, res) {
             //    no email found
             if (result.length === 0) {
                 console.log('not a match');
-                // res.redirect('/');
                 res.send('error');
             }
             // email found
@@ -268,9 +272,7 @@ app.post("/customerLogin", function (req, res) {
                     //   if  passwords not match
                     if (isMatch === false) {
                         console.log('not a match');
-                        // res.redirect('/');
                         res.send('error');
-
 
                     }
 
@@ -313,6 +315,29 @@ app.post('/logout', (req, res) => {
 
 
 
+// ADMIN DASHBOARD
+
+app.get('/dashboard',validateToken, (req, res) => {
+    // Query to fetch the admin ID from the "admin" table
+    const query = 'SELECT Admin_id FROM admin';
+  
+    connection.query(query, (error, results) => {
+      if (error) {
+        console.error(error);
+        // Handle the error appropriately, e.g., return an error page
+        var error= 'stay tight.. we are fixing the error';
+            res.render("message",{display:error});
+      }
+
+  
+      // Assuming there is only one admin ID in the "admin" table
+      const adminId = results[0].Admin_id;
+  
+      res.render('dashboard', { adminId: adminId});
+    });
+  });
+
+
 // admin page :   creating new flights ////////////////////////////
 
 app.post("/createFlight",function(req,res){
@@ -321,6 +346,7 @@ app.post("/createFlight",function(req,res){
     var source=req.body.source;
     var Destination=req.body.Destination;
     var Date=req.body.Date;
+    
     var AirplaneName=req.body.AirplaneName;
     var Terminal=req.body.Terminal;
     
@@ -337,8 +363,7 @@ app.post("/createFlight",function(req,res){
     var EDiscount=req.body.EDiscount;
     
     
-    var sql = "INSERT INTO flight VALUES('"+flightID+"',LOWER('"+source+"'),LOWER('"+Destination+"'),'"+Date+"','"+Departure+"','"+Arrival+"','"+AirplaneName+"','available','"+Terminal+"',(SELECT Admin_id FROM admin));INSERT INTO class VALUES('"+flightID+"','Business','"+BTotalSeats+"','"+BTotalSeats+"','"+BPrice+"','"+BDiscount+"');INSERT INTO class VALUES('"+flightID+"','Economy','"+ETotalSeats+"','"+ETotalSeats+"','"+EPrice+"','"+EDiscount+"')";
-    // 
+    var sql = "INSERT INTO flight(flight_id,source,destination,date,departure_time,arrival_time,airplane_name,terminal,admin_id) VALUES('"+flightID+"',LOWER('"+source+"'),LOWER('"+Destination+"'), '"+Date+"','"+Departure+"','"+Arrival+"','"+AirplaneName+"','"+Terminal+"',(SELECT Admin_id FROM admin));INSERT INTO class VALUES('"+flightID+"','Business','"+BTotalSeats+"','"+BTotalSeats+"','"+BPrice+"','"+BDiscount+"'); INSERT INTO class VALUES('"+flightID+"','Economy','"+ETotalSeats+"','"+ETotalSeats+"','"+EPrice+"','"+EDiscount+"')";
     // inserting form data into database //
     connection.query(sql,function(error,results, fields){
         if (error) {
@@ -361,8 +386,10 @@ app.post("/createFlight",function(req,res){
 
 
 //  ADMIN PAGE : CRUD OPERATIONS 
+
 //  see all flights
-app.get('/admincrudoperations',function(req,res){
+//  this page will be displayed after insertion 
+app.get('/admincrudoperations',validateToken,function(req,res){
     var sql = "select f.flight_id,f.source,f.destination,f.date, f.departure_time, f.arrival_time,f.airplane_name,f.status,f.terminal,c.class,c.total_seats,c.seats_left,c.price,c.discount from flight f , class c where f.flight_id=c.flight_id";
     connection.query(sql,function(error,result){
         if (error) {
@@ -371,7 +398,8 @@ app.get('/admincrudoperations',function(req,res){
             res.render("message",{display:error});
         }
         else{
-            res.render("admincrudoperations",{flights:result});
+            res.render("flights",{flights:result});
+            // res.render("admincrudoperations",{flights:result});
                  
                 
         }
@@ -380,7 +408,7 @@ app.get('/admincrudoperations',function(req,res){
 });
 
 //  admin :delete flight
-app.get('/delete-flight',function(req,res){
+app.get('/delete-flight',validateToken,function(req,res){
     var id = req.query.id;
     var sql = "update flight set status='cancelled' where flight_id='"+id+"'; delete from class where flight_id='"+id+"'";
     
@@ -400,12 +428,13 @@ app.get('/delete-flight',function(req,res){
 }); 
 
 // ################ admin : update flight
-app.get('/updateflight',function(req,res){
-    var sql="select f.flight_id,f.source,f.destination,f.date, f.departure_time, f.arrival_time,f.airplane_name,f.status,f.terminal,c.class,c.total_seats,c.seats_left,c.price,c.discount from flight f , class c where f.flight_id=c.flight_id";
+app.get('/updateflight',validateToken,function(req,res){
     var id = req.query.id;
+    var sql="select f.flight_id,f.source,f.destination,f.date, f.departure_time, f.arrival_time,f.airplane_name,f.status,f.terminal,c.class,c.total_seats,c.seats_left,c.price,c.discount from flight f , class c where f.flight_id='"+id+"' AND c.flight_id='"+id+"'";
     
     
-    connection.query(sql,[id],function(error,result){
+    
+    connection.query(sql,function(error,result){
         if (error) {
             console.log(error);
             var error= 'sorry please try again';
@@ -437,29 +466,51 @@ app.post("/updateflight",function(req,res){
     var EDiscount=req.body.EDiscount;
     
     
-    var sql="UPDATE flight set date=?,airplane_name=?, status=? , terminal=? ,departure_time=? , arrival_time=? where flight_id=? ; UPDATE class set price=? ,discount=? where flight_id=? AND class='Business'; UPDATE class set price=? ,discount=? where flight_id=? AND class='Economy' ";
+    var sql="UPDATE flight set date=?,airplane_name=?, status=? , terminal=? ,departure_time=? , arrival_time=? where flight_id=? ";
     
     
     // inserting form data into database //
-    connection.query(sql,[Date,AirplaneName,status,Terminal,Departure,Arrival,flightID,BPrice,BDiscount,flightID,EPrice,EDiscount,flightID],function(error){
+    connection.query(sql,[Date,AirplaneName,status,Terminal,Departure,Arrival,flightID],function(error){
         if (error) {
             console.log(error);
             var error= 'sorry please insert again';
             res.render("message",{display:error});
         }
         else{
-            res.redirect('/admincrudoperations')
+            if (status === 'cancelled') {
+                			        var deleteClassQuery="DELETE FROM class WHERE flight_id = ?";
+                		     	    connection.query(deleteClassQuery, [flightID], function(error){
+                			        	if (error) {
+                           				  console.log(error);
+                          				  var error= 'sorry please insert again';
+                          			      res.render("message",{display:error});
+                      					  }
+                      			        else{
+                					           res.redirect('/admincrudoperations')}
+                                                   });
+            }
+            else {
+                	var updateClass="UPDATE class set price=? ,discount=? where flight_id=? AND class='Business'; UPDATE class set price=? ,discount=? where flight_id=? AND class='Economy'";
+                	connection.query(updateClass, [BPrice,BDiscount,flightID,EPrice,EDiscount,flightID], function(error){
+                		        if (error) {
+                                       	console.log(error);
+                                      	var error= 'sorry please insert again';
+                                			res.render("message",{display:error});
+                      			                		  }
+                      		    else{
+                				    res.redirect('/admincrudoperations');}
+                    }); }
         }
         
     });
-        
+
     });
 
 
 
     // ********* ADMIN SEARCH FLIGHT
 
-app.get("/flightsearch",function(req,res){
+app.get("/flightsearch",validateToken,function(req,res){
         //getting data from form//
         var flightid=req.query.flightid;
         var source =req.query.source;
@@ -480,7 +531,7 @@ app.get("/flightsearch",function(req,res){
             }
             else{
                 // res.render("searchFlight",{flights:result});
-                res.render("admincrudoperations",{flights:result});
+                res.render("flights",{flights:result});
             }
             
         });
@@ -492,7 +543,7 @@ app.get("/flightsearch",function(req,res){
             
 
 
-app.get("/usersearch",function(req,res){
+app.get("/usersearch",validateToken,function(req,res){
         
     var customerid=req.query.customerid;
     var firstname=req.query.firstname;
