@@ -597,7 +597,10 @@ app.get("/availableflights",function(req,res){
 
             
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d19ac344bb247fc0c7a7d21cd42bb3713e40846a
     app.get("/usersearch", validateToken, function (req, res) {
         var customerid = req.query.customerid;
         var firstname = req.query.firstname;
@@ -630,6 +633,11 @@ app.get("/availableflights",function(req,res){
             }
         });
     });
+<<<<<<< HEAD
+=======
+    
+
+>>>>>>> d19ac344bb247fc0c7a7d21cd42bb3713e40846a
 // ***********************************
 
 
