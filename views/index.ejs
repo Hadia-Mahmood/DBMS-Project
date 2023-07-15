@@ -166,7 +166,7 @@
                           <span class="flight_class">Class: <%= flights[i].class %></span>
                           <span class="date">Date: <%= formattedDate %></span>
                           <span class="time">Time: <%= flights[i].departure_time %></span>
-                          <a href="#" class="btn btn-primary btn-outline-dark">Book Now</a>
+                          <a href="/bookingpage?id=<%- flights[i].flight_id %>&flightclass=<%= flights[i].class %>" class="btn btn-primary btn-outline-dark">Book Now</a>
                           <div class="price">
                             <span class="discount-price">$<%= (flights[i].price) -
                                 ((flights[i].price*flights[i].discount)/100) %></span>
