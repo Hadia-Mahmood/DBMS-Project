@@ -61,10 +61,10 @@ app.get("/aboutus",function(req,res){
 
 
 
-app.get("/flights",function(req,res){
-    // res.sendFile(staticPath+'/flights_available.html');
-    res.sendFile(path.join(__dirname,'public','flights_available.html'));
- });
+// app.get("/availableflights",function(req,res){
+//     // res.sendFile(staticPath+'/flights_available.html');
+//     res.sendFile(path.join(__dirname,'public','flights_available.html'));
+//  });
 
 
 app.get("/register",function(req,res){
@@ -91,10 +91,15 @@ app.get("/customerpage", validateToken ,function(req,res){
 
 //  this page will only be available if user is authenticated ///
 app.get("/bookingpage", validateToken ,function(req,res){
-    // res.sendFile(staticPath+'/booking.html');
     res.sendFile(path.join(__dirname,'public','booking.html'));
-
  }); 
+
+ app.get("/SIGNIN_UP_FIRST",function(req,res){
+    var error= 'SIGN IN OR SIGN UP FIRST  ';
+    res.render("message",{display:error});
+ });
+
+
 // to go to  home search bar section 
 app.get("/homepagesearchbar",function(req,res){
     res.redirect("/")
@@ -177,16 +182,14 @@ app.get('/get_data2', function (req, res) {
 });
 
 
-// module.exports = router;
-
 
 // Execute the query for trending flights
 app.get("/", function (req, res) {
     connection.query(
-      `SELECT f.flight_id, f.destination, f.date, f.departure_time, c.price, c.discount
+      `SELECT f.flight_id, f.destination, f.date, f.departure_time, c.price, c.discount,c.class
        FROM flight AS f
        JOIN class AS c ON f.flight_id = c.flight_id
-       WHERE c.discount > 0;`,
+       WHERE c.discount > 0 AND f.status='available' AND c.seats_left>0 ;`,
       (error, results) => {
         if (error) {
           console.error('Error executing query:', error);
@@ -408,7 +411,7 @@ app.get('/admincrudoperations',validateToken,function(req,res){
         }
         else{
             res.render("flights",{flights:result});
-            // res.render("admincrudoperations",{flights:result});
+            
                  
                 
         }
@@ -546,7 +549,40 @@ app.get("/flightsearch",validateToken,function(req,res){
         });
             
         });
+    // **************************** CUSTOMER SEARCH FLIGHTS****************************
     
+app.get("/availableflights",function(req,res){
+        //getting data from form//
+        var departureDate=req.query.departureDate;
+        var source =req.query.source;
+        var destination=req.query.destination;
+
+
+        
+
+
+        var sql="select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,c.class,c.seats_left,c.price,c.discount ,TIMEDIFF(f.arrival_time,f.departure_time) AS time_difference from  flight f INNER JOIN class c  ON f.flight_id = c.flight_id  WHERE f.source ='"+source+"' AND f.destination= '"+destination+"' AND (f.date BETWEEN '"+departureDate+"' AND DATE_ADD('"+departureDate+"', INTERVAL 30 DAY)) AND f.status='available'  AND c.class='Economy';select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,c.class,c.seats_left,c.price,c.discount ,TIMEDIFF(f.arrival_time,f.departure_time) AS time_difference from  flight f INNER JOIN class c  ON f.flight_id = c.flight_id   WHERE f.source ='"+source+"' AND f.destination= '"+destination+"' AND (f.date BETWEEN '"+departureDate+"' AND DATE_ADD('"+departureDate+"', INTERVAL 30 DAY)) AND f.status='available' AND c.class='Business' ;";
+        connection.query(sql,function(error,result){
+            if (error) {
+                console.log(error);
+                var error= 'sorry please search again';
+                res.render("message",{display:error});
+            }
+            else{
+
+                console.log('result0');
+                console.log(result[0]);
+	         	console.log('result1');
+                console.log(result[1]);
+                console.log('actual result 1 endingggg');	
+                
+                res.render("flights_available",{flights:result});
+                
+            } 
+        });
+     });
+
+
     // *********************************************************************************
 
             

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Search Results</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/flights_available.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <a class="navbar-brand" href="#">SkyMate</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/homepagesearchbar">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="#">Features</a>
+                </li> -->
+            </ul>
+        </div>
+    </nav>
+    <!-- any one  or both   available  -->
+    <!-- both will have same length we wont delete class we will only set its seatsleft attribute to zero  -->
+    <!-- both results have same length -->
+    <% if (flights[0].length>0 ){%>
+        <div class="container"></div>
+        <h2 class="head-statement my-4" style="margin-left: 500px;">AVAILABLE FLIGHTS  </h2>
+        <!-- check 3 conditions  only economy , only business , or both -->
+        <% for(var i=0;i<flights[0].length;i++){ %> 
+        <div class="row">
+            <div class="col-md-10 flight-card card">
+
+                <div class="card-body">
+                    <h4 class="card-title"><strong>Flight ID:<%- flights[0][i].flight_id %></strong></h4>
+                    <div class="grid-container">
+                        <div class="grid-item1">
+                            <p class="card-text source"><strong>Source: <%- flights[0][i].source %></p>
+                            <p class="card-text destination"><strong>Destination:</strong> <%- flights[0][i].destination %></p>
+                            <p class="card-text duration"><strong></strong>Duration:</strong> <%- flights[0][i].time_difference %> hours</p>
+                        </div>
+                        <div class="grid-item2">
+
+                                <!-- formatting date dd/mm/yyyy -->
+                            <% const dateString = flights[0][i].date; %>
+                            <% const date = new Date(dateString); %>
+                            <% const day = String(date.getDate()).padStart(2, '0'); %>
+                            <% const month = String(date.getMonth() + 1).padStart(2, '0'); %> 
+                            <% const year = date.getFullYear(); %>
+                            <% const formattedDate = `${day}/${month}/${year}`; %>
+                            <p class="card-text date"><strong>Date of Departure:</strong> <%= formattedDate %></p>
+                            <p class="card-text departure_time"><strong>Departure Time:</strong> <%- flights[0][i].departure_time %></p>
+                            <p class="card-text arrival_time"><strong>Arrival Time:</strong> <%- flights[0][i].arrival_time %></p>
+                        </div>
+                        <!-- if economy seats =0 -->
+                        <% let economyseats =flights[0][i].seats_left %>
+                        <% if  (economyseats===0)  {%>
+                        
+                            <div class="grid-item3">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radiobutton" id="radio1">
+                                        <label class="form-check-label" for="radio1">BUSINESS</label>
+                                    </div>
+                                   
+                                    <p class="card-text price_business">Price:  <%= Math.floor( (flights[1][i].price) - ((flights[1][i].price*flights[1][i].discount)/100)) %></p>
+                                    <p class="card-text price_business">SeatsLeft:<%- flights[1][i].seats_left %></p>
+                                </div>
+                            </div>
+    
+                           
+
+                        <!-- if business class seats = 0 -->
+                        <% }let business_seats =flights[1][i].seats_left %>
+                        <% if  (business_seats===0)  {%>
+                        
+                       
+                            <div class="grid-item4">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radiobutton" id="radio2">
+                                        <label class="form-check-label" for="radio2">ECONOMY</label>
+                                    </div>
+                                    <p class="card-text price_economy">Price:<%= Math.floor((flights[0][i].price) - ((flights[0][i].price*flights[0][i].discount)/100)) %></p>
+                                    <p class="card-text price_economy">SeatsLeft:<%- flights[0][i].seats_left %></p>
+                                </div>
+                            </div>
+                            
+
+                        <!-- if both have seats -->
+                        <% }else if  (business_seats>0 && economyseats>0)  {%>
+                            <div class="grid-item3">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radiobutton" id="radio1">
+                                        <label class="form-check-label" for="radio1">BUSINESS</label>
+                                    </div>
+                                    <p class="card-text price_business">Price:  <%= Math.floor( (flights[1][i].price) - ((flights[1][i].price*flights[1][i].discount)/100)) %></p>
+                                    <p class="card-text price_business">SeatsLeft:<%- flights[1][i].seats_left %></p>
+                                </div>
+                            </div>
+    
+                            <div class="grid-item4">
+                                <div class="card-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="radiobutton" id="radio2">
+                                        <label class="form-check-label" for="radio2">ECONOMY</label>
+                                    </div>
+                                    <p class="card-text price_economy">Price:<%= Math.floor((flights[0][i].price) - ((flights[0][i].price*flights[0][i].discount)/100)) %></p>
+                                    <p class="card-text price_economy">SeatsLeft:<%- flights[0][i].seats_left %></p>
+                                </div>
+                            </div>
+                            <% } %>
+
+                        
+
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="/bookingpage"><button class="btn btn-primary">BOOK NOW</button></a>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <% } %>
+
+        
+
+    
+    <!-- no result -->
+    <% }if (flights[0].length===0  ){%>
+    
+        <h1 style="margin-left: 450px;">NO FLIGHTS AVAILABLE</h1>
+
+        <% } %>
+    
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script>
+    // document.getElementById("searched_date").innerHTML = Date();
+
+    </script>
+</body>
+
+</html>
