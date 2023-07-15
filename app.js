@@ -538,12 +538,10 @@ app.get("/flightsearch",validateToken,function(req,res){
         var source =req.query.source;
         var destination=req.query.destination;
         var flightclass=req.query.class;
-        var price=req.query.price;
-        var discount =req.query.discount;
         var airplaneName=req.query.airplaneName;
         var date=req.query.date;
 
-        var sql= "select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,f.airplane_name,f.status,f.terminal,c.class,c.total_seats,c.seats_left,c.price,c.discount from flight f INNER JOIN class c  ON f.flight_id = c.flight_id where f.flight_id LIKE'%"+flightid+"%' AND f.source LIKE'%"+source+"%'  AND f.destination LIKE'%"+destination+"%'  AND  c.class LIKE'%"+flightclass+"%'  AND c.price LIKE'%"+price+"%' AND c.discount LIKE'%"+discount+"%'  AND f.airplane_name LIKE'%"+airplaneName+"%'AND f.date LIKE'%"+date+"%'";
+        var sql= "select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,f.airplane_name,f.status,f.terminal,c.class,c.total_seats,c.seats_left,c.price,c.discount from flight f INNER JOIN class c  ON f.flight_id = c.flight_id where f.flight_id LIKE'%"+flightid+"%' AND f.source LIKE'%"+source+"%'  AND f.destination LIKE'%"+destination+"%'  AND  c.class LIKE'%"+flightclass+"%' AND f.airplane_name LIKE'%"+airplaneName+"%'AND f.date LIKE'%"+date+"%'";
         
         connection.query(sql,function(error,result){
             if (error) {
