@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flight Search Results</title>
+    <title>Available Flights</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/flights_available.css">
 
@@ -24,9 +24,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/homepagesearchbar">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li> -->
+                
             </ul>
         </div>
     </nav>
@@ -69,14 +67,17 @@
                             <div class="grid-item3">
                                 <div class="card-body">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radiobutton" id="radio1">
-                                        <label class="form-check-label" for="radio1">BUSINESS</label>
+                                        <input class="form-check-input" type="radio" value="Business"  name="radiobutton" id="radio1">
+                                        <label class="form-check-label" for="radio1">BUSINESS</label>                                      
                                     </div>
                                    
                                     <p class="card-text price_business">Price:  <%= Math.floor( (flights[1][i].price) - ((flights[1][i].price*flights[1][i].discount)/100)) %></p>
                                     <p class="card-text price_business">SeatsLeft:<%- flights[1][i].seats_left %></p>
                                 </div>
                             </div>
+                            <div class="card-footer">
+                                <a id="classSelected"href="/bookingpage?id=<%- flights[0][i].flight_id %>&flightclass=Business" ><button class="btn btn-primary">BOOK NOW</button></a>
+                           </div>               
     
                            
 
@@ -88,13 +89,16 @@
                             <div class="grid-item4">
                                 <div class="card-body">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radiobutton" id="radio2">
+                                        <input class="form-check-input" type="radio" value="Economy"  name="radiobutton" id="radio2">
                                         <label class="form-check-label" for="radio2">ECONOMY</label>
                                     </div>
                                     <p class="card-text price_economy">Price:<%= Math.floor((flights[0][i].price) - ((flights[0][i].price*flights[0][i].discount)/100)) %></p>
                                     <p class="card-text price_economy">SeatsLeft:<%- flights[0][i].seats_left %></p>
                                 </div>
                             </div>
+                            <div class="card-footer">
+                                <a id="classSelected" href="/bookingpage?id=<%- flights[0][i].flight_id %>&flightclass=Economy" ><button class="btn btn-primary">BOOK NOW</button></a>
+                           </div> 
                             
 
                         <!-- if both have seats -->
@@ -102,8 +106,9 @@
                             <div class="grid-item3">
                                 <div class="card-body">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radiobutton" id="radio1">
+                                        <input class="form-check-input" type="radio" name="radiobutton"  value="Business" id="radio1">
                                         <label class="form-check-label" for="radio1">BUSINESS</label>
+
                                     </div>
                                     <p class="card-text price_business">Price:  <%= Math.floor( (flights[1][i].price) - ((flights[1][i].price*flights[1][i].discount)/100)) %></p>
                                     <p class="card-text price_business">SeatsLeft:<%- flights[1][i].seats_left %></p>
@@ -113,22 +118,31 @@
                             <div class="grid-item4">
                                 <div class="card-body">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="radiobutton" id="radio2">
+                                        <input class="form-check-input" type="radio" name="radiobutton"  value="Economy" id="radio2">
                                         <label class="form-check-label" for="radio2">ECONOMY</label>
                                     </div>
                                     <p class="card-text price_economy">Price:<%= Math.floor((flights[0][i].price) - ((flights[0][i].price*flights[0][i].discount)/100)) %></p>
                                     <p class="card-text price_economy">SeatsLeft:<%- flights[0][i].seats_left %></p>
                                 </div>
                             </div>
+                            <div class="card-footer">
+                                <a id="classSelected"href="/bookingpage?id=<%- flights[0][i].flight_id %>&flightclass=Business" ><button class="btn btn-primary">BOOK BUSINESS</button></a>
+                                
+                           </div> 
+                           <div class="card-footer">
+                            <a id="classSelected"href="/bookingpage?id=<%- flights[0][i].flight_id %>&flightclass=Economy" ><button class="btn btn-primary">BOOK ECONOMY</button></a>
+                            
+                          </div> 
+                        
                             <% } %>
+
 
                         
 
                     </div>
                 </div>
-                <div class="card-footer">
-                    <a href="/bookingpage"><button class="btn btn-primary">BOOK NOW</button></a>
-                </div>
+                 
+                
             </div>
 
 
@@ -136,9 +150,6 @@
         </div>
     </div>
     <% } %>
-
-        
-
     
     <!-- no result -->
     <% }if (flights[0].length===0  ){%>
@@ -147,16 +158,13 @@
 
         <% } %>
     
-
-
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-    <script>
-    // document.getElementById("searched_date").innerHTML = Date();
-
-    </script>
+    <script src="js/flights_available.js"></script>
+    
 </body>
 
 </html>
+
+

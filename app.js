@@ -52,12 +52,11 @@ app.use(cookieParser());
 //     // ###########
 //  });
 
-
-app.get("/aboutus", function (req, res) {
-
-    res.sendFile(path.join(__dirname, 'public', 'aboutus.html'));
-
-});
+app.get("/aboutus",function(req,res){
+    
+    res.sendFile(path.join(__dirname,'public','aboutus.html'));
+    
+ });
 
 
 
@@ -90,9 +89,20 @@ app.get("/customerpage", validateToken, function (req, res) {
 });
 
 //  this page will only be available if user is authenticated ///
-app.get("/bookingpage", validateToken, function (req, res) {
-    res.sendFile(path.join(__dirname, 'public', 'booking.html'));
-});
+app.get("/bookingpage", validateToken ,function(req,res){
+    var id = req.query.id;
+    var flightclass= req.query.flightclass
+    console.log(id);
+    console.log(flightclass);
+    if (flightclass===undefined){
+        var error= 'PLEASE SELECT CLASS ';
+        res.render("message",{display:error});
+    }
+    else{
+        res.sendFile(path.join(__dirname,'public','booking.html'));
+ }
+    
+ }); 
 
 app.get("/SIGNIN_UP_FIRST", function (req, res) {
     var error = 'SIGN IN OR SIGN UP FIRST  ';
@@ -619,15 +629,10 @@ app.get("/usersearch", validateToken, function (req, res) {
             }
         }
     });
-});
-
-
 // ***********************************
-
-
-connection.connect(function (err) {
-    if (err)
-        throw (err);
+connection.connect(function(err){
+    if(err)
+         throw(err);
     console.log("connection successfull....");
 });
 
