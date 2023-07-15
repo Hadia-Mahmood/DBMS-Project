@@ -1,104 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <title>DASHBOARD</title>
-    
-    
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 30px;
+            color: #007bff;
+        }
+
+        h3 {
+            margin-top: 30px;
+            color: #007bff;
+        }
+
+        .form {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 5% 4% !important;
+            background: linear-gradient(to bottom, #1b1c3f, #4a4e91);
+            border-radius: 35px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            margin-left: 5%;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ffffff;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        input[type="number"] {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-top: 5px;
+            width: 100%;
+        }
+
+        /* Improved styling for all fields */
+        .form .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4%;
+        }
+
+        .form .grid-container label,
+        .form .grid-container input {
+            width: 100%;
+        }
+
+        button[name="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        button[name="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        h4 {
+            color: #007bff;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        /* Optional: Style for error messages */
+        .error {
+            color: red;
+            margin-top: 5px;
+        }
+
+        /* Add spacing to elements */
+        .form {
+            padding: 30px;
+        }
+
+        .form .grid-container {
+            gap: 60px;
+        }
+
+        .form .grid-container div {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form .grid-container div label,
+        .form .grid-container div input {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 600px) {
+            .form {
+                padding: 10px;
+            }
+
+            .form .grid-container {
+                gap: 10px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <H1>ADMIN DASHBOARD</H1>
-     <br>
-     <!--            create new flight           -->
-     <h3>CREATE NEW FLIGHT</h3>
-     <form action="/createFlight" method="post">
+    <h1>ADMIN DASHBOARD</h1>
+    <br>
+    <!-- create new flight -->
+    <h3>CREATE NEW FLIGHT</h3>
+    <form action="/createFlight" method="post">
         <div class="form">
-             
-            <label for="">flightID </label>
-            <input name="flightID" placeholder="ENTER 4 DIGIT NO." maxlength="4" pattern="\d{4}" required type="text">
+            <div class="grid-container">
+                <div>
+                    <label for="flightID">Flight ID</label>
+                    <input name="flightID" placeholder="ENTER 4 DIGIT NO." maxlength="4" pattern="\d{4}" required
+                        type="text">
+                </div>
+                <div>
+                    <label for="source">Source</label>
+                    <input name="source" placeholder="Source" type="text" required>
+                </div>
+                <div>
+                    <label for="Destination">Destination</label>
+                    <input type="text" name="Destination" placeholder="Destination" required>
+                </div>
+                <div>
+                    <label for="Date">Date</label>
+                    <input name="Date" placeholder="MM/DD/YYYY" type="date" required>
+                </div>
+                <div>
+                    <label for="AirplaneName">Airplane Name</label>
+                    <input type="text" name="AirplaneName" placeholder="Airplane Name" required>
+                </div>
+                <div>
+                    <label for="Terminal">Terminal</label>
+                    <input name="Terminal" placeholder="Terminal" type="text" required>
+                </div>
+                <div>
+                    <label for="Departure">Departure Time</label>
+                    <input name="Departure" type="time" placeholder="Departure Time" required>
+                </div>
+                <div>
+                    <label for="Arrival">Arrival Time</label>
+                    <input name="Arrival" type="time" placeholder="Arrival Time" required>
+                </div>
+                <div>
+                    <h4>ENTER BUSINESS CLASS DETAILS</h4>
+                    <label for="BTotalSeats">Total Seats</label>
+                    <input name="BTotalSeats" placeholder="Min 20 Max 60" type="number" min="20" max="60" required>
 
-            <label for="">Source </label>
-            <input name="source" placeholder="source" type="text" required>
-            
-            <label for="">Destination</label>
-            <input type="text"   name="Destination" placeholder="destination " required>
+                    <label for="BPrice">Price</label>
+                    <input name="BPrice" placeholder="Min 50000 Max 400000" type="number" min="50000" max="400000"
+                        required>
 
-            <label for="">Date </label>
-            <input name="Date" placeholder="mm/dd/yyyy" type="date" required>
+                    <label for="BDiscount">Discount</label>
+                    <input name="BDiscount" placeholder="Min 0 Max 60" type="number" min="0" max="60" required>
+                </div>
+                <div>
+                    <h4>ENTER ECONOMY CLASS DETAILS</h4>
+                    <label for="ETotalSeats">Total Seats</label>
+                    <input name="ETotalSeats" placeholder="Min 50 Max 100" type="number" min="50" max="100" required>
 
-            <label for="">Airplane Name </label>
-            <input type="text"   name="AirplaneName" placeholder="AirplaneName" required >
+                    <label for="EPrice">Price</label>
+                    <input name="EPrice" placeholder="Min 50000 Max 400000" type="number" min="50000" max="400000"
+                        required>
 
-            <label for="">Terminal </label>
-            <input name="Terminal"  placeholder="terminal" type="text"required>
-
-
-            <label for="">Departure Time </label>
-            <input name="Departure" type="time"   placeholder="Departure time" required >
-
-            <label for="">Arrival Time </label>
-            <input name="Arrival"  type="time"   placeholder="Arrivaltime" required>
-
-            <H4>ENTER BUSINESS CLASS DETAILS</H4>
-
-            <label for="">Total Seats </label>
-            <input name="BTotalSeats" placeholder="min 20 max 60" type="number" min="20" max="60" required>
-
-            <label for="">Price </label>
-            <input name="BPrice" placeholder="min 50000 max 400000" type="number" min="50000" max="400000" required>
-
-            <label for="">Discount </label>
-            <input name="BDiscount" placeholder=" min 0 max 60" type="number" min="0"  max="60" required>
-
-
-            <H4>ENTER ECONOMY CLASS DETAILS</H4>
-
-            <label for="">Total Seats </label>
-            <input name="ETotalSeats" placeholder="min=50 max=100" type="number" min="50" max="100" required>
-
-            <label for="">Price </label>
-            <input name="EPrice" placeholder="min=50000 max=400000" type="number" min="50000" max="400000" required>
-
-            <label for="">Discount </label>
-            <input name="EDiscount" placeholder=" min=0 max=60" type="number"  min="0" max="60" required>
-              
-
+                    <label for="EDiscount">Discount</label>
+                    <input name="EDiscount" placeholder="Min 0 Max 60" type="number" min="0" max="60" required>
+                </div>
+            </div>
+            <button name="submit" type="submit">Create Flight!</button>
         </div>
-        <br>
-        <button name="submit" type="submit">Create flight!</button>
-     </form>
-     <br>
-     <hr>
-     <h1>DELETE UPDATE FLIGHT BY CLICKING ON THIS BUTTON</h1>
-     <form action="/admincrudoperations" method="get">
-        <button name="submit" type="submit">delete update or search flight</button>
-    </form> 
-
-     <br>
-     <hr>
-     <h1>SEARCH  FLIGHT BY CLICKING ON THIS BUTTON</h1>
-     <form action="/flightsearch" method="get">
-        <button name="submit" type="submit">SEARCH</button>
     </form>
-     <br>
-     <hr>
-     <h1>Skymate Users</h1>
-     <form action="/usersearch" method="get">
-        <button name="submit" type="submit">CLICK HERE </button>
-    </form>
-
-     <br>
-
-
-    <hr>
-    <h1>LOGOUT</h1>
-    <form action="/logout" method="post">
-        <button name="submit" type="submit">LOG OUT</button>
-    </form>
-    <!-- ***************************************** -->
-    <script src="js/admin.js"></script>
-    <!-- ****************************************** -->
 </body>
+
 </html>

@@ -2,49 +2,103 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADMIN CRUD</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkyMate</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+
+    <!-- Bootstrap5 cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/ab0ab137d9.js" crossorigin="anonymous"></script>
+
+    <!-- Css StyleSheets -->
+    <link rel="stylesheet" href="./css/crud.css" />
 </head>
 
 <body>
-    <!-- ADMIN can search a flight on the basis of  flight id ,class, source , destination , airplane name , date , price ,discount  -->
-    <h1>SEARCH FLIGHT  HERE </h1>
-    <form action="flightsearch" method="get">
-        <input type="search" name="flightid" placeholder="Search FLIGHT ID ">
-        <input type="search" name="source" placeholder="Search  FLIGHT SOURCE ">
-        <input type="search" name="destination" placeholder="Search DESTINATION ">
-        <input type="search" name="class" placeholder="Search CLASS ">
-        <input type="search" name="price" placeholder="Search PRICE">
-        <input type="search" name="discount" placeholder="Search DISCOUNT">
-        <input type="search" name="airplaneName" placeholder="Search AIRPLANE NAME">
-        <input type="search" name="date" placeholder="Search DATE ">
-        <input type="submit" value="Search">
-    </form>
 
-   <hr>
-    
-    <br>
+    <!-- Navbar Code -->
+    <section id="title">
+        <div id="header">
+            <nav class="navbar navbar-expand-lg sticky-top">
+                <a href="" class="navbar-brand" style="color: #f3fbfb">SkyMate</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-stream"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="/logout" method="post">
+                                <button name="submit" class="beautiful-button" type="submit">
+                                    LOG OUT
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar Code End -->
+    </section>
+    <!-- ADMIN can search a flight on the basis of  flight id ,class, source , destination , airplane name , date , price ,discount  -->
+
+    <section id="adsearch">
+        <div class="heading">
+            <h1>
+                <a href="" class="typewrite" data-period="2000" data-type='[ "Search flights here..."]'>
+                    <span class="wrap"></span>
+                </a>
+            </h1>
+
+        </div>
+        <form action="flightsearch" method="get">
+            <div style="margin: auto; font-size: 1.6rem; width: 100%; ">
+                <div class="search-bars" style="display: flex; justify-content: center; ">
+                    <input type="search" name="flightid" placeholder="FLIGHT ID">
+                    <input type="search" name="source" placeholder="FLIGHT SOURCE">
+                    <input type="search" name="destination" placeholder="FLIGHT DESTINATION">
+                    <input type="search" name="class" placeholder="FLIGHT CLASS ">
+                </div>
+                <div class="search-bars" style="display: flex; justify-content: center; padding: 2% 3%; gap: 3%;">
+                    <input type="search" name="airplaneName" placeholder="AIRPLANE NAME">
+                    <input type="search" name="date" placeholder="FLIGHT DATE">
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <button class="buttonsub" type="submit" value="Search">
+                        submit
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </section>
     <!-- DISPLAY ALL FLIGHTS  -->
-    <H1>FLIGHT LIST </H1>
+    <section id="tabedisplay"></section>
     <table border="1" width="100%">
         <tr>
-            <th>FLIGHT ID</th>
-            <th>SOURCE</th>
-            <th>DESTINATION</th>
-            <th>DATE</th>
-            <th>DEPARTURE TIME</th>
-            <th>ARRIVAL TIME</th>
-            <th>AIRPLANE NAME </th>
-            <th>STATUS </th>
-            <th>TERMINAL</th>
-            <th>CLASS</th>
-            <th>TOTAL SEATS</th>
-            <th>SEATS LEFT</th>
-            <th>PRICE</th>
-            <th>DISCOUNT</th>
-            <th>DELETE</th>
-            <th>UPDATE</th>
+            <th style="font-size: 1.3rem;">FLIGHT ID</th>
+            <th style="font-size: 1.3rem;">SOURCE</th>
+            <th style="font-size: 1.3rem;">DESTINATION</th>
+            <th style="font-size: 1.3rem;">DATE</th>
+            <th style="font-size: 1.3rem;">DEPARTURE TIME</th>
+            <th style="font-size: 1.3rem;">ARRIVAL TIME</th>
+            <th style="font-size: 1.3rem;">AIRPLANE NAME </th>
+            <th style="font-size: 1.3rem;">STATUS </th>
+            <th style="font-size: 1.3rem;">TERMINAL</th>
+            <th style="font-size: 1.3rem;">CLASS</th>
+            <th style="font-size: 1.3rem;">TOTAL SEATS</th>
+            <th style="font-size: 1.3rem;">SEATS LEFT</th>
+            <th style="font-size: 1.3rem;">PRICE</th>
+            <th style="font-size: 1.3rem;">DISCOUNT</th>
+            <th style="font-size: 1.3rem;" colspan="2">ACTIONS</th>
         </tr>
 
         <% if (flights.length>0){%>
@@ -53,22 +107,28 @@
                     <%const date=new Date(flights[i].date) %>
                         <% const formattedDate=`${date.getDate()} ${date.toLocaleString('default', { month: 'short' })}
                             ${date.getFullYear()}`; %>
-                            <td><%- flights[i].flight_id %></td>
-                            <td><%- flights[i].source %></td>
-                            <td><%- flights[i].destination %></td>
-                            <td><%- formattedDate %></td>
-                            <td><%- flights[i].departure_time %></td>
-                            <td><%- flights[i].arrival_time %></td>
-                            <td><%- flights[i].airplane_name %></td>
-                            <td><%- flights[i].status %></td>
-                            <td><%- flights[i].terminal %></td>
-                            <td><%- flights[i].class %></td>
-                            <td><%- flights[i].total_seats %></td>
-                            <td><%- flights[i].seats_left %></td>
-                            <td><%- flights[i].price %></td>
-                            <td><%- flights[i].discount %></td>
-                            <td> <a href="/delete-flight?id=<%- flights[i].flight_id %>">Delete</a> </td>
-                            <td> <a href="/updateflight?id=<%- flights[i].flight_id %>">Update</a> </td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].flight_id %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].source %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].destination %></td>
+                            <td style="font-size: 1.3rem;"><%- formattedDate %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].departure_time %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].arrival_time %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].airplane_name %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].status %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].terminal %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].class %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].total_seats %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].seats_left %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].price %></td>
+                            <td style="font-size: 1.3rem;"><%- flights[i].discount %></td>
+                            <td style="font-size: 1.3rem;"> <a
+                                    href="/delete-flight?id=<%- flights[i].flight_id %>">Delete</a> </td>
+                            <td style="font-size: 1.3rem;">
+                                <a href="/updateflight?id=<%- flights[i].flight_id %>">Update</a>
+                            </td>
+
+                            <!-- The modal HTML remains the same as shown in the previous response -->
+
                 </tr>
                 <% } %>
 
@@ -79,8 +139,87 @@
 
 
     </table>
+    </section>
 
-    <script src="js/admin.js"></script>
+
+    <div class="loader-parent">
+        <div class="loader"></div>
+    </div>
+
+
+    <div class="back-button">
+        <button onClick="window.location.href='/dashboard'" style="width: 140%;" class="beautiful-button"
+            onclick="goBack()">
+            Back
+        </button>
+    </div>
+
+
+
+
+
+    <script>
+        var TxtType = function (el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 10) || 2000;
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+        };
+
+        TxtType.prototype.tick = function () {
+            var i = this.loopNum % this.toRotate.length;
+            var fullTxt = this.toRotate[i];
+
+            if (this.isDeleting) {
+                this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+                this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+
+            this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
+
+            var that = this;
+            var delta = 200 - Math.random() * 100;
+
+            if (this.isDeleting) { delta /= 2; }
+
+            if (!this.isDeleting && this.txt === fullTxt) {
+                delta = this.period;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+                this.isDeleting = false;
+                this.loopNum++;
+                delta = 500;
+            }
+
+            setTimeout(function () {
+                that.tick();
+            }, delta);
+        };
+
+        window.onload = function () {
+            var elements = document.getElementsByClassName('typewrite');
+            for (var i = 0; i < elements.length; i++) {
+                var toRotate = elements[i].getAttribute('data-type');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                    new TxtType(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+            // INJECT CSS
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
+            document.body.appendChild(css);
+        };
+    </script>
+
+    <!-- Load Bootstrap JavaScript (including Popper.js) first -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/js/bootstrap.min.js"></script>
 
 </body>
 

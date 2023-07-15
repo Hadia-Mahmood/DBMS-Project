@@ -52,22 +52,25 @@
     <section id="adsearch">
         <div class="heading">
             <h1>
-                <a href="" class="typewrite" data-period="2000"
-                    data-type='[ "Search Users Here..."]'>
+                <a href="" class="typewrite" data-period="2000" data-type='[ "Search Users Here..."]'>
                     <span class="wrap"></span>
                 </a>
             </h1>
-    
+
         </div>
         <div class="search-bars">
-            <form id="searchForm">
-                <input  type="search" name="customerid" placeholder="CUSTOMER ID" />
-                <input  type="search" name="firstname" placeholder="FIRST NAME" />
-                <input  type="search" name="lastname" placeholder="LAST NAME" />
-                <input  type="search" name="email" placeholder="EMAIL" />
-                <button class="buttonsub" type="submit" value="Search" > 
-                    submit
-                </button>
+            <form id="searchForm" style="margin: auto; display: flex ; justify-content: center;">
+
+                <input type="search" name="customerid" placeholder="CUSTOMER ID" />
+                <input type="search" name="firstname" placeholder="FIRST NAME" />
+                <input type="search" name="lastname" placeholder="LAST NAME" />
+                <input type="search" name="email" placeholder="EMAIL" />
+                <div style="display: flex; justify-content: center; margin-top: 3%;">
+                    <button class="buttonsub" type="submit" value="Search">
+                        submit
+                    </button>
+                </div>
+
             </form>
         </div>
         <br />
@@ -76,12 +79,9 @@
     <!-- DISPLAY ALL users  -->
 
     <section id="tabedisplay">
-        <div class="userlist">
-            <h1>USER LIST</h1>
-        </div>
-        
-        <div class="data-table">
-            <table id="userTable" border="1" width="100%">
+
+        <div class="data-table" style="border-radius: 55px;">
+            <table id="userTable" border="1">
                 <!-- Table header -->
                 <tr>
                     <th>CUSTOMER ID</th>
@@ -119,6 +119,16 @@
             </table>
         </div>
     </section>
+
+    <div class="loader-parent">
+        <div class="loader"></div>
+    </div>
+    <div class="back-button">
+        <button onClick="window.location.href='/dashboard'" style="width: 140%;" class="beautiful-button"
+            onclick="goBack()">
+            Back
+        </button>
+    </div>
 </body>
 
 

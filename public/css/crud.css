@@ -208,43 +208,85 @@ h3 {
      display: flex;
      flex-wrap: wrap;
      gap: 10px;
+
  }
 
  input[type="search"] {
      text-align: center;
      border: 1px solid #ccc;
-     padding: 1% 0;
+     padding: 2% 2%;
+     margin: auto 1%;
      border-radius: 35px;
-     width: 250px;
+     width: 260px;
+     height: 45px;
  }
 
  table {
+  text-align: center;
+  width: 98%;
+  margin: 2% auto;
+  border-collapse: collapse;
+  background: linear-gradient(to bottom, #f0f0f0, #e0e0e0);
 
-     border-collapse: collapse;
-     width: 100%;
-     margin-top: 20px;
- }
+}
 
- th, td {
-     padding: 10px;
-     text-align: left;
- }
+/* Table header */
+th {
+  padding: 10px;
+  font-family: var(--secondary-font);
+  background: linear-gradient(to bottom, #4a90e2, #2568ab);
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  border-radius: 2px;
+  border-right: 1px solid #ccc;
+}
 
- th {
-     background-color: #f2f2f2;
- }
+/* Table body - alternating row colors */
+tr {
+  background-color: rgb(255, 255, 255);
+  color: black;
+}
 
+/* Table body - hover effect */
+tr:hover {
+  background-color: rgba(58, 117, 166, 1);
+  color: white;
+}
 
- tr:nth-child(odd) {
-     background-color: transparent;
- }
+tr:hover a{
+  color: black;
+}
 
- tr:hover {
-     background-color: #d4d4d4;
- }
+/* Table cells */
+td {
+  font-size: 1.6rem;
+  padding: 10px;
+  font-weight: bold;
+  border-right: 1px solid #ccc;
+}
 
+/* Table cells - last in row */
+td:last-child {
+  border-right: none;
+}
 
+/* Table caption */
+caption {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
 
+/* Table borders */
+table, td {
+  border: 1.6px solid #000000;
+}
+
+table, th{
+  border: 1.2px solid #000000;
+}
  #adsearch{
   padding: 3% 0;
   background-image: url(../images/airplane-img.jpg);
@@ -314,8 +356,82 @@ h3 {
 
 
 
+
 .userlist{
   display: flex;
   justify-content: center;
   margin: 2% 0;
 }
+
+
+.back-button {
+  position: fixed;
+  bottom: 40px;
+  right: 70px;
+}
+
+
+td a{
+  color: rgba(58, 117, 166, 1);
+  text-decoration: none;
+  font-size: 1.5rem;  
+  transition: 0.5s;
+}
+
+td a:hover{
+  color: #ffffff;
+  font-size: 1.7rem;
+}
+
+
+.loader-parent{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5%;
+  margin-top: 3%
+}
+
+.loader {
+
+  display: block;
+  --height-of-loader: 4px;
+  --loader-color: #0071e2;
+  width: 530px;
+  height: var(--height-of-loader);
+  border-radius: 30px;
+  background-color: rgba(0,0,0,0.2);
+  position: relative;
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  background: var(--loader-color);
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  border-radius: 30px;
+  animation: moving 1s ease-in-out infinite;
+  ;
+}
+
+@keyframes moving {
+  50% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+    right: 0;
+    left: unset;
+  }
+}
+
+
+
+
+
+
+/* admin crud */
+
