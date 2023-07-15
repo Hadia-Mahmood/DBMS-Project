@@ -551,69 +551,39 @@ app.get("/flightsearch",validateToken,function(req,res){
 
             
 
-
-app.get("/usersearch",validateToken,function(req,res){
-        
-    var customerid=req.query.customerid;
-    var firstname=req.query.firstname;
-    var lastname=req.query.lastname;
-    // var flightid=req.query.FLIGHTID;
-    var email=req.query.email;
-  
+    app.get("/usersearch", validateToken, function (req, res) {
+        var customerid = req.query.customerid;
+        var firstname = req.query.firstname;
+        var lastname = req.query.lastname;
+        var email = req.query.email;
     
-    var sql= "SET SQL_MODE ='';select  f.flightID   from customer c inner join customer_booked_flights f  on c.customer_id =f.customer_ID inner join user u on c.customer_id = u.ID where c.customer_id  LIKE'%"+customerid+"%'AND c.first_name LIKE'%"+firstname+"%'AND c.last_name LIKE'%"+lastname+"%'  AND u.email LIKE'%"+email+"%'  ;";
+        var sql = `SELECT c.customer_id, c.first_name, c.last_name, u.email, t.flightID, t.ticket_id, t.class, t.passengerName, pcn.contact_number 
+                   FROM customer c
+                   INNER JOIN user u ON c.customer_id = u.ID
+                   LEFT JOIN ticket t ON c.customer_id = t.customerID
+                   LEFT JOIN passenger_contact_number pcn ON t.ticket_id = pcn.ticket_id
+                   WHERE c.customer_id LIKE '%${customerid}%' 
+                   AND c.first_name LIKE '%${firstname}%' 
+                   AND c.last_name LIKE '%${lastname}%' 
+                   AND u.email LIKE '%${email}%'`;
     
-    connection.query(sql,function(error,result){
-        if (error) {
-            console.log(error);
-            var error= 'sorry please search again';
-            res.render("message",{display:error});
-        }
-        if (result[1].length===0){
-            console.log('yes');
-            var sql="select c.customer_id ,c.first_name ,c.last_name, u.email from customer c  inner join user u on c.customer_id = u.ID where c.customer_id  LIKE'%"+customerid+"%'AND c.first_name LIKE'%"+firstname+"%'AND c.last_name LIKE'%"+lastname+"%'  AND u.email LIKE'%"+email+"%'";
-            connection.query(sql,function(error,result){
-                            if (error) {
-                                console.log(error);
-                                var error= 'sorry please search again';
-                                res.render("message",{display:error});
-                            }
-                            else{
-                                console.log(result);
-                                res.render("nobookingusers",{users:result});
-
-                            }
-                            
-                        });
-            
-        }
-
-        
-        else{
-            var sql="select c.customer_id,c.first_name,c.last_name  ,t.ticket_id,t.passengerName, t.flightID, t.class, u.email ,pcn.contact_number from ticket t inner join  customer c on  t.customerID=c.customer_id inner join  user u  on t.customerID = u.ID inner join  passenger_contact_number pcn  on t.ticket_id = pcn.ticket_id where t.customerID LIKE'%"+customerid+"%'AND c.first_name LIKE'%"+firstname+"%'  AND c.last_name LIKE'%"+lastname+"%'  AND u.email LIKE'%"+email+"%'";
-            connection.query(sql,function(error,result){
-                            if (error) {
-                                console.log(error);
-                                var error= 'sorry please search again';
-                                res.render("message",{display:error});
-                            }
-                            else{
-                                console.log(result);
-                                res.render("skymateusers",{users:result});
-
-                            }
-                            
-                        });
-            
-           
-        }
-        
+        connection.query(sql, function (error, result) {
+            if (error) {
+                console.log(error);
+                var error = 'Sorry, there was an error. Please search again.';
+                res.render("message", { display: error });
+            } else {
+                console.log(result);
+                if (result.length === 0) {
+                    // No users found
+                    res.render("skymateusers", { users: [] });
+                } else {
+                    res.render("skymateusers", { users: result });
+                }
+            }
+        });
     });
-        
-    });    
-
-
-
+    
 
 // ***********************************
 

@@ -2,61 +2,183 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>skymateUsers</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkyMate</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+
+    <!-- Bootstrap5 cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/ab0ab137d9.js" crossorigin="anonymous"></script>
+
+    <!-- Css StyleSheets -->
+    <link rel="stylesheet" href="./css/crud.css" />
 </head>
 
 <body>
-    <!-- ADMIN can search a customer on the basis of  customer id ,first name, lastname , email -->
-    <h1>SEARCH USERS  HERE </h1>
-    <form action="usersearch" method="get">
-        <input type="search" name="customerid" placeholder="Search CUSTOMER ID ">
-        <input type="search" name="firstname" placeholder="FIRST NAME ">
-        <input type="search" name="lastname" placeholder="LAST NAME ">
-        <!-- <input type="search" name="FLIGHTID" placeholder="FLIGHT ID "> -->
-        <input type="search" name="email" placeholder="EMAIL">
-       
-        <input type="submit" value="Search">
-    </form>
-    <br>
+    <!-- Navbar Code -->
+    <section id="title">
+        <div id="header">
+            <nav class="navbar navbar-expand-lg sticky-top">
+                <a href="" class="navbar-brand" style="color: #f3fbfb">SkyMate</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-stream"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="dashboard.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="/logout" method="post">
+                                <button name="submit" class="beautiful-button" type="submit">
+                                    LOG OUT
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar Code End -->
+    </section>
+
+    <!-- ADMIN can search a customer on the basis of  customer id, first name, lastname, email -->
+
+    <section id="adsearch">
+        <div class="heading">
+            <h1>
+                <a href="" class="typewrite" data-period="2000"
+                    data-type='[ "Search Users Here..."]'>
+                    <span class="wrap"></span>
+                </a>
+            </h1>
+    
+        </div>
+        <div class="search-bars">
+            <form id="searchForm">
+                <input  type="search" name="customerid" placeholder="CUSTOMER ID" />
+                <input  type="search" name="firstname" placeholder="FIRST NAME" />
+                <input  type="search" name="lastname" placeholder="LAST NAME" />
+                <input  type="search" name="email" placeholder="EMAIL" />
+                <button class="buttonsub" type="submit" value="Search" > 
+                    submit
+                </button>
+            </form>
+        </div>
+        <br />
+    </section>
+
     <!-- DISPLAY ALL users  -->
-    <H1>USER LIST </H1>
-    <table border="1" width="100%">
-        <tr>
-            <th>CUSTOMER ID</th>
-            <th>FIRST NAME</th>
-            <th>LAST NAME</th>
-            
-            <th>EMAIL</th>
-            <th>BOOKED FLIGHT ID</th>
-            <th>TICKET ID</th>
-            <th>CLASS</th>
-            <th>PASSENGER NAME</th>
-            <th>PASSENGER CONTACT NUMBER</th>
-        </tr>
 
-        <% if (users.length>0){%>
-            <% for(var i=0;i<users.length;i++){ %>
+    <section id="tabedisplay">
+        <div class="userlist">
+            <h1>USER LIST</h1>
+        </div>
+        
+        <div class="data-table">
+            <table id="userTable" border="1" width="100%">
+                <!-- Table header -->
                 <tr>
-                            <td><%- users[i].customer_id %></td>
-                            <td><%- users[i].first_name %></td>
-                            <td><%- users[i].last_name %></td>
-                            
-                            <td><%- users[i].email %></td>
-                            <td><%- users[i].flightID %></td>
-                            <td><%- users[i].ticket_id %></td>
-                            <td><%- users[i].class %></td>
-                            <td><%- users[i].passengerName %></td>
-                            <td><%- users[i].contact_number %></td>
+                    <th>CUSTOMER ID</th>
+                    <th>FIRST NAME</th>
+                    <th>LAST NAME</th>
+                    <th>EMAIL</th>
+                    <th>BOOKED FLIGHT ID</th>
+                    <th>TICKET ID</th>
+                    <th>CLASS</th>
+                    <th>PASSENGER NAME</th>
+                    <th>PASSENGER CONTACT NUMBER</th>
                 </tr>
-                <% } %>
-
-                    <% } else { %>
-                        <h1>NO USER AVAILABLE</h1>
-
-                        <% } %>
-    </table>
+                <!-- Table body -->
+                <% for (var i=0; i < users.length; i++) { %>
+                    <tr>
+                        <td><%- users[i].customer_id %></td>
+                        <td><%- users[i].first_name %></td>
+                        <td><%- users[i].last_name %></td>
+                        <td><%- users[i].email %></td>
+                        <% if (users[i].flightID) { %>
+                            <td><%- users[i].flightID %></td>
+                            <% } else { %>
+                                <td>No Booking</td>
+                                <% } %>
+                                    <% if (users[i].ticket_id) { %>
+                                        <td><%- users[i].ticket_id %></td>
+                                        <% } else { %>
+                                            <td>No Booking</td>
+                                            <% } %>
+                                                <td><%- users[i].class %></td>
+                                                <td><%- users[i].passengerName %></td>
+                                                <td><%- users[i].contact_number %></td>
+                    </tr>
+                    <% } %>
+            </table>
+        </div>
+    </section>
 </body>
+
+
+<script>
+    var TxtType = function (el, toRotate, period) {
+        this.toRotate = toRotate;
+        this.el = el;
+        this.loopNum = 0;
+        this.period = parseInt(period, 10) || 2000;
+        this.txt = '';
+        this.tick();
+        this.isDeleting = false;
+    };
+
+    TxtType.prototype.tick = function () {
+        var i = this.loopNum % this.toRotate.length;
+        var fullTxt = this.toRotate[i];
+
+        if (this.isDeleting) {
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
+
+        var that = this;
+        var delta = 200 - Math.random() * 100;
+
+        if (this.isDeleting) { delta /= 2; }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+            delta = this.period;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.loopNum++;
+            delta = 500;
+        }
+
+        setTimeout(function () {
+            that.tick();
+        }, delta);
+    };
+
+    window.onload = function () {
+        var elements = document.getElementsByClassName('typewrite');
+        for (var i = 0; i < elements.length; i++) {
+            var toRotate = elements[i].getAttribute('data-type');
+            var period = elements[i].getAttribute('data-period');
+            if (toRotate) {
+                new TxtType(elements[i], JSON.parse(toRotate), period);
+            }
+        }
+        // INJECT CSS
+        var css = document.createElement("style");
+        css.type = "text/css";
+        css.innerHTML = ".typewrite > .wrap { border-right: 0.08em solid #fff}";
+        document.body.appendChild(css);
+    };
+</script>
 
 </html>
