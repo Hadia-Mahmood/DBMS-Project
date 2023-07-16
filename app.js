@@ -115,6 +115,12 @@ app.get("/homepagesearchbar",function(req,res){
     res.redirect("/")
 });
 
+app.get("/copyRight",function(req,res){
+    var error= 'Dont even dare to copy  ';
+    res.render("message",{display:error});
+ });
+
+
 ///////////////////////////////////////// admin sign in///////////////////////////////////////
 app.post("/adminsignin",function(req,res){
     //getting data from frontend//
@@ -627,6 +633,12 @@ app.get("/availableflights",function(req,res){
             }
         });
     });
+
+// booking process
+app.post("/bookingProcess",function(req,res){
+       
+    res.redirect("/customerpage");
+ });
 // ***********************************
 connection.connect(function(err){
     if(err)
