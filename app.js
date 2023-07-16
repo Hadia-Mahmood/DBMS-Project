@@ -5,7 +5,9 @@ const ejs = require("ejs");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const cookieParser = require("cookie-parser");
-var router = express.Router();
+const router = express.Router();
+const session = require('express-session');
+require('dotenv').config()
 
 const { createTokens , validateToken} = require("./JWT");
 
@@ -40,6 +42,13 @@ app.use(bodyParser.urlencoded({
 
 
 app.use(cookieParser());
+
+
+app.use(session({
+    secret: process.env.SECRETTWO,
+    resave: false,
+    saveUninitialized: true
+  }));
 
 // ////////////////////////////////ROUTES///////////////////////////////////////////////////////
 
@@ -94,6 +103,13 @@ app.get("/bookingpage", validateToken ,function(req,res){
     var flightclass= req.query.flightclass
     console.log(id);
     console.log(flightclass);
+    
+   // Store the data in the session as an object
+    req.session.data = {
+    id: id,
+    flightclass: flightclass
+      };
+
     if (flightclass===undefined){
         var error= 'PLEASE SELECT CLASS ';
         res.render("message",{display:error});
@@ -637,7 +653,18 @@ app.get("/availableflights",function(req,res){
 // booking process
 app.post("/bookingProcess",function(req,res){
        
-    res.redirect("/customerpage");
+      
+// Retrieve the data object from the session
+    const data = req.session.data;
+
+  // Access the individual data items
+  const flightid = data.id;
+  const fclass = data.flightclass;
+  console.log('booking process info');
+      console.log(flightid);
+      console.log(fclass);
+      res.redirect("/customerpage");
+
  });
 // ***********************************
 connection.connect(function(err){
