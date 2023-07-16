@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkyMate</title>
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+
+    <!-- Bootstrap5 cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/ab0ab137d9.js" crossorigin="anonymous"></script>
+
+    <!-- Css StyleSheets -->
+    <link rel="stylesheet" href="css/customer.css">
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        function userLogin() {
+
+            var email = document.getElementById('useremail');
+            var password = document.getElementById('userpass');
+            var error = document.getElementById('errormsg');
+
+            var req = new XMLHttpRequest();
+            req.open("POST", "/customerLogin");
+            req.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+            req.send("email=" + email.value + "&password=" + password.value)
+
+            req.onreadystatechange = function () {
+                if (req.readyState == 4 && req.status == 200) {
+                    if (req.responseText == 'error') {
+                        error.innerText = "ID - Password didn't match"
+                        // alert("Id pass dont match")
+                    }
+                    else if (req.responseText == 'success') {
+                        window.location.href = '/customerpage'
+                    }
+                }
+            }
+
+
+            return false;
+        }
+    </script>
+
+</head>
+
+<body class="home">
+    <!-- Navbar Code -->
+    <section id="title">
+        <div id="header">
+            <nav class="navbar navbar-expand-lg fixed-top">
+                <a href="" class="navbar-brand" style="color: #F3FBFB;">SkyMate</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-stream"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+
+                            <a class="nav-link active" style="margin-top: 6%;" aria-current="page" href="/">Home</a>
+                        </li>
+                        <li class="nav-item" style="margin-top: 2%;">
+                            <a class="nav-link" href="/custpagesearchbar#SEARCH_PORTION">Flights</a>
+                        </li>
+                        <li class="nav-item">
+                            <form action="/logout" method="post">
+                                <button class="Btn" name="submit" type="submit">
+
+                                    <div class="sign"><svg viewBox="0 0 512 512">
+                                            <path
+                                                d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z">
+                                            </path>
+                                        </svg></div>
+
+                                    <div class="text">Logout</div>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar Code End -->
+
+        <!-- Banner section -->
+
+        <div class="row  container-fluid-1">
+            <div class="col-lg-6">
+                <div class="tagline">
+                    <h1 class="titletxt">MAKING YOUR TRAVEL DREAMS <br> <span class="areality"> A REALITY</span></h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="dashboard">
+        <div class="container">
+            <div style="display: flex; padding-top: 2%; margin-left: 2%;">
+                <img src="/images/profile.png" style="width: 4%;" alt="">
+                <h3 style="font-size: 1.5rem; margin: auto 0; color: black;">hamzaanwermohiuddin</h3>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card-t">
+                        <div class="card-content-t" style="margin: auto;">
+                            <div style="text-align: center;">
+                                <p>LONDON</p>
+                                <h1>LON</h1>
+                                <p>depature time</p>
+                            </div>
+                            <div style="text-align: center;">
+                                <img src="/images/trace.png" class="imgtrace" style="width: 45%;" alt="">
+                            </div>
+                            <div style="text-align: center;">
+                                <p>BERLIN</p>
+                                <h1>BER</h1>
+                                <p>arrival time</p>
+                            </div>
+                        </div>
+                        <div class="card-content-2"
+                            style="background-color: white; border-radius: 35px; width: 100%; height: 30vh; padding: 1% 5%;">
+                            <div class="contentunder" >
+                                <div style="text-align: center;">
+                                    <p class="subhead">Ticket ID</p>
+                                    <p class="values">lon</p>
+                                </div>
+                                <div style="text-align: center;">
+                                    <p class="subhead">Meal</p>
+                                    <p class="values">lon</p>
+                                </div>
+                                <div style="text-align: center;">
+                                    <p class="subhead">Class</p>
+                                    <p class="values">lon</p>
+                                </div>
+                                <div style="text-align: center;">
+                                    <p class="subhead">Status</p>
+                                    <p class="values">lon</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: center;">
+                                <button class="Btn02" id="openPrecsButton">
+                                    <svg class="svgIcon" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path></svg>
+                                    <span class="icon2"></span>
+                                    <span class="tooltip">Open Menu</span>
+                                 </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-1 precs">
+                        <div class="ticket">
+                            <div class="tickheadings">
+                                <div>
+                                    <h4>Class</h4>
+                                    <hr>    
+                                    <h5>Economy</h5>
+                                </div>
+                                <div>
+                                    <h4>Terminal</h4>
+                                    <hr>    
+                                    <h5>T2</h5>
+                                </div>
+                                <div>
+                                    <h4>Airplane Name</h4>
+                                    <hr>    
+                                    <h5>A132</h5>
+                                </div>
+                                <div>
+                                    <h4>Passenger Name</h4>
+                                    <hr>    
+                                    <h5>Hamza</h5>
+                                </div>
+                                <div>
+                                    <h4>Contact No</h4>
+                                    <hr>    
+                                    <h5>03132693971</h5>
+                                </div>
+                            </div>
+                            <div>
+                                <a href="#" class="btncancel"> Cancel Flight</a>
+                                <a href="#" class="btncancel"> Change Class</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+document.getElementById('openPrecsButton').addEventListener('click', function(event) {
+    event.stopPropagation();
+    var precsDiv = document.querySelector('.precs');
+    var button = document.getElementById('openPrecsButton'); // Get the button element
+
+    // Toggle the .precs div visibility
+    if (precsDiv.style.display === 'block') {
+        precsDiv.style.display = 'none';
+        precsDiv.style.opacity = '0';
+        button.classList.remove('rotate-180'); // Remove the rotation class
+    } else {
+        precsDiv.style.display = 'block';
+        precsDiv.style.opacity = '1';
+        button.classList.add('rotate-180'); // Add the rotation class
+        // Add click event listener to the whole document
+        document.addEventListener('click', hidePrecsOnClickOutside);
+    }
+});
+
+// Function to handle hiding .precs when clicking outside
+function hidePrecsOnClickOutside(event) {
+    var precsDiv = document.querySelector('.precs');
+    var button = document.getElementById('openPrecsButton'); // Get the button element
+    // Check if the clicked element is not inside the .precs div
+    if (!precsDiv.contains(event.target) && event.target !== precsDiv) {
+        precsDiv.style.display = 'none';
+        precsDiv.style.opacity = '0';
+        button.classList.remove('rotate-180'); // Remove the rotation class
+        // Remove the event listener after the .precs is hidden
+        document.removeEventListener('click', hidePrecsOnClickOutside);
+    }
+}
+
+
+
+    </script>
+    <div class="textsearch">
+        <h1>WHERE DO YOU WANT TO GO?</h1>
+    </div>
+    <section id="SEARCH_PORTION">
+        <form action="/availableflights" method="get">
+            <div class="search-bar row" style="margin-bottom: 5%;">
+
+                <div class="col-4">
+                    <input id="autocomplete_search" autocomplete="off" name="source"
+                        class="input input-alt form-control form-control-lg" placeholder="✈ Source" required=""
+                        type="text">
+                    <div id="search_result" class="suggestion-box"></div>
+
+                </div>
+                <div class="form-group col-4">
+                    <input id="autocomplete_search2" autocomplete="off" class="input input-alt" name="destination"
+                        placeholder="✈  DESTINATION" required="" type="text">
+                    <div id="search_result2" class="suggestion-box"></div>
+                </div>
+                <div class="form-group col-4 ">
+                    <input name="departureDate" class="input input-alt" placeholder="DEPARTURE DATE" <% const today=new
+                        Date().toISOString().split('T')[0]; %>
+                    min="<%= today %>" required="" type="date"
+                        style="color:#152238; font-size: 1.8rem; opacity: 0.9;">
+                        <span class="input-border input-border-alt"></span>
+                </div>
+            </div>
+            <button class="btn-submit"> SUBMIT
+            </button>
+        </form>
+    </section>
+
+
+    <% const capitalizeFirstLetter=string=> `${string.charAt(0).toUpperCase()}${string.slice(1)}`; %>
+
+        <section id="trending-flights">
+
+            <div class="trending-flights">
+                <div class="one">
+                    <h1>Style One</h1>
+                </div>
+                <% for (let i=0; i < flights.length; i++) { %>
+                    <% if (i % 3===0) { %>
+                        <div class="row" style="margin-top: 6%;">
+                            <% } %>
+                                <div class="col-lg-4">
+                                    <%const date=new Date(flights[i].date) %>
+                                        <% const formattedDate=`${date.getDate()} ${date.toLocaleString('default', {
+                                            month: 'short' })} ${date.getFullYear()}`; %>
+                                            <div class="card" style="width: 300px;">
+                                                <img src="images/flights/<%= flights[i].destination %>.jpg"
+                                                    style="height: 30vh;" class="card-img-top" alt="Sample Image">
+                                                <div class="card-body text-center">
+                                                    <span class="flight-id">Flight ID: <%= flights[i].flight_id %>
+                                                    </span>
+                                                    <span class="to">To:
+                                                        <%=capitalizeFirstLetter(flights[i].destination) %>
+                                                    </span>
+                                                    <span class="flight_class">Class: <%= flights[i].class %></span>
+                                                    <span class="date">Date: <%= formattedDate %></span>
+                                                    <span class="time">Time: <%= flights[i].departure_time %></span>
+                                                    <a href="/bookingpage?id=<%- flights[i].flight_id %>&flightclass=<%= flights[i].class %>"
+                                                        class="btn btn-primary btn-outline-dark">Book Now</a>
+                                                    <div class="price">
+                                                        <span class="discount-price">$<%= (flights[i].price) -
+                                                                ((flights[i].price*flights[i].discount)/100) %></span>
+                                                        <span class="original-price">$<%= flights[i].price %></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </div>
+                                <% if ((i + 1) % 3===0 || i===flights.length - 1) { %>
+                        </div>
+                        <% } %>
+                            <% } %>
+            </div>
+        </section>
+        <section id="footer">
+
+
+            <!-- Remove the container if you want to extend the Footer to full width. -->
+            <div class="my-5" style="margin-bottom:0 !important; margin: auto;">
+
+                <footer class="text-white text-center text-lg-start"
+                    style="background-color: rgb(20, 42, 61) !important;">
+                    <!-- Grid container -->
+                    <div class="container p-4" style="align-items: center; margin: auto;">
+                        <!--Grid row-->
+                        <div class="row mt-4" style="margin: auto; justify-content:center;">
+                            <!--Grid column-->
+                            <div class="col-lg-4 col-md-12 mb-4 mb-md-0">
+                                <h5 class="text-uppercase mb-4" style="font-size: 4rem;">About company</h5>
+
+                                <p style="font-size: 1.5rem;">
+                                    SkyMate is a leading airline company dedicated to providing exceptional travel
+                                    experiences to
+                                    passengers around the world. With a commitment to safety, comfort, and convenience,
+                                    SkyMate offers a
+                                    wide range of domestic and international flights to various destinations.
+                                </p>
+
+                                <p style="font-size: 1.5rem;">
+                                    Our focus on innovation and customer satisfaction has earned us a reputation as a
+                                    trusted and
+                                    preferred choice among travelers. Experience the joy of flying with SkyMate and
+                                    discover a world of
+                                    possibilities in the skies.
+                                </p>
+
+                                <div class="mt-4">
+                                    <!-- Facebook -->
+                                    <a type="button" class="btn btn-floating btn-warning btn-lg"><i
+                                            class="fab fa-facebook-f"></i></a>
+                                    <!-- Dribbble -->
+                                    <a type="button" class="btn btn-floating btn-warning btn-lg"><i
+                                            class="fab fa-dribbble"></i></a>
+                                    <!-- Twitter -->
+                                    <a type="button" class="btn btn-floating btn-warning btn-lg"><i
+                                            class="fab fa-twitter"></i></a>
+                                    <!-- Google + -->
+                                    <a type="button" class="btn btn-floating btn-warning btn-lg"><i
+                                            class="fab fa-google-plus-g"></i></a>
+                                    <!-- Linkedin -->
+                                </div>
+                            </div>
+                            <!--Grid column-->
+
+                            <!--Grid column-->
+
+                            <div class="col-lg-4 col-md-6 mb-4 mb-md-0" style="margin-left: 8rem;">
+                                <h5 class="text-uppercase mb-4" style="font-size: 4rem;">Our Contacts</h5>
+                                <ul class="fa-ul" style="margin-top: 2rem;">
+                                    <li class="mb-3" style="font-size: 1.7rem;">
+                                        <span class="fa-li"><i class="fas fa-home"></i></span><span class="ms-2">New
+                                            York, NY 10012,
+                                            US</span>
+                                    </li>
+                                    <li class="mb-3" style="font-size: 1.7rem;">
+                                        <span class="fa-li"><i class="fas fa-envelope"></i></span><span
+                                            class="ms-2">info@example.com</span>
+                                    </li>
+                                    <li class="mb-3" style="font-size: 1.7rem;">
+                                        <span class="fa-li"><i class="fas fa-phone"></i></span><span class="ms-2">+ 01
+                                            234 567 88</span>
+                                    </li>
+                                    <li class="mb-3" style="font-size: 1.7rem;">
+                                        <span class="fa-li"><i class="fas fa-print"></i></span><span class="ms-2">+ 01
+                                            234 567 89</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--Grid column-->
+                        </div>
+                        <!--Grid row-->
+                    </div>
+                    <!-- Grid container -->
+
+                    <!-- Copyright -->
+                    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                        © 2020 Copyright:
+                        <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+                    </div>
+                    <!-- Copyright -->
+                </footer>
+
+            </div>
+            <!-- End of .container -->
+
+
+        </section>
+
+
+        <script>
+
+            function load_data(query = '') {
+                fetch('/get_data?search_query=' + query)
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok.');
+                        }
+                        return response.json();
+                    })
+                    .then(function (responseData) {
+                        var html = '<ul class="list-group">';
+
+                        if (responseData.length > 0) {
+                            for (var count = 0; count < responseData.length; count++) {
+                                var regular_expression = new RegExp('(' + query + ')', 'gi');
+
+                                html += '<a href="#" class="list-group-item list-group-item-action" onclick="get_text(this); return false;">' + responseData[count].source.replace(regular_expression, '<span class="text-primary fw-bold">$1</span>') + '</a>';
+                            }
+                        } else {
+                            html += '<a href="#" class="list-group-item list-group-item-action disabled">No Data Found</a>';
+                        }
+
+                        html += '</ul>';
+
+                        document.getElementById('search_result').innerHTML = html;
+                    })
+                    .catch(function (error) {
+                        console.error('Error:', error);
+                        document.getElementById('search_result').innerHTML = 'Error occurred while fetching data.';
+                    });
+            }
+
+            var search_element = document.getElementById("autocomplete_search");
+
+            search_element.onkeyup = function () {
+
+                var query = search_element.value;
+                console.log(query);
+                load_data(query);
+
+            };
+
+            search_element.onfocus = function () {
+
+                var query = search_element.value;
+                console.log(query);
+                load_data(query);
+
+            };
+
+            function get_text(event) {
+                var source = event.textContent;
+
+                console.log(source);
+
+                document.getElementById('autocomplete_search').value = source;
+
+                document.getElementById('search_result').innerHTML = '';
+            }
+
+
+
+
+            //////////////////////////////////////////////////////////////////////////////////
+            function load_data2(query = '') {
+                fetch('/get_data2?search_query=' + query)
+                    .then(function (response) {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok.');
+                        }
+                        return response.json();
+                    })
+                    .then(function (responseData) {
+                        var html = '<ul class="list-group">';
+
+                        if (responseData.length > 0) {
+                            for (var count = 0; count < responseData.length; count++) {
+                                var regular_expression = new RegExp('(' + query + ')', 'gi');
+
+                                html += '<a href="#" class="list-group-item list-group-item-action" onclick="get_text2(this); return false;">' + responseData[count].destination.replace(regular_expression, '<span class="text-primary fw-bold">$1</span>') + '</a>';
+                            }
+                        } else {
+                            html += '<a href="#" class="list-group-item list-group-item-action disabled">No Data Found</a>';
+                        }
+
+                        html += '</ul>';
+
+                        document.getElementById('search_result2').innerHTML = html;
+                    })
+                    .catch(function (error) {
+                        console.error('Error:', error);
+                        document.getElementById('search_result2').innerHTML = 'Error occurred while fetching data.';
+                    });
+            }
+
+            var search_element2 = document.getElementById("autocomplete_search2");
+
+            search_element2.onkeyup = function () {
+                var query = search_element2.value;
+                load_data2(query);
+            };
+
+            search_element2.onfocus = function () {
+                var query = search_element2.value;
+                load_data2(query);
+            };
+
+            function get_text2(event) {
+                var destination = event.textContent;
+                document.getElementById('autocomplete_search2').value = destination;
+                document.getElementById('search_result2').innerHTML = '';
+                return false;
+            }
+
+
+
+            document.addEventListener('click', function (event) {
+                var searchBox1 = document.getElementById('autocomplete_search');
+                var searchBox2 = document.getElementById('autocomplete_search2');
+
+                var searchResult1 = document.getElementById('search_result');
+                var searchResult2 = document.getElementById('search_result2');
+
+                // Check if the click event occurred outside the search boxes and their suggestion boxes
+                if (event.target !== searchBox1 && event.target !== searchBox2 && !searchBox1.contains(event.target) && !searchBox2.contains(event.target)) {
+                    searchResult1.innerHTML = '';
+                    searchResult2.innerHTML = '';
+                }
+            });
+
+
+
+
+
+            ////////////////////////////navbar opacity//////////////////////////////////////////////////////
+            window.addEventListener('scroll', function () {
+                var titleSection = document.getElementById('title');
+                var navbar = document.querySelector('.navbar');
+
+                // Get the bottom position of the title section
+                var titleBottom = titleSection.offsetTop + titleSection.offsetHeight;
+
+                // Get the scroll position
+                var scrollPosition = window.scrollY;
+
+                // Check if the scroll position has passed the title section
+                if (scrollPosition > titleBottom) {
+                    // Add a CSS class to update the navbar opacity
+                    navbar.classList.add('navbar-scrolled');
+                } else {
+                    // Remove the CSS class to revert back to the initial opacity
+                    navbar.classList.remove('navbar-scrolled');
+                }
+            });
+        </script>
+
+
+        <script>
+            // function([string1, string2],target id,[color1,color2])    
+            consoleText(['Hello World.', 'Console Text', 'Made with Love.'], 'text', ['tomato', 'rebeccapurple', 'lightblue']);
+
+            function consoleText(words, id, colors) {
+                if (colors === undefined) colors = ['#fff'];
+                var visible = true;
+                var con = document.getElementById('console');
+                var letterCount = 1;
+                var x = 1;
+                var waiting = false;
+                var target = document.getElementById(id)
+                target.setAttribute('style', 'color:' + colors[0])
+                window.setInterval(function () {
+
+                    if (letterCount === 0 && waiting === false) {
+                        waiting = true;
+                        target.innerHTML = words[0].substring(0, letterCount)
+                        window.setTimeout(function () {
+                            var usedColor = colors.shift();
+                            colors.push(usedColor);
+                            var usedWord = words.shift();
+                            words.push(usedWord);
+                            x = 1;
+                            target.setAttribute('style', 'color:' + colors[0])
+                            letterCount += x;
+                            waiting = false;
+                        }, 1000)
+                    } else if (letterCount === words[0].length + 1 && waiting === false) {
+                        waiting = true;
+                        window.setTimeout(function () {
+                            x = -1;
+                            letterCount += x;
+                            waiting = false;
+                        }, 1000)
+                    } else if (waiting === false) {
+                        target.innerHTML = words[0].substring(0, letterCount)
+                        letterCount += x;
+                    }
+                }, 120)
+                window.setInterval(function () {
+                    if (visible === true) {
+                        con.className = 'console-underscore hidden'
+                        visible = false;
+
+                    } else {
+                        con.className = 'console-underscore'
+
+                        visible = true;
+                    }
+                }, 400)
+            }
+        </script>
+
+        <!--  -->
+
+        <!-- Bootstrap5 script -->
+        <!-- Bootstrap JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+</body>
+
+</html>
+
+
+
+
+<!-- 
+  <section id="dashboard">
+    <div class="container">
+      <% data.forEach((item, index) => { %>
+        <% if (index % 2 === 0) { %>
+          <div class="row">
+        <% } %>
+            <div class="col-lg-6">
+              <div class="card-t">
+                <div class="card-content-t" style="margin: auto;">
+                  <div style="text-align: center;">
+                    <p><%= item.from %></p>
+                    <h1><%= item.fromCode %></h1>
+                    <p>depature time</p>
+                  </div>
+                  <div style="text-align: center;">
+                    <img src="/images/trace.png" class="imgtrace" style="width: 45%;" alt="">
+                  </div>
+                  <div style="text-align: center;">
+                    <p><%= item.to %></p>
+                    <h1><%= item.toCode %></h1>
+                    <p>arrival time</p>
+                  </div>
+                </div>
+                <div class="card-content-2" style="background-color: white; border-radius: 35px; width: 100%; height: 30vh; padding: 1% 5%;">
+                  <div class="contentunder">
+                    <div style="text-align: center;">
+                      <p class="subhead">Ticket ID</p>
+                      <p class="values"><%= item.ticketId %></p>
+                    </div>
+                    <div style="text-align: center;">
+                      <p class="subhead">Meal</p>
+                      <p class="values"><%= item.meal %></p>
+                    </div>
+                    <div style="text-align: center;">
+                      <p class="subhead">Class</p>
+                      <p class="values"><%= item.class %></p>
+                    </div>
+                    <div style="text-align: center;">
+                      <p class="subhead">Status</p>
+                      <p class="values"><%= item.status %></p>
+                    </div>
+                  </div>
+                  <div style="display: flex; justify-content: center;">
+                    <button class="Btn02" id="openPrecsButton">
+                      <svg class="svgIcon" viewBox="0 0 384 512" height="1em" xmlns="http://www.w3.org/2000/svg"><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path></svg>
+                      <span class="icon2"></span>
+                      <span class="tooltip">Open Menu</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="container-1 precs">
+                <div class="ticket">
+                  <div class="tickheadings">
+                    <div>
+                      <h4>Class</h4>
+                      <hr>
+                      <h5><%= item.class %></h5>
+                    </div>
+                    <div>
+                      <h4>Terminal</h4>
+                      <hr>
+                      <h5><%= item.terminal %></h5>
+                    </div>
+                    <div>
+                      <h4>Airplane Name</h4>
+                      <hr>
+                      <h5><%= item.airplaneName %></h5>
+                    </div>
+                    <div>
+                      <h4>Passenger Name</h4>
+                      <hr>
+                      <h5><%= item.passengerName %></h5>
+                    </div>
+                    <div>
+                      <h4>Contact No</h4>
+                      <hr>
+                      <h5><%= item.contactNo %></h5>
+                    </div>
+                  </div>
+                  <div>
+                    <a href="#" class="btncancel">Cancel Flight</a>
+                    <a href="#" class="btncancel">Change Class</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <% if ((index + 1) % 2 === 0) { %>
+          </div>
+        <% } %>
+      <% }); %>
+    </div>
+  </section> -->

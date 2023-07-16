@@ -83,10 +83,10 @@ app.get("/adminpage", validateToken ,function(req,res){
 
 
 //  this page will only be available if user is authenticated ///
-app.get("/customerpage", validateToken ,function(req,res){
-    // res.sendFile(staticPath+'/customer.html');
-    res.sendFile(path.join(__dirname,'public','customer.html'));
- }); 
+// app.get("/customerpage", validateToken ,function(req,res){
+//     // res.sendFile(staticPath+'/customer.html');
+//     res.render('customer');
+//  }); 
 
 //  this page will only be available if user is authenticated ///
 app.get("/bookingpage", validateToken ,function(req,res){
@@ -113,6 +113,10 @@ app.get("/bookingpage", validateToken ,function(req,res){
 // to go to  home search bar section 
 app.get("/homepagesearchbar",function(req,res){
     res.redirect("/")
+});
+
+app.get("/custpagesearchbar",function(req,res){
+    res.redirect("/customerpage")
 });
 
 ///////////////////////////////////////// admin sign in///////////////////////////////////////
@@ -211,6 +215,28 @@ app.get("/", function (req, res) {
         console.log("result")
         console.log(results);
         res.render("index", { flights: results }); // Pass the results to the EJS template for rendering
+      }
+    );
+  });
+
+
+  app.get("/customerpage", function (req, res) {
+    connection.query(
+      `SELECT f.flight_id, f.destination, f.date, f.departure_time, c.price, c.discount,c.class
+       FROM flight AS f
+       JOIN class AS c ON f.flight_id = c.flight_id
+       WHERE c.discount > 0 AND f.status='available' AND c.seats_left>0 ;`,
+      (error, results) => {
+        if (error) {
+          console.error('Error executing query:', error);
+          console.log(results);
+          
+          res.render("index", { flights: [] }); // Pass an empty array if an error occurs
+          return;
+        }
+        console.log("result")
+        console.log(results);
+        res.render("customer", { flights: results }); // Pass the results to the EJS template for rendering
       }
     );
   });
