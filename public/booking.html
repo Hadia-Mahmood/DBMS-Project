@@ -39,7 +39,7 @@
         <div class="container-fluid">
           <!-- HTML Markup -->
           <div class="booking-section">
-            <form id="booking-form" action="process_booking.php" method="POST">
+            <form id="booking-form" action="/bookingProcess" method="POST" onsubmit="return submitForm(this);">
               <div class="contact-nums">
                 <div class="form-group">
                   <label for="passenger-name">Passenger Name</label>
@@ -97,8 +97,8 @@
               <div style="margin: auto; text-align: center;">
 
 
-                <button class="cta">
-                  <span>Hover me</span>
+                <button type="submit" class="cta">
+                  <span>BOOK</span>
                   <svg viewBox="0 0 13 10" height="10px" width="15px">
                     <path d="M1,5 L11,5"></path>
                     <polyline points="8 1 12 5 8 9"></polyline>
@@ -194,7 +194,27 @@
     crossorigin="anonymous"></script>
 
   <!-- CUSTOME JS -->
-  <script src="js/index.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script>
+    function submitForm(form){
+      swal({
+        title:"Are you sure",
+        text:"THIS FORM WILL BE SUBMITTED",
+        icon:"warning",
+        buttons:true,
+        dangerMode:true,
+      })
+      .then((isOkay)=>{
+        if (isOkay){
+          form.submit();
+        }
+      });
+      return false;
+    }</script>
+  
+  
+  
+  
 </body>
 
 </html>
