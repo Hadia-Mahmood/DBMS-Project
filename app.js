@@ -111,6 +111,7 @@ app.get("/adminpage", validateToken ,authenticateAdmin,function(req,res){
 
 
 //  this page will only be available if user is authenticated ///
+<<<<<<< HEAD
 app.get("/customerpage", validateToken,authenticateCustomer ,function(req,res){
     // res.sendFile(staticPath+'/customer.html');
     const  customerEmail=req.session.data2 
@@ -119,6 +120,12 @@ app.get("/customerpage", validateToken,authenticateCustomer ,function(req,res){
 
     res.sendFile(path.join(__dirname,'public','customer.html'));
  }); 
+=======
+// app.get("/customerpage", validateToken ,function(req,res){
+//     // res.sendFile(staticPath+'/customer.html');
+//     res.render('customer');
+//  }); 
+>>>>>>> df5f5230179b331aaf887fc3f86ae82b10ca85e3
 
 //  this page will only be available if user is authenticated ///
 app.get("/bookingpage", validateToken,authenticateCustomer ,function(req,res){
@@ -156,12 +163,6 @@ app.get("/bookingpage", validateToken,authenticateCustomer ,function(req,res){
 app.get("/homepagesearchbar",function(req,res){
     res.redirect("/")
 });
-
-app.get("/copyRight",function(req,res){
-    var error= 'Dont even dare to copy  ';
-    res.render("message",{display:error});
- });
-
 
 ///////////////////////////////////////// admin sign in///////////////////////////////////////
 app.post("/adminsignin",function(req,res){
@@ -261,6 +262,28 @@ app.get("/", function (req, res) {
         console.log("result")
         console.log(results);
         res.render("index", { flights: results }); // Pass the results to the EJS template for rendering
+      }
+    );
+  });
+
+
+  app.get("/customerpage", function (req, res) {
+    connection.query(
+      `SELECT f.flight_id, f.destination, f.date, f.departure_time, c.price, c.discount,c.class
+       FROM flight AS f
+       JOIN class AS c ON f.flight_id = c.flight_id
+       WHERE c.discount > 0 AND f.status='available' AND c.seats_left>0 ;`,
+      (error, results) => {
+        if (error) {
+          console.error('Error executing query:', error);
+          console.log(results);
+          
+          res.render("index", { flights: [] }); // Pass an empty array if an error occurs
+          return;
+        }
+        console.log("result")
+        console.log(results);
+        res.render("customer", { flights: results }); // Pass the results to the EJS template for rendering
       }
     );
   });
