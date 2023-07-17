@@ -43,7 +43,7 @@
               <div class="contact-nums">
                 <div class="form-group">
                   <label for="passenger-name">Passenger Name</label>
-                  <input type="text" id="passenger-name" name="passenger-name" required style="width: 300px;">
+                  <input type="text" id="passenger-name" name="passengerName" required style="width: 300px;">
                 </div>
                 <div class="form-group">
                   <label for="email">Email Address</label>
@@ -55,21 +55,23 @@
               <div class="contact-nums">
                 <div class="form-group">
                   <label for="contact-number">Contact Number</label>
-                  <input type="tel" id="contact-number" name="contact-number" required style="width: 300px;">
+                  <input  id="contact-number" name="contact_number" required style="width: 300px;" type="tel"  minlength="7" maxlength="7">
                 </div>
                 <div class="form-group">
                   <label for="second-contact-number">Second Contact Number</label>
-                  <input type="tel" id="second-contact-number" name="second-contact-number" style="width: 300px;">
+                  <input type="tel"  minlength="7" required maxlength="7" id="second-contact-number" name="second_contact_number" style="width: 300px;">
                 </div>
               </div>
               <div class="form-group">
                 <label for="meal">Select Meal</label>
                 <select id="meal" name="meal" required>
-                  <option value="">-- Select Meal --</option>
-                  <!-- Options loaded from the database via backend -->
-                  <option value="meal1">Meal 1</option>
-                  <option value="meal2">Meal 2</option>
-                  <option value="meal3">Meal 3</option>
+                  
+                  <option value="Veg">VEG</option>
+                  <option value="Non Veg">NON VEG</option>
+                  <option value="Asian">ASIAN</option>
+                  <option value="Kids">KIDS</option>
+                  <option value="Chinese">CHINESE</option>
+                  <option value="Italian">ITALIAN</option>
                 </select>
               </div>
               <div class="form-group">
@@ -83,15 +85,16 @@
               <div class="contact-nums">
                 <div class="form-group">
                   <label for="card-number">Card Number</label>
-                  <input type="text" id="card-number" name="card-number" required>
+                  <input placeholder="4 DIGIT" type="tel"   maxlength="4" pattern="\d{4}"  id="card_number" name="card_number" required>
                 </div>
                 <div class="form-group">
-                  <label for="expiry-date">Card Expiry Date</label>
-                  <input type="text" id="expiry-date" name="expiry-date" required>
+                  <label for="expiry-date">Expiry Date</label>
+                  <input type="date" id="expiry-date"  name="expiry_date" required >
+                    
                 </div>
                 <div class="form-group">
                   <label for="card-name">Full Name on Card</label>
-                  <input type="text" id="card-name" name="card-name" required>
+                  <input type="text" id="card-name" name="card_name" required>
                 </div>
               </div>
               <div style="margin: auto; text-align: center;">

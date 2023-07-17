@@ -7,11 +7,11 @@ const { sign, verify } = require("jsonwebtoken");
 // we are going to receive a user in our argument  with all of its info that is retrieved from the 
 // table then we are going to generate a token  with username  and whatever data you have for that user
 //  and a secret that you should convert in env ////////////////////////////////
-const createTokens = (user) => {
+const createTokens = (user,role) => {
     // this user is object ` that you get from database that has all the columns info
   const accessToken = sign(
     // user.email is from database 
-    { username: user.email},
+    { username: user.email, role:role},
     // secret //
     process.env.SECRET
   );
@@ -34,7 +34,10 @@ const validateToken = (req, res, next) => {
     // verify compares browser token with our token 
     const validToken = verify(accessToken, process.env.SECRET);
     if (validToken) {
-      req.authenticated = true;
+        req.user={username:validToken.username,
+        role:validToken.role
+      };
+        // req.authenticated = true;
       return next();
     }
   } catch (err) {
@@ -43,4 +46,3 @@ const validateToken = (req, res, next) => {
 };
 
 module.exports = { createTokens, validateToken };
-
