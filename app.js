@@ -111,21 +111,17 @@ app.get("/adminpage", validateToken ,authenticateAdmin,function(req,res){
 
 
 //  this page will only be available if user is authenticated ///
-<<<<<<< HEAD
+
 app.get("/customerpage", validateToken,authenticateCustomer ,function(req,res){
     // res.sendFile(staticPath+'/customer.html');
     const  customerEmail=req.session.data2 
+    console.log('INSIDE CUSTOMER PAGE ROUTE');
     console.log('the logged in user is');
     console.log(customerEmail);
 
-    res.sendFile(path.join(__dirname,'public','customer.html'));
+    res.render('customer');
  }); 
-=======
-// app.get("/customerpage", validateToken ,function(req,res){
-//     // res.sendFile(staticPath+'/customer.html');
-//     res.render('customer');
-//  }); 
->>>>>>> df5f5230179b331aaf887fc3f86ae82b10ca85e3
+
 
 //  this page will only be available if user is authenticated ///
 app.get("/bookingpage", validateToken,authenticateCustomer ,function(req,res){
