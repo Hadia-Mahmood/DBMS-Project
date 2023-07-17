@@ -686,13 +686,14 @@ app.get("/availableflights",function(req,res){
 
             
 
-    app.get("/usersearch", validateToken, authenticateAdmin,function (req, res) {
+    app.get('/usersearch', validateToken, authenticateAdmin, function (req, res) {
         var customerid = req.query.customerid;
         var firstname = req.query.firstname;
         var lastname = req.query.lastname;
         var email = req.query.email;
-    
-        var sql = `SELECT c.customer_id, c.first_name, c.last_name, u.email, t.flightID, t.ticket_id, t.class, t.passengerName, pcn.contact_number 
+      
+        var sql = `SELECT c.customer_id, c.first_name, c.last_name, u.email, t.flightID, t.ticket_id, t.class, t.passengerName, 
+                           GROUP_CONCAT(pcn.contact_number SEPARATOR ' / ') AS contact_numbers
                    FROM customer c
                    INNER JOIN user u ON c.customer_id = u.ID
                    LEFT JOIN ticket t ON c.customer_id = t.customerID
@@ -700,25 +701,27 @@ app.get("/availableflights",function(req,res){
                    WHERE c.customer_id LIKE '%${customerid}%' 
                    AND c.first_name LIKE '%${firstname}%' 
                    AND c.last_name LIKE '%${lastname}%' 
-                   AND u.email LIKE '%${email}%'`;
-    
+                   AND u.email LIKE '%${email}%'
+                   GROUP BY c.customer_id, c.first_name, c.last_name, u.email, t.flightID, t.ticket_id, t.class, t.passengerName`;
+      
         connection.query(sql, function (error, result) {
-            if (error) {
-                console.log(error);
-                var error = 'Sorry, there was an error. Please search again.';
-                res.render("message", { display: error });
+          if (error) {
+            console.log(error);
+            var error = 'Sorry, there was an error. Please search again.';
+            res.render('message', { display: error });
+          } else {
+            console.log(result);
+      
+            if (result.length === 0) {
+              // No users found
+              res.render('skymateusers', { users: [] });
             } else {
-                console.log(result);
-                if (result.length === 0) {
-                    // No users found
-                    res.render("skymateusers", { users: [] });
-                } else {
-                    res.render("skymateusers", { users: result });
-                }
+              res.render('skymateusers', { users: result });
             }
+          }
         });
-    });
-
+      });
+      
 // booking process
 app.post("/bookingProcess",function(req,res){
 
