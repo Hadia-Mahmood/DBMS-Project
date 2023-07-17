@@ -260,6 +260,29 @@ app.get("/", function (req, res) {
 });
 
 
+//   app.get("/customerpage", validateToken, authenticateCustomer,function (req, res) {
+//     //  YOU CAN USE THIS CUSTOMER EMAIL FOR  SEARCHING THIS LOGGED IN CUSTOMER  DATA FROM DATABASE
+//     const  customerEmail=req.session.data2 
+//     console.log('INSIDE CUSTOMER PAGE ROUTE');
+//     console.log('the logged in user is');
+//     console.log(customerEmail);
+
+//     connection.query(
+//       `SELECT * FROM DISCOUNTED;`,
+//       (error, results) => {
+//         if (error) {
+//           console.error('Error executing query:', error);
+//           console.log(results);
+          
+//           res.render("index", { flights: [] }); // Pass an empty array if an error occurs
+//           return;
+//         }
+//         console.log("result")
+//         console.log(results);
+//         res.render("customer", { flights: results }); // Pass the results to the EJS template for rendering
+//       }
+//     );
+//   });
 app.get("/customerpage", validateToken, authenticateCustomer, function (req, res) {
     // Get flights data from the `DISCOUNTED` table
     connection.query(`SELECT * FROM DISCOUNTED;`, (error, flightsResults) => {
@@ -275,30 +298,20 @@ app.get("/customerpage", validateToken, authenticateCustomer, function (req, res
         console.log('the logged in user is');
         console.log(customerEmail);
 
-        // Fetch additional data separately (replace the queries with your actual queries)
+        // Fetch additional data separately (replace the query with your actual query)
         connection.query(`SELECT * FROM user_flight_info WHERE email = ?;`, [customerEmail] , (error, otherDataResults) => {
             if (error) {
-                console.error('Error executing user_flight_info query:', error);
+                console.error('Error executing other data query:', error);
                 // You can handle the error or pass an empty array for otherDataResults if needed
-                res.render("customer", { flights: flightsResults, otherData: [], userInfo: {} });
+                res.render("customer", { flights: flightsResults, otherData: [] });
                 return;
             }
-
-            connection.query(`SELECT * FROM user_customer_info WHERE email = ?;`, [customerEmail], (error, userInfoResults) => {
-                if (error) {
-                    console.error('Error executing user_customer_info query:', error);
-                    // You can handle the error or pass an empty object for userInfoResults if needed
-                    res.render("customer", { flights: flightsResults, otherData: otherDataResults, userInfo: {} });
-                    return;
-                }
-
-                // Assuming you have fetched the other data successfully, you can pass it to the template
-                res.render("customer", { flights: flightsResults, otherData: otherDataResults, userInfo: userInfoResults });
-            });
+            flightsResults["Email"] = customerEmail;
+            // Assuming you have fetched the other data successfully, you can pass it to the template
+            res.render("customer", { flights: flightsResults, otherData: otherDataResults });
         });
     });
 });
-
 
 
 
@@ -648,66 +661,54 @@ app.post("/updateflight", function (req, res) {
 
 // ********* ADMIN SEARCH FLIGHT
 
-app.get("/flightsearch", validateToken, authenticateAdmin, function (req, res) {
+        var sql= "select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,f.airplane_name,f.status,f.terminal,c.class,c.total_seats,c.seats_left,c.price,c.discount from flight f INNER JOIN class c  ON f.flight_id = c.flight_id where f.flight_id LIKE'%"+flightid+"%' AND f.source LIKE'%"+source+"%'  AND f.destination LIKE'%"+destination+"%'  AND  c.class LIKE'%"+flightclass+"%' AND f.airplane_name LIKE'%"+airplaneName+"%'AND f.date LIKE'%"+date+"%'";
+        
+        connection.query(sql,function(error,result){
+            if (error) {
+                console.log(error);
+                var error= 'sorry please search again';
+                res.render("message",{display:error});
+            }
+            else{
+                // res.render("searchFlight",{flights:result});
+                res.render("flights",{flights:result});
+            }
+            
+        });
+            
+        });
+    // **************************** CUSTOMER SEARCH FLIGHTS****************************
+     
+app.get("/availableflights",function(req,res){
     //getting data from form//
-    var flightid = req.query.flightid;
-    var source = req.query.source;
-    var destination = req.query.destination;
-    var flightclass = req.query.class;
-    var airplaneName = req.query.airplaneName;
-    var date = req.query.date;
+    var departureDate=req.query.departureDate;
+    var source =req.query.source;
+    var destination=req.query.destination;
 
-    var sql = "select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,f.airplane_name,f.status,f.terminal,c.class,c.total_seats,c.seats_left,c.price,c.discount from flight f INNER JOIN class c  ON f.flight_id = c.flight_id where f.flight_id LIKE'%" + flightid + "%' AND f.source LIKE'%" + source + "%'  AND f.destination LIKE'%" + destination + "%'  AND  c.class LIKE'%" + flightclass + "%' AND f.airplane_name LIKE'%" + airplaneName + "%'AND f.date LIKE'%" + date + "%'";
 
-    connection.query(sql, function (error, result) {
+    
+
+
+    var sql="select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,c.class,c.seats_left,c.price,c.discount ,TIMEDIFF(f.arrival_time,f.departure_time) AS time_difference from  flight f INNER JOIN class c  ON f.flight_id = c.flight_id  WHERE f.source ='"+source+"' AND f.destination= '"+destination+"' AND (f.date BETWEEN '"+departureDate+"' AND DATE_ADD('"+departureDate+"', INTERVAL 30 DAY)) AND f.status='available'  AND c.class='Economy';select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,c.class,c.seats_left,c.price,c.discount ,TIMEDIFF(f.arrival_time,f.departure_time) AS time_difference from  flight f INNER JOIN class c  ON f.flight_id = c.flight_id   WHERE f.source ='"+source+"' AND f.destination= '"+destination+"' AND (f.date BETWEEN '"+departureDate+"' AND DATE_ADD('"+departureDate+"', INTERVAL 30 DAY)) AND f.status='available' AND c.class='Business' ;";
+    connection.query(sql,function(error,result){
         if (error) {
             console.log(error);
-            var error = 'sorry please search again';
-            res.render("message", { display: error });
+            var error= 'sorry please search again';
+            res.render("message",{display:error});
         }
-        else {
-            // res.render("searchFlight",{flights:result});
-            res.render("flights", { flights: result });
-        }
-
-    });
-
-});
-// **************************** CUSTOMER SEARCH FLIGHTS****************************
-
-app.get("/availableflights", function (req, res) {
-    //getting data from form//
-    var departureDate = req.query.departureDate;
-    var source = req.query.source;
-    var destination = req.query.destination;
-
-
-
-
-
-    var sql = "select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,c.class,c.seats_left,c.price,c.discount ,TIMEDIFF(f.arrival_time,f.departure_time) AS time_difference from  flight f INNER JOIN class c  ON f.flight_id = c.flight_id  WHERE f.source ='" + source + "' AND f.destination= '" + destination + "' AND (f.date BETWEEN '" + departureDate + "' AND DATE_ADD('" + departureDate + "', INTERVAL 30 DAY)) AND f.status='available'  AND c.class='Economy';select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,c.class,c.seats_left,c.price,c.discount ,TIMEDIFF(f.arrival_time,f.departure_time) AS time_difference from  flight f INNER JOIN class c  ON f.flight_id = c.flight_id   WHERE f.source ='" + source + "' AND f.destination= '" + destination + "' AND (f.date BETWEEN '" + departureDate + "' AND DATE_ADD('" + departureDate + "', INTERVAL 30 DAY)) AND f.status='available' AND c.class='Business' ;";
-    connection.query(sql, function (error, result) {
-        if (error) {
-            console.log(error);
-            var error = 'sorry please search again';
-            res.render("message", { display: error });
-        }
-        else {
+        else{
 
             console.log('result0');
             console.log(result[0]);
-            console.log('result1');
+             console.log('result1');
             console.log(result[1]);
-            console.log('actual result 1 endingggg');
-
-            res.render("flights_available", { flights: result });
-
-        }
+            console.log('actual result 1 endingggg');	
+            
+            res.render("flights_available",{flights:result});
+            
+        } 
     });
-});
-
-// *********************************************************************************
-
+ });
 
 
 app.get('/usersearch', validateToken, authenticateAdmin, function (req, res) {
@@ -769,13 +770,70 @@ app.post("/bookingProcess", function (req, res) {
 
 
     // GETTING FORM DATA
-    var passengerName = req.body.passengerName;
-    var formemail = req.body.email;
-    var contact_number = req.body.contact_number;
-    var second_contact_number = req.body.second_contact_number;
-    var meal = req.body.meal;
-    var card_number = req.body.card_number;
-    var card_expiry_date = req.body.expiry_date;
+    var passengerName=req.body.passengerName;
+    var formemail=req.body.email;
+    var contact_number=req.body.contact_number;
+    var second_contact_number=req.body.second_contact_number;
+    var meal=req.body.meal;
+    var card_number=req.body.card_number;
+    var card_expiry_date=req.body.expiry_date;
+    
+   
+          if(customerEmail===formemail){
+                // IF YES INSERT DATA IN DATABASE
+                // checking if user already has flight associated with him
+                var DuplicateDataCheck="SELECT * from customer_booked_flights Where flightID='"+flightid+"' AND customer_ID =(select ID FROM user WHERE email='"+customerEmail+"')";
+                 connection.query(DuplicateDataCheck,function(error,result){
+                 if (error) {
+                         console.log(error);
+                          var error= 'PlEASE PROVIDE VALID INFO';
+                          res.render("message",{display:error});
+                             }
+                            //  if user has no flight already booked
+                 else if (result.length===0){
+                             var sql="INSERT INTO customer_booked_flights VALUES('"+flightid+"',(select ID FROM user WHERE email='"+customerEmail+"')); INSERT INTO ticket(meal,PassengerName,customerID,flightID,class) VALUES('"+meal+"','"+passengerName+"',(select ID FROM user WHERE email='"+customerEmail+"'),'"+flightid+"','"+fclass+"'); INSERT INTO payment_card_info  (card_number,card_expiry_date) SELECT '"+card_number+"', '"+card_expiry_date+"' WHERE NOT EXISTS (SELECT 1 FROM payment_card_info p WHERE p.card_number = '"+card_number+"');SELECT * FROM class WHERE flight_id='"+flightid+"' AND class='"+fclass+"' ";
+                            connection.query(sql,function(error,result){
+                            if (error) {
+                                         console.log(error);
+                                         var error= 'PlEASE PROVIDE VALID CARD  INFO';
+                                         res.render("message",{display:error});
+                                      }
+                            else{
+                                        const ticketID=result[1].insertId;
+                                        console.log("result 3 is");
+                                        console.log(result[3]);
+                                        const Wprice=result[3][0].price;
+                                        console.log(Wprice);
+                                        const Wdiscount=result[3][0].discount;
+                                        console.log("discount");
+                                        console.log(Wdiscount);
+                                        const actualPrice= Wprice-((Wprice*Wdiscount)/100);
+                                        console.log("actualPrice");
+                                        console.log(actualPrice);
+                                        var sqlTwo="INSERT INTO payment(ticket_id) VALUES('"+ticketID+"');INSERT INTO passenger_contact_number VALUES('"+ticketID+"','"+contact_number+"');INSERT INTO passenger_contact_number VALUES('"+ticketID+"','"+second_contact_number+"');INSERT INTO payment_details VALUES('"+ticketID+"','"+actualPrice+"','"+card_number+"');";
+                                        connection.query(sqlTwo,function(error,result){
+                                        if (error) {
+                                                   console.log(error);
+                                                   var error= 'PlEASE PROVIDE VALID  CARD INFO';
+                                                   res.render("message",{display:error});
+                                                    }
+                                        else{
+                                            var UpdateSeatsLeft= "UPDATE class SET seats_left= (seats_left)-1 WHERE flight_id='"+flightid+"'  AND class='"+fclass+"' ";
+                                            connection.query(UpdateSeatsLeft,function(error,result){
+                                                                                    if (error) {
+                                                                                               console.log(error);
+                                                                                               var error= 'Problem ';
+                                                                                               res.render("message",{display:error});
+                                                                                                }
+                                                                                    else{
+                                                                                               res.redirect("/customerpage");
+                                                                                        } 
+                                                                                    });  
+                                            
+                                            } 
+                                        });              
+                                } 
+                            });
 
 
     if (customerEmail === formemail) {
