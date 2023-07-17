@@ -112,7 +112,7 @@ app.get("/adminpage", validateToken ,authenticateAdmin,function(req,res){
 
 //  this page will only be available if user is authenticated ///
 
-app.get("/customerpage", validateToken,authenticateCustomer ,function(req,res){
+app.get("/customerpage2", validateToken,authenticateCustomer ,function(req,res){
     // res.sendFile(staticPath+'/customer.html');
     const  customerEmail=req.session.data2 
     console.log('INSIDE CUSTOMER PAGE ROUTE');
@@ -243,10 +243,7 @@ app.get('/get_data2', function (req, res) {
 // Execute the query for trending flights
 app.get("/", function (req, res) {
     connection.query(
-      `SELECT f.flight_id, f.destination, f.date, f.departure_time, c.price, c.discount,c.class
-       FROM flight AS f
-       JOIN class AS c ON f.flight_id = c.flight_id
-       WHERE c.discount > 0 AND f.status='available' AND c.seats_left>0 ;`,
+      `SELECT * FROM DISCOUNTED;`,
       (error, results) => {
         if (error) {
           console.error('Error executing query:', error);
@@ -265,10 +262,7 @@ app.get("/", function (req, res) {
 
   app.get("/customerpage", function (req, res) {
     connection.query(
-      `SELECT f.flight_id, f.destination, f.date, f.departure_time, c.price, c.discount,c.class
-       FROM flight AS f
-       JOIN class AS c ON f.flight_id = c.flight_id
-       WHERE c.discount > 0 AND f.status='available' AND c.seats_left>0 ;`,
+      `SELECT * FROM DISCOUNTED;`,
       (error, results) => {
         if (error) {
           console.error('Error executing query:', error);
