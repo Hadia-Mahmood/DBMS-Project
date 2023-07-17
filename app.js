@@ -655,38 +655,37 @@ app.get("/flightsearch",validateToken,authenticateAdmin,function(req,res){
             
         });
     // **************************** CUSTOMER SEARCH FLIGHTS****************************
-    
+     
 app.get("/availableflights",function(req,res){
-        //getting data from form//
-        var departureDate=req.query.departureDate;
-        var source =req.query.source;
-        var destination=req.query.destination;
+    //getting data from form//
+    var departureDate=req.query.departureDate;
+    var source =req.query.source;
+    var destination=req.query.destination;
 
 
-        
+    
 
 
-        var sql="select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,c.class,c.seats_left,c.price,c.discount ,TIMEDIFF(f.arrival_time,f.departure_time) AS time_difference from  flight f INNER JOIN class c  ON f.flight_id = c.flight_id  WHERE f.source ='"+source+"' AND f.destination= '"+destination+"' AND (f.date BETWEEN '"+departureDate+"' AND DATE_ADD('"+departureDate+"', INTERVAL 30 DAY)) AND f.status='available'  AND c.class='Economy';select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,c.class,c.seats_left,c.price,c.discount ,TIMEDIFF(f.arrival_time,f.departure_time) AS time_difference from  flight f INNER JOIN class c  ON f.flight_id = c.flight_id   WHERE f.source ='"+source+"' AND f.destination= '"+destination+"' AND (f.date BETWEEN '"+departureDate+"' AND DATE_ADD('"+departureDate+"', INTERVAL 30 DAY)) AND f.status='available' AND c.class='Business' ;";
-        connection.query(sql,function(error,result){
-            if (error) {
-                console.log(error);
-                var error= 'sorry please search again';
-                res.render("message",{display:error});
-            }
-            else{
+    var sql="select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,c.class,c.seats_left,c.price,c.discount ,TIMEDIFF(f.arrival_time,f.departure_time) AS time_difference from  flight f INNER JOIN class c  ON f.flight_id = c.flight_id  WHERE f.source ='"+source+"' AND f.destination= '"+destination+"' AND (f.date BETWEEN '"+departureDate+"' AND DATE_ADD('"+departureDate+"', INTERVAL 30 DAY)) AND f.status='available'  AND c.class='Economy';select f.flight_id,f.source,f.destination,f.date,f.departure_time, f.arrival_time,c.class,c.seats_left,c.price,c.discount ,TIMEDIFF(f.arrival_time,f.departure_time) AS time_difference from  flight f INNER JOIN class c  ON f.flight_id = c.flight_id   WHERE f.source ='"+source+"' AND f.destination= '"+destination+"' AND (f.date BETWEEN '"+departureDate+"' AND DATE_ADD('"+departureDate+"', INTERVAL 30 DAY)) AND f.status='available' AND c.class='Business' ;";
+    connection.query(sql,function(error,result){
+        if (error) {
+            console.log(error);
+            var error= 'sorry please search again';
+            res.render("message",{display:error});
+        }
+        else{
 
-                console.log('result0');
-                console.log(result[0]);
-	         	console.log('result1');
-                console.log(result[1]);
-                console.log('actual result 1 endingggg');	
-                
-                res.render("flights_available",{flights:result});
-                
-            } 
-        });
-     });
-
+            console.log('result0');
+            console.log(result[0]);
+             console.log('result1');
+            console.log(result[1]);
+            console.log('actual result 1 endingggg');	
+            
+            res.render("flights_available",{flights:result});
+            
+        } 
+    });
+ });
 
     // *********************************************************************************
 
