@@ -112,15 +112,15 @@ app.get("/adminpage", validateToken ,authenticateAdmin,function(req,res){
 
 //  this page will only be available if user is authenticated ///
 
-app.get("/customerpage2", validateToken,authenticateCustomer ,function(req,res){
-    // res.sendFile(staticPath+'/customer.html');
-    const  customerEmail=req.session.data2 
-    console.log('INSIDE CUSTOMER PAGE ROUTE');
-    console.log('the logged in user is');
-    console.log(customerEmail);
+// app.get("/customerpage2", validateToken,authenticateCustomer ,function(req,res){
+//     // res.sendFile(staticPath+'/customer.html');
+//     const  customerEmail=req.session.data2 
+//     console.log('INSIDE CUSTOMER PAGE ROUTE');
+//     console.log('the logged in user is');
+//     console.log(customerEmail);
 
-    res.render('customer');
- }); 
+//     res.render('customer');
+//  }); 
 
 
 //  this page will only be available if user is authenticated ///
@@ -260,7 +260,13 @@ app.get("/", function (req, res) {
   });
 
 
-  app.get("/customerpage", function (req, res) {
+  app.get("/customerpage", validateToken, authenticateCustomer,function (req, res) {
+    //  YOU CAN USE THIS CUSTOMER EMAIL FOR  SEARCHING THIS LOGGED IN CUSTOMER  DATA FROM DATABASE
+    const  customerEmail=req.session.data2 
+    console.log('INSIDE CUSTOMER PAGE ROUTE');
+    console.log('the logged in user is');
+    console.log(customerEmail);
+
     connection.query(
       `SELECT * FROM DISCOUNTED;`,
       (error, results) => {
@@ -756,7 +762,7 @@ app.post("/bookingProcess",function(req,res){
           if(customerEmail===formemail){
                 // IF YES INSERT DATA IN DATABASE
                 // checking if user already has flight associated with him
-                var DuplicateDataCheck="SELECT * from customer_booked_flights Where flightID='"+flightid+"'";
+                var DuplicateDataCheck="SELECT * from customer_booked_flights Where flightID='"+flightid+"' AND customer_ID =(select ID FROM user WHERE email='"+customerEmail+"')";
                  connection.query(DuplicateDataCheck,function(error,result){
                  if (error) {
                          console.log(error);
