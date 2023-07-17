@@ -260,29 +260,58 @@ app.get("/", function (req, res) {
   });
 
 
-  app.get("/customerpage", validateToken, authenticateCustomer,function (req, res) {
-    //  YOU CAN USE THIS CUSTOMER EMAIL FOR  SEARCHING THIS LOGGED IN CUSTOMER  DATA FROM DATABASE
-    const  customerEmail=req.session.data2 
-    console.log('INSIDE CUSTOMER PAGE ROUTE');
-    console.log('the logged in user is');
-    console.log(customerEmail);
+//   app.get("/customerpage", validateToken, authenticateCustomer,function (req, res) {
+//     //  YOU CAN USE THIS CUSTOMER EMAIL FOR  SEARCHING THIS LOGGED IN CUSTOMER  DATA FROM DATABASE
+//     const  customerEmail=req.session.data2 
+//     console.log('INSIDE CUSTOMER PAGE ROUTE');
+//     console.log('the logged in user is');
+//     console.log(customerEmail);
 
-    connection.query(
-      `SELECT * FROM DISCOUNTED;`,
-      (error, results) => {
-        if (error) {
-          console.error('Error executing query:', error);
-          console.log(results);
+//     connection.query(
+//       `SELECT * FROM DISCOUNTED;`,
+//       (error, results) => {
+//         if (error) {
+//           console.error('Error executing query:', error);
+//           console.log(results);
           
-          res.render("index", { flights: [] }); // Pass an empty array if an error occurs
-          return;
+//           res.render("index", { flights: [] }); // Pass an empty array if an error occurs
+//           return;
+//         }
+//         console.log("result")
+//         console.log(results);
+//         res.render("customer", { flights: results }); // Pass the results to the EJS template for rendering
+//       }
+//     );
+//   });
+app.get("/customerpage", validateToken, authenticateCustomer, function (req, res) {
+    // Get flights data from the `DISCOUNTED` table
+    connection.query(`SELECT * FROM DISCOUNTED;`, (error, flightsResults) => {
+        if (error) {
+            console.error('Error executing flights query:', error);
+            res.render("index", { flights: [] }); // Pass an empty array if an error occurs
+            return;
         }
-        console.log("result")
-        console.log(results);
-        res.render("customer", { flights: results }); // Pass the results to the EJS template for rendering
-      }
-    );
-  });
+
+        // Assuming you have already set customerEmail in the session data
+        const customerEmail = req.session.data2;
+        console.log('INSIDE CUSTOMER PAGE ROUTE');
+        console.log('the logged in user is');
+        console.log(customerEmail);
+
+        // Fetch additional data separately (replace the query with your actual query)
+        connection.query(`SELECT * FROM user_flight_info WHERE email = ?;`, [customerEmail] , (error, otherDataResults) => {
+            if (error) {
+                console.error('Error executing other data query:', error);
+                // You can handle the error or pass an empty array for otherDataResults if needed
+                res.render("customer", { flights: flightsResults, otherData: [] });
+                return;
+            }
+            flightsResults["Email"] = customerEmail;
+            // Assuming you have fetched the other data successfully, you can pass it to the template
+            res.render("customer", { flights: flightsResults, otherData: otherDataResults });
+        });
+    });
+});
 
 
 
