@@ -76,6 +76,18 @@ app.get("/aboutus",function(req,res){
 //  });
 
 
+app.get('/update-flight-status', (req, res) => {
+  const query = 'UPDATE flight SET status = ? WHERE date < CURDATE()';
+  const values = ['departed'];
+
+  connection.query(query, values, (error, results) => {
+    if (error) throw error;
+    console.log('Updated flight statuses to "departed"');
+    res.send('Flight statuses updated');
+  });
+});
+
+
 app.get("/register",function(req,res){
     // res.sendFile(staticPath+'/account.html');
     res.sendFile(path.join(__dirname,'public','account.html'));
@@ -86,7 +98,8 @@ app.get("/register",function(req,res){
 const authenticateAdmin = (req, res, next) => {
     // Check if the user is an admin
     if (req.user.role !== "admin") {
-      return res.status(403).json({ error: "Access denied." });
+      res.redirect("/SIGNIN_UP_FIRST");
+      // return res.status(403).json({ error: "Access denied." });
     }
     next();
   };
@@ -95,7 +108,8 @@ const authenticateAdmin = (req, res, next) => {
   const authenticateCustomer = (req, res, next) => {
     // Check if the user is a customer
     if (req.user.role !== "customer") {
-      return res.status(403).json({ error: "Access denied." });
+      res.redirect("/SIGNIN_UP_FIRST");
+      // return res.status(403).json({ error: "Access denied." });
     }
     next();
   };
@@ -150,7 +164,7 @@ app.get("/bookingpage", validateToken,authenticateCustomer ,function(req,res){
  }); 
 
  app.get("/SIGNIN_UP_FIRST",function(req,res){
-    var error= 'SIGN IN OR SIGN UP FIRST  ';
+    var error= 'SIGN IN  FIRST  ';
     res.render("message",{display:error});
  });
 
@@ -448,7 +462,7 @@ app.get('/dashboard',validateToken, authenticateAdmin,(req, res) => {
     const adminQuery = 'SELECT Admin_id FROM admin';
     const customerQuery = 'SELECT COUNT(*) AS customerCount FROM customer';
     const customerFlightQuery = 'SELECT COUNT(*) AS customerFlightCount FROM customer_booked_flights';
-    const flightQuery = 'SELECT COUNT(*) AS flightCount FROM flight';
+    const flightQuery = "SELECT COUNT(*) AS flightCount FROM flight WHERE status='available'";
   
     connection.query(adminQuery, (error1, results1) => {
       if (error1) {
@@ -945,20 +959,7 @@ app.delete("/deleteBooking/:ticketId", (req, res) => {
   
         const cardNumber = paymentResult[0].card_number;
   
-        // Step 3: Delete the record from the customer_booked_flights table using customerId
-        connection.query("DELETE FROM customer_booked_flights WHERE customer_ID = ?", [customerId], (error, result) => {
-          if (error) {
-            console.error("Error deleting customer_booked_flights:", error);
-            return res.status(500).json({ error: "Failed to delete customer booked flights" });
-          }
-  
-          // Step 4: Delete the record from the payment_card_info table using cardNumber
-          connection.query("DELETE FROM payment_card_info WHERE card_number = ?", [cardNumber], (error, result) => {
-            if (error) {
-              console.error("Error deleting payment_card_info:", error);
-              return res.status(500).json({ error: "Failed to delete payment card info" });
-            }
-  
+        
             // Step 5: Delete the record from the payment_details table using ticketId
             connection.query("DELETE FROM payment_details WHERE ticketID = ?", [ticketId], (error, result) => {
               if (error) {
@@ -979,7 +980,20 @@ app.delete("/deleteBooking/:ticketId", (req, res) => {
                     console.error("Error deleting ticket:", error);
                     return res.status(500).json({ error: "Failed to delete ticket" });
                   }
-  
+                  // Step 3: Delete the record from the customer_booked_flights table using customerId
+                  connection.query("DELETE FROM customer_booked_flights WHERE (customer_ID, flightID) NOT IN (SELECT customerID, flightID FROM ticket);",  (error, result) => {
+                    if (error) {
+                      console.error("Error deleting customer_booked_flights:", error);
+                      return res.status(500).json({ error: "Failed to delete customer booked flights" });
+                    }
+            
+                    // Step 4: Delete the record from the payment_card_info table using cardNumber only when no other ticket has the same card number
+                    connection.query("SET SQL_SAFE_UPDATES = 0;DELETE FROM payment_card_info WHERE card_number NOT IN (SELECT card_number FROM payment_details);",  (error, result) => {
+                      if (error) {
+                        console.error("Error deleting payment_card_info:", error);
+                        return res.status(500).json({ error: "Failed to delete payment card info" });
+                      }
+            
                   // All deletions were successful
                   return res.status(200).json({ message: "Booking deleted successfully" });
                 });

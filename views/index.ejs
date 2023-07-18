@@ -456,6 +456,19 @@
     </div>
 
     <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        fetch('/update-flight-status')
+          .then(response => response.text())
+          .then(data => {
+            console.log(data); // Flight statuses updated
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      });
+    </script>
+
+    <script>
 
       function load_data(query = '') {
         fetch('/get_data?search_query=' + query)
