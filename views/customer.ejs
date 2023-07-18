@@ -105,6 +105,13 @@
         </div>
         </div>
     </section>
+    <script>
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const formattedDate = `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
+            return formattedDate;
+        }
+    </script>
 
     <% function formatName(firstName, lastName) { return firstName.charAt(0).toUpperCase() + firstName.slice(1) + ' ' +
         lastName.charAt(0).toUpperCase() + lastName.slice(1); } %>
@@ -142,6 +149,13 @@
                                                 <div style="text-align: center;">
                                                     <img src="/images/trace.png" class="imgtrace" style="width: 45%;"
                                                         alt="">
+                                                        <% function formatDate(dateString) { %>
+                                                            <% const date = new Date(dateString); %>
+                                                            <% const formattedDate = `${date.getDate()} ${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`; %>
+                                                            <% return formattedDate; %>
+                                                        <% } %>
+                                                        <p style="font-size: 1.5rem;"><%= formatDate(item.date) %></p>
+                                                        
                                                 </div>
                                                 <div style="text-align: center;">
                                                     <p>

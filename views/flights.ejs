@@ -80,10 +80,14 @@
         </form>
 
     </section>
+
+
     <!-- DISPLAY ALL FLIGHTS  -->
     <section id="tabedisplay"></section>
-    <table border="1" width="100%">
+    <table border="1" width="100%" id="flight-table">
+
         <tr>
+            <th><p id="total-count"></p></th>
             <th style="font-size: 1.3rem;">FLIGHT ID</th>
             <th style="font-size: 1.3rem;">SOURCE</th>
             <th style="font-size: 1.3rem;">DESTINATION</th>
@@ -107,6 +111,7 @@
                     <%const date=new Date(flights[i].date) %>
                         <% const formattedDate=`${date.getDate()} ${date.toLocaleString('default', { month: 'short' })}
                             ${date.getFullYear()}`; %>
+                            <td style="font-size: 1.3rem;"><%= i+1%></td>
                             <td style="font-size: 1.3rem;"><%- flights[i].flight_id %></td>
                             <td style="font-size: 1.3rem;"><%- flights[i].source %></td>
                             <td style="font-size: 1.3rem;"><%- flights[i].destination %></td>
@@ -216,6 +221,20 @@
             document.body.appendChild(css);
         };
     </script>
+
+
+<script>
+    // Get the table element by its ID
+    const table = document.getElementById('flight-table');
+
+    // Get the number of rows (excluding the header row)
+    const rowCount = table.rows.length - 1;
+
+    // Display the total count of rows
+    const totalCountElement = document.getElementById('total-count');
+    totalCountElement.textContent = 'Total Records ' + rowCount;
+</script>
+
 
     <!-- Load Bootstrap JavaScript (including Popper.js) first -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

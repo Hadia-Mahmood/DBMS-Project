@@ -927,84 +927,95 @@ app.post("/bookingProcess",function(req,res){
 
 
 
-// Define the route to handle the DELETE request to delete the booking
 app.delete("/deleteBooking/:ticketId", (req, res) => {
-    const ticketId = req.params.ticketId;
-  
-    // Step 1: Fetch customerId from the ticket table
-    connection.query("SELECT customerID FROM ticket WHERE ticket_id = ?", [ticketId], (error, ticketResult) => {
+  const ticketId = req.params.ticketId;
+
+  // Step 1: Fetch customerId from the ticket table
+  connection.query("SELECT customerID, flightID, class FROM ticket WHERE ticket_id = ?", [ticketId], (error, ticketResult) => {
+    if (error) {
+      console.error("Error fetching customerId:", error);
+      return res.status(500).json({ error: "Failed to fetch customer ID" });
+    }
+
+    if (ticketResult.length === 0) {
+      console.error("No matching ticket found");
+      return res.status(404).json({ error: "Ticket not found" });
+    }
+
+    const customerId = ticketResult[0].customerID;
+
+    // Step 2: Fetch cardNumber from the payment_details table
+    connection.query("SELECT card_number FROM payment_details WHERE ticketID = ?", [ticketId], (error, paymentResult) => {
       if (error) {
-        console.error("Error fetching customerId:", error);
-        return res.status(500).json({ error: "Failed to fetch customer ID" });
+        console.error("Error fetching cardNumber:", error);
+        return res.status(500).json({ error: "Failed to fetch card number" });
       }
-  
-      if (ticketResult.length === 0) {
-        console.error("No matching ticket found");
-        return res.status(404).json({ error: "Ticket not found" });
+
+      if (paymentResult.length === 0) {
+        console.error("No matching payment details found");
+        return res.status(404).json({ error: "Payment details not found" });
       }
-  
-      const customerId = ticketResult[0].customerID;
-  
-      // Step 2: Fetch cardNumber from the payment_details table
-      connection.query("SELECT card_number FROM payment_details WHERE ticketID = ?", [ticketId], (error, paymentResult) => {
+
+      const cardNumber = paymentResult[0].card_number;
+
+      // Step 5: Delete the record from the payment_details table using ticketId
+      connection.query("DELETE FROM payment_details WHERE ticketID = ?", [ticketId], (error, result) => {
         if (error) {
-          console.error("Error fetching cardNumber:", error);
-          return res.status(500).json({ error: "Failed to fetch card number" });
+          console.error("Error deleting payment_details:", error);
+          return res.status(500).json({ error: "Failed to delete payment details" });
         }
-  
-        if (paymentResult.length === 0) {
-          console.error("No matching payment details found");
-          return res.status(404).json({ error: "Payment details not found" });
-        }
-  
-        const cardNumber = paymentResult[0].card_number;
-  
-        
-            // Step 5: Delete the record from the payment_details table using ticketId
-            connection.query("DELETE FROM payment_details WHERE ticketID = ?", [ticketId], (error, result) => {
-              if (error) {
-                console.error("Error deleting payment_details:", error);
-                return res.status(500).json({ error: "Failed to delete payment details" });
-              }
-  
-              // Step 6: Delete the record from the passenger_contact_number table using ticketId
-              connection.query("DELETE FROM passenger_contact_number WHERE ticket_id = ?", [ticketId], (error, result) => {
+
+        // Step 6: Delete the record from the passenger_contact_number table using ticketId
+        connection.query("DELETE FROM passenger_contact_number WHERE ticket_id = ?", [ticketId], (error, result) => {
+          if (error) {
+            console.error("Error deleting passenger_contact_number:", error);
+            return res.status(500).json({ error: "Failed to delete passenger contact number" });
+          }
+
+          // Step 7: Delete the record from the ticket table (last step since it has foreign key constraints)
+          connection.query("DELETE FROM ticket WHERE ticket_id = ?", [ticketId], (error, result) => {
+            if (error) {
+              console.error("Error deleting ticket:", error);
+              return res.status(500).json({ error: "Failed to delete ticket" });
+            }
+
+            // Step 8: Increment seats_left in the class table
+            connection.query(
+              "UPDATE class SET seats_left = seats_left + 1 WHERE flight_id = ? AND class = ?",
+              [ticketResult[0].flightID, ticketResult[0].class],
+              (error, result) => {
                 if (error) {
-                  console.error("Error deleting passenger_contact_number:", error);
-                  return res.status(500).json({ error: "Failed to delete passenger contact number" });
+                  console.error("Error updating seats_left in class table:", error);
+                  return res.status(500).json({ error: "Failed to update seats_left in class table" });
                 }
-  
-                // Step 7: Delete the record from the ticket table (last step since it has foreign key constraints)
-                connection.query("DELETE FROM ticket WHERE ticket_id = ?", [ticketId], (error, result) => {
+
+                // Step 3: Delete the record from the customer_booked_flights table using customerId
+                connection.query("DELETE FROM customer_booked_flights WHERE (customer_ID, flightID) NOT IN (SELECT customerID, flightID FROM ticket);", (error, result) => {
                   if (error) {
-                    console.error("Error deleting ticket:", error);
-                    return res.status(500).json({ error: "Failed to delete ticket" });
+                    console.error("Error deleting customer_booked_flights:", error);
+                    return res.status(500).json({ error: "Failed to delete customer booked flights" });
                   }
-                  // Step 3: Delete the record from the customer_booked_flights table using customerId
-                  connection.query("DELETE FROM customer_booked_flights WHERE (customer_ID, flightID) NOT IN (SELECT customerID, flightID FROM ticket);",  (error, result) => {
+
+                  // Step 4: Delete the record from the payment_card_info table using cardNumber only when no other ticket has the same card number
+                  connection.query("SET SQL_SAFE_UPDATES = 0;DELETE FROM payment_card_info WHERE card_number NOT IN (SELECT card_number FROM payment_details);", (error, result) => {
                     if (error) {
-                      console.error("Error deleting customer_booked_flights:", error);
-                      return res.status(500).json({ error: "Failed to delete customer booked flights" });
+                      console.error("Error deleting payment_card_info:", error);
+                      return res.status(500).json({ error: "Failed to delete payment card info" });
                     }
-            
-                    // Step 4: Delete the record from the payment_card_info table using cardNumber only when no other ticket has the same card number
-                    connection.query("SET SQL_SAFE_UPDATES = 0;DELETE FROM payment_card_info WHERE card_number NOT IN (SELECT card_number FROM payment_details);",  (error, result) => {
-                      if (error) {
-                        console.error("Error deleting payment_card_info:", error);
-                        return res.status(500).json({ error: "Failed to delete payment card info" });
-                      }
-            
-                  // All deletions were successful
-                  return res.status(200).json({ message: "Booking deleted successfully" });
+
+                    // All deletions and updates were successful
+                    return res.status(200).json({ message: "Booking canceled successfully" });
+                  });
                 });
-              });
-            });
+              }
+            );
           });
         });
       });
     });
   });
-  
+});
+
 
 
 
