@@ -269,7 +269,8 @@
             <section style="display: flex; justify-content: space-evenly;">
                 <div>
                     <label for="">Date</label>
-                    <input name="Date" value="<%= flights[0].date %>" placeholder="mm/dd/yyyy" type="date" required>
+                    <input name="Date" value="<%= flights[0].date %>" placeholder="mm/dd/yyyy" <% const today=new
+                    Date().toISOString().split('T')[0]; %> min="<%= today %>" required="" type="date">
                 </div>
                 <div>
                     <label for="">Airplane Name</label>
@@ -305,7 +306,7 @@
         <section style="display: flex; justify-content: space-evenly;">
             <div>
                 <label for="">Price</label>
-                <input name="BPrice" placeholder="min 50000 max 400000" type="number" min="50000" max="400000"
+                <input name="BPrice"  placeholder="Min 100 Max 1000" type="number" min="100" max="1000"
                     value="<%= flights[0].price %>" required>
             </div>
             <div>
@@ -318,7 +319,7 @@
         <section style="display: flex; justify-content: space-evenly;">
             <div>
                 <label for="">Price</label>
-                <input name="EPrice" placeholder="min 50000 max 400000" type="number" min="50000" max="400000"
+                <input name="EPrice" placeholder="Min 50 Max 100" type="number" min="50" max="100"
                     value="<%= flights[1].price %>" required>
             </div>
             <div>

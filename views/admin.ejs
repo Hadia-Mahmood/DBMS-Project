@@ -207,7 +207,8 @@
             <div class="section">
                 <div>
                     <label for="Date">Date</label>
-                    <input name="Date" placeholder="MM/DD/YYYY" type="date" required>
+                    <input name="Date" placeholder="MM/DD/YYYY" <% const today=new
+                    Date().toISOString().split('T')[0]; %> min="<%= today %>" required="" type="date">
                 </div>
                 <div>
                     <label for="AirplaneName">Airplane Name</label>
@@ -235,7 +236,7 @@
                     <input name="BTotalSeats" placeholder="Min 20 Max 60" type="number" min="20" max="60" required>
 
                     <label for="BPrice">Price</label>
-                    <input name="BPrice" placeholder="Min 50000 Max 400000" type="number" min="50000" max="400000"
+                    <input name="BPrice" placeholder="Min 100 Max 1000" type="number" min="100" max="1000"
                         required>
 
                     <label for="BDiscount">Discount</label>
@@ -244,10 +245,10 @@
                 <div>
                     <h4>ENTER ECONOMY CLASS DETAILS</h4>
                     <label for="ETotalSeats">Total Seats</label>
-                    <input name="ETotalSeats" placeholder="Min 50 Max 100" type="number" min="50" max="100" required>
+                    <input name="ETotalSeats" placeholder="Min 20 Max 60" type="number" min="20" max="60" required>
 
                     <label for="EPrice">Price</label>
-                    <input name="EPrice" placeholder="Min 50000 Max 400000" type="number" min="50000" max="400000"
+                    <input name="EPrice" placeholder="Min 50 Max 100" type="number" min="50" max="100"
                         required>
 
                     <label for="EDiscount">Discount</label>
