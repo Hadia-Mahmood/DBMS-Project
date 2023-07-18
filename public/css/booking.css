@@ -104,6 +104,10 @@ select {
   box-sizing: border-box;
 }
 
+input[type="date"]{
+  font-size: 1.5rem;
+}
+
 .terms-label {
   display: inline !important;
   position: relative;

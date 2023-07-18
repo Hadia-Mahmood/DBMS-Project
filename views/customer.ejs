@@ -95,11 +95,14 @@
         <!-- Banner section -->
 
         <div class="row  container-fluid-1">
-            <div class="col-lg-6">
-                <div class="tagline">
-                    <h1 class="titletxt">MAKING YOUR TRAVEL DREAMS <br> <span class="areality"> A REALITY</span></h1>
-                </div>
+            <div class="background-image-overlay"></div>
+            <div class="tagline">
+                <!-- <h1 class="titletxt">MAKING YOUR TRAVEL DREAMS <br> <span class="areality"> A REALITY</span></h1> -->
+                <h1 class="titletxt">WELCOME TO SKYMATE<br> <span class="areality">
+                        <%= formatName(userInfo[0].first_name, userInfo[0].last_name) %>
+                    </span></h1>
             </div>
+        </div>
         </div>
     </section>
 
@@ -107,163 +110,166 @@
         lastName.charAt(0).toUpperCase() + lastName.slice(1); } %>
 
         <section id="dashboard">
-            <div class="container">
+            <div class="container reveal">
                 <% if (otherData && otherData.length> 0) { %>
                     <div style="display: flex; padding-top: 2%; margin-left: 2%;">
                         <img src="/images/profile.png" style="width: 4%;" alt="">
-                        <h3 style="font-size: 1.5rem; margin: auto 0; color: black;">
+                        <h3 style="font-size: 2.5rem; margin: auto 0; padding-left: 0.5%; color: black;">
                             <%= formatName(otherData[0].first_name, otherData[0].last_name) %>
                         </h3>
                     </div>
-                    
-
-                            <% otherData.forEach((item, index)=> { %>
-                                <% if (index % 2===0) { %>
-                                    <div class="row">
-                                        <% } %>
-                                            <div class="col-lg-6">
-                                                <div class="card-t">
-                                                    <div class="card-content-t" style="margin: auto;">
-                                                        <div style="text-align: center;">
-                                                            <p>
-                                                                <%= item.source %>
-                                                            </p>
-                                                            <h1>
-                                                                <%= item.source.substring(0, 3).toUpperCase() %>
-                                                            </h1>
-                                                            <p>
-                                                                <%= item.departure_time %>
-                                                            </p>
-                                                        </div>
-                                                        <div style="text-align: center;">
-                                                            <img src="/images/trace.png" class="imgtrace"
-                                                                style="width: 45%;" alt="">
-                                                        </div>
-                                                        <div style="text-align: center;">
-                                                            <p>
-                                                                <%= item.destination %>
-                                                            </p>
-                                                            <h1>
-                                                                <%= item.destination.substring(0, 3).toUpperCase() %>
-                                                            </h1>
-                                                            <p>
-                                                                <%= item.arrival_time %>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-content-2"
-                                                        style="background-color: white; border-radius: 35px; width: 100%; height: 30vh; padding: 1% 5%;">
-                                                        <div class="contentunder">
-                                                            <div style="text-align: center;">
-                                                                <p class="subhead">Ticket ID</p>
-                                                                <p class="values">
-                                                                    <%= item.ticket_id %>
-                                                                </p>
-                                                            </div>
-                                                            <div style="text-align: center;">
-                                                                <p class="subhead">Meal</p>
-                                                                <p class="values">
-                                                                    <%= item.meal %>
-                                                                </p>
-                                                            </div>
-                                                            <div style="text-align: center;">
-                                                                <p class="subhead">Class</p>
-                                                                <p class="values">
-                                                                    <%= item.class %>
-                                                                </p>
-                                                            </div>
-                                                            <div style="text-align: center;">
-                                                                <p class="subhead">Status</p>
-                                                                <p class="values">
-                                                                    <%= item.status %>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div style="display: flex; justify-content: center;">
-                                                            <button class="Btn02" id="openPrecsButton">
-                                                                <svg class="svgIcon" viewBox="0 0 384 512" height="1em"
-                                                                    xmlns="http://www.w3.org/2000/svg">
-                                                                    <path
-                                                                        d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
-                                                                    </path>
-                                                                </svg>
-                                                                <span class="icon2"></span>
-                                                                <span class="tooltip">Open Menu</span>
-                                                            </button>
-                                                        </div>
-                                                    </div>
+                    <div style="display: flex; justify-content: center;">
+                        <h1>Your Bookings</h1>
+                    </div>
+                    <% otherData.forEach((item, index)=> { %>
+                        <% if (index % 2===0) { %>
+                            <div class="row reveal">
+                                <% } %>
+                                    <div class="col-lg-6">
+                                        <div class="card-t reveal">
+                                            <div class="card-content-t" style="margin: auto;">
+                                                <div style="text-align: center;">
+                                                    <p>
+                                                        <%= item.source %>
+                                                    </p>
+                                                    <h1>
+                                                        <%= item.source.substring(0, 3).toUpperCase() %>
+                                                    </h1>
+                                                    <p>
+                                                        <%= item.departure_time %>
+                                                    </p>
                                                 </div>
-                                                <div class="container-1 precs">
-                                                    <div class="ticket">
-                                                        <div class="tickheadings">
-                                                            <div>
-                                                                <h4>Class</h4>
-                                                                <hr>
-                                                                <h5>
-                                                                    <%= item.class %>
-                                                                </h5>
-                                                            </div>
-                                                            <div>
-                                                                <h4>Terminal</h4>
-                                                                <hr>
-                                                                <h5>
-                                                                    <%= item.terminal %>
-                                                                </h5>
-                                                            </div>
-                                                            <div>
-                                                                <h4>Airplane Name</h4>
-                                                                <hr>
-                                                                <h5>
-                                                                    <%= item.airplane_name %>
-                                                                </h5>
-                                                            </div>
-                                                            <div>
-                                                                <h4>Passenger Name</h4>
-                                                                <hr>
-                                                                <h5>
-                                                                    <%= item.passengerName %>
-                                                                </h5>
-                                                            </div>
-                                                            <div>
-                                                                <h4>Contact No</h4>
-                                                                <hr>
-                                                                <h5>
-                                                                    <%= item.contact_numbers %>
-                                                                </h5>
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <a href="#" class="btncancel">Cancel Flight</a>
-                                                            <a href="#" class="btncancel">Change Class</a>
-                                                        </div>
-                                                    </div>
+                                                <div style="text-align: center;">
+                                                    <img src="/images/trace.png" class="imgtrace" style="width: 45%;"
+                                                        alt="">
+                                                </div>
+                                                <div style="text-align: center;">
+                                                    <p>
+                                                        <%= item.destination %>
+                                                    </p>
+                                                    <h1>
+                                                        <%= item.destination.substring(0, 3).toUpperCase() %>
+                                                    </h1>
+                                                    <p>
+                                                        <%= item.arrival_time %>
+                                                    </p>
                                                 </div>
                                             </div>
-                                            <% if ((index + 1) % 2===0) { %>
+                                            <div class="card-content-2"
+                                                style="background-color: white; border-radius: 35px; width: 100%; height: 30vh; padding: 1% 5%;">
+                                                <div class="contentunder">
+                                                    <div style="text-align: center;">
+                                                        <p class="subhead">Ticket ID</p>
+                                                        <p class="values">
+                                                            <%= item.ticket_id %>
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center;">
+                                                        <p class="subhead">Meal</p>
+                                                        <p class="values">
+                                                            <%= item.meal %>
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center;">
+                                                        <p class="subhead">Class</p>
+                                                        <p class="values">
+                                                            <%= item.class %>
+                                                        </p>
+                                                    </div>
+                                                    <div style="text-align: center;">
+                                                        <p class="subhead">Status</p>
+                                                        <p class="values">
+                                                            <%= item.status %>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div style="display: flex; justify-content: center;">
+                                                    <button class="Btn02" id="openPrecsButton">
+                                                        <svg class="svgIcon" viewBox="0 0 384 512" height="1em"
+                                                            xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
+                                                            </path>
+                                                        </svg>
+                                                        <span class="icon2"></span>
+                                                        <span class="tooltip">Open Menu</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="container-1 precs">
+                                            <div class="ticket">
+                                                <div class="tickheadings">
+                                                    <div>
+                                                        <h4>Class</h4>
+                                                        <hr>
+                                                        <h5>
+                                                            <%= item.class %>
+                                                        </h5>
+                                                    </div>
+                                                    <div>
+                                                        <h4>Terminal</h4>
+                                                        <hr>
+                                                        <h5>
+                                                            <%= item.terminal %>
+                                                        </h5>
+                                                    </div>
+                                                    <div>
+                                                        <h4>Airplane Name</h4>
+                                                        <hr>
+                                                        <h5>
+                                                            <%= item.airplane_name %>
+                                                        </h5>
+                                                    </div>
+                                                    <div>
+                                                        <h4>Passenger Name</h4>
+                                                        <hr>
+                                                        <h5>
+                                                            <%= item.passengerName %>
+                                                        </h5>
+                                                    </div>
+                                                    <div>
+                                                        <h4>Contact No</h4>
+                                                        <hr>
+                                                        <h5>
+                                                            <%= item.contact_numbers %>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <a href="#" class="btncancel" id="cancelFlightBtn"
+                                                        data-ticket-id="<%= item.ticket_id %>">Cancel Flight</a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <% } %>
-                                        <% }); %>
-                                        <% } else { %>
-                                            <div style="display: flex; padding-top: 2%; margin-left: 2%;">
-                                                <img src="/images/profile.png" style="width: 4%;" alt="">
-                                                <h3 style="font-size: 1.5rem; margin: auto 0; color: black;">
-                                                    <%= formatName(userInfo[0].first_name, userInfo[0].last_name) %>
-                                                </h3>
-                                                
-                                            </div>
-                                            <div style="display: flex; justify-content: center;">
-                                                <h1 style="color: black; font-size: 3rem;">No Booking yet</h1>
-                                            </div>
-                                            
-                                            <% } %>
+                                    <% if ((index + 1) % 2===0) { %>
+                            </div>
+                            <% } %>
+                                <% }); %>
+                                    <% } else { %>
+                                        <div style="display: flex; padding-top: 2%; margin-left: 2%;">
+                                            <img src="/images/profile.png" style="width: 6%; padding-left: 2%;" alt="">
+                                            <h3 style="font-size: 1.5rem; margin: auto 0; color: black;">
+                                                <%= formatName(userInfo[0].first_name, userInfo[0].last_name) %>
+                                            </h3>
+
+                                        </div>
+                                        <div style="display: flex; justify-content: center;">
+                                            <h1 style="color: black; font-size: 3rem; padding-bottom: 4%;">No Booking
+                                                yet</h1>
+                                        </div>
+
+                                        <% } %>
             </div>
         </section>
 
         <script>
-            document.getElementById('openPrecsButton').addEventListener('click', function (event) {
+            // Function to handle showing/hiding .precs when clicking a button
+            function togglePrecsVisibility(event) {
                 event.stopPropagation();
-                var precsDiv = document.querySelector('.precs');
-                var button = document.getElementById('openPrecsButton'); // Get the button element
+                var precsDiv = event.currentTarget.closest('.col-lg-6').querySelector('.precs');
+                var button = event.currentTarget; // Get the clicked button element
 
                 // Toggle the .precs div visibility
                 if (precsDiv.style.display === 'block') {
@@ -274,32 +280,45 @@
                     precsDiv.style.display = 'block';
                     precsDiv.style.opacity = '1';
                     button.classList.add('rotate-180'); // Add the rotation class
-                    // Add click event listener to the whole document
-                    document.addEventListener('click', hidePrecsOnClickOutside);
-                }
-            });
-
-            // Function to handle hiding .precs when clicking outside
-            function hidePrecsOnClickOutside(event) {
-                var precsDiv = document.querySelector('.precs');
-                var button = document.getElementById('openPrecsButton'); // Get the button element
-                // Check if the clicked element is not inside the .precs div
-                if (!precsDiv.contains(event.target) && event.target !== precsDiv) {
-                    precsDiv.style.display = 'none';
-                    precsDiv.style.opacity = '0';
-                    button.classList.remove('rotate-180'); // Remove the rotation class
-                    // Remove the event listener after the .precs is hidden
-                    document.removeEventListener('click', hidePrecsOnClickOutside);
                 }
             }
 
+            // Function to handle closing .precs when clicking outside
+            function closeAllPrecs(event) {
+                var precsDivs = document.querySelectorAll('.precs');
+                var buttons = document.querySelectorAll('.Btn02'); // Get all the buttons with class 'Btn02'
 
+                // Check if the clicked target is a button or the .precs div
+                if (!event.target.classList.contains('Btn02') && !event.target.classList.contains('precs')) {
+                    precsDivs.forEach(function (precsDiv) {
+                        precsDiv.style.display = 'none';
+                        precsDiv.style.opacity = '0';
+                    });
+                    buttons.forEach(function (button) {
+                        button.classList.remove('rotate-180'); // Remove the rotation class from all buttons
+                    });
+                }
+            }
+
+            // Get all the buttons with class 'Btn02' and add event listeners to each
+            var openPrecsButtons = document.querySelectorAll('.Btn02');
+            openPrecsButtons.forEach(function (button) {
+                button.addEventListener('click', togglePrecsVisibility);
+            });
+
+            // Add click event listener to the whole document for closing .precs when clicking outside
+            document.addEventListener('click', closeAllPrecs);
 
         </script>
-        <div class="textsearch">
+
+        <div style="display: flex; justify-content: center; margin: 5% auto;">
+            <div class="loader"></div>
+        </div>
+
+        <div class="textsearch reveal">
             <h1>WHERE DO YOU WANT TO GO?</h1>
         </div>
-        <section id="SEARCH_PORTION">
+        <section id="SEARCH_PORTION" class="reveal ">
             <form action="/availableflights" method="get">
                 <div class="search-bar row" style="margin-bottom: 5%;">
 
@@ -334,17 +353,14 @@
             <section id="trending-flights">
 
                 <div class="trending-flights">
-                    <div class="one">
-                        <!-- <h1>Style One</h1> -->
-                        <h1>
-                            <%= flights.Email %>
-                        </h1>
+                    <div class="one reveal">
+                        <h1>Trending Flights</h1>
                     </div>
                     <% for (let i=0; i < flights.length; i++) { %>
                         <% if (i % 3===0) { %>
                             <div class="row" style="margin-top: 6%;">
                                 <% } %>
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-4 reveal">
                                         <%const date=new Date(flights[i].date) %>
                                             <% const formattedDate=`${date.getDate()} ${date.toLocaleString('default', {
                                                 month: 'short' })} ${date.getFullYear()}`; %>
@@ -686,6 +702,96 @@
                     }, 400)
                 }
             </script>
+
+            <script>
+                // Function to check if an element is in the viewport
+                function isElementInViewport(element) {
+                    const rect = element.getBoundingClientRect();
+                    return rect.top >= 0 && rect.bottom <= window.innerHeight;
+                }
+
+                // Function to handle the intersection of elements
+                function handleIntersection(entries, observer) {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("revealed");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }
+
+                // Set up the Intersection Observer
+                const observer = new IntersectionObserver(handleIntersection, {
+                    root: null,
+                    threshold: 0.2,
+                });
+
+                // Observe all elements with the 'reveal' class
+                const elements = document.querySelectorAll(".reveal");
+                elements.forEach((element) => {
+                    // Check if the element is initially in the viewport
+                    if (isElementInViewport(element)) {
+                        element.classList.add("revealed");
+                    } else {
+                        observer.observe(element);
+                    }
+                });
+
+                // Function to reset the state of elements when the user scrolls
+                function resetRevealedState() {
+                    elements.forEach((element) => {
+                        if (element.classList.contains("revealed") && !isElementInViewport(element)) {
+                            element.classList.remove("revealed");
+                            observer.observe(element); // Re-observe the element to trigger reveal again
+                        }
+                    });
+                }
+
+                // Listen for scroll events and call the reset function
+                window.addEventListener("scroll", resetRevealedState);
+            </script>
+
+
+            <script>
+                // Add event listener to the "Cancel Flight" button
+                document.addEventListener("DOMContentLoaded", function () {
+                    const cancelFlightBtns = document.querySelectorAll("#cancelFlightBtn");
+
+                    cancelFlightBtns.forEach(btn => {
+                        btn.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            const ticketId = event.target.dataset.ticketId;
+
+                            // Show a prompt to confirm the cancellation
+                            if (window.confirm("Are you sure you want to cancel this flight?")) {
+                                // If the user confirms, send an AJAX request to the server to delete the booking
+                                deleteBooking(ticketId);
+                            }
+                        });
+                    });
+                });
+
+                // Function to send an AJAX request to delete the booking
+                function deleteBooking(ticketId) {
+                    // You can use any AJAX library here. For example, using Fetch API:
+                    fetch(`/deleteBooking/${ticketId}`, {
+                        method: "DELETE",
+                    })
+                        .then(response => {
+                            if (response.ok) {
+                                // If the booking was successfully deleted, refresh the page or update the UI accordingly.
+                                window.location.reload(); // Reload the page after successful deletion
+                            } else {
+                                console.error("Error deleting the booking");
+                                // Handle error scenario if needed.
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error occurred while deleting the booking:", error);
+                        });
+                }
+            </script>
+
 
             <!--  -->
 

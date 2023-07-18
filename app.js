@@ -160,6 +160,10 @@ app.get("/homepagesearchbar",function(req,res){
     res.redirect("/")
 });
 
+app.get("/custpagesearchbar",function(req,res){
+    res.redirect("/customerpage")
+});
+
 ///////////////////////////////////////// admin sign in///////////////////////////////////////
 app.post("/adminsignin",function(req,res){
     //getting data from frontend//
@@ -192,13 +196,17 @@ app.post("/adminsignin",function(req,res){
                          httpOnly: true, 
                             });
               
-                res.redirect('/dashboard');
+                // res.redirect('/dashboard');
+                res.send('success')
                 
             }
             else{
                 console.log('not a match');
                 var error= ' wrong password email combination ';
-                res.render("message",{display:error});
+                // res.render("message",{display:error});
+                // res.send('success')
+                // console.log('not a match');
+                res.send('error');
                 
                 
             };
@@ -440,6 +448,7 @@ app.get('/dashboard',validateToken, authenticateAdmin,(req, res) => {
     const adminQuery = 'SELECT Admin_id FROM admin';
     const customerQuery = 'SELECT COUNT(*) AS customerCount FROM customer';
     const customerFlightQuery = 'SELECT COUNT(*) AS customerFlightCount FROM customer_booked_flights';
+    const flightQuery = 'SELECT COUNT(*) AS flightCount FROM flight';
   
     connection.query(adminQuery, (error1, results1) => {
       if (error1) {
@@ -464,11 +473,20 @@ app.get('/dashboard',validateToken, authenticateAdmin,(req, res) => {
           }
   
           const customerFlightCount = results3[0].customerFlightCount;
+
+          connection.query(flightQuery, (error4, results4) => {
+            if (error4) {
+              console.error(error4);
+              return res.render('error');
+            }
+    
+            const flightCount = results4[0].flightCount;
   
-          res.render("dashboard", { adminId: adminId, customerCount: customerCount, customerFlightCount: customerFlightCount });
+          res.render("dashboard", { adminId: adminId, customerCount: customerCount, customerFlightCount: customerFlightCount, flightcount: flightCount });
         });
       });
-    });
+     });
+});
   });
   
 
@@ -891,6 +909,91 @@ app.post("/bookingProcess",function(req,res){
                        }
    
 });
+
+
+
+
+// Define the route to handle the DELETE request to delete the booking
+app.delete("/deleteBooking/:ticketId", (req, res) => {
+    const ticketId = req.params.ticketId;
+  
+    // Step 1: Fetch customerId from the ticket table
+    connection.query("SELECT customerID FROM ticket WHERE ticket_id = ?", [ticketId], (error, ticketResult) => {
+      if (error) {
+        console.error("Error fetching customerId:", error);
+        return res.status(500).json({ error: "Failed to fetch customer ID" });
+      }
+  
+      if (ticketResult.length === 0) {
+        console.error("No matching ticket found");
+        return res.status(404).json({ error: "Ticket not found" });
+      }
+  
+      const customerId = ticketResult[0].customerID;
+  
+      // Step 2: Fetch cardNumber from the payment_details table
+      connection.query("SELECT card_number FROM payment_details WHERE ticketID = ?", [ticketId], (error, paymentResult) => {
+        if (error) {
+          console.error("Error fetching cardNumber:", error);
+          return res.status(500).json({ error: "Failed to fetch card number" });
+        }
+  
+        if (paymentResult.length === 0) {
+          console.error("No matching payment details found");
+          return res.status(404).json({ error: "Payment details not found" });
+        }
+  
+        const cardNumber = paymentResult[0].card_number;
+  
+        // Step 3: Delete the record from the customer_booked_flights table using customerId
+        connection.query("DELETE FROM customer_booked_flights WHERE customer_ID = ?", [customerId], (error, result) => {
+          if (error) {
+            console.error("Error deleting customer_booked_flights:", error);
+            return res.status(500).json({ error: "Failed to delete customer booked flights" });
+          }
+  
+          // Step 4: Delete the record from the payment_card_info table using cardNumber
+          connection.query("DELETE FROM payment_card_info WHERE card_number = ?", [cardNumber], (error, result) => {
+            if (error) {
+              console.error("Error deleting payment_card_info:", error);
+              return res.status(500).json({ error: "Failed to delete payment card info" });
+            }
+  
+            // Step 5: Delete the record from the payment_details table using ticketId
+            connection.query("DELETE FROM payment_details WHERE ticketID = ?", [ticketId], (error, result) => {
+              if (error) {
+                console.error("Error deleting payment_details:", error);
+                return res.status(500).json({ error: "Failed to delete payment details" });
+              }
+  
+              // Step 6: Delete the record from the passenger_contact_number table using ticketId
+              connection.query("DELETE FROM passenger_contact_number WHERE ticket_id = ?", [ticketId], (error, result) => {
+                if (error) {
+                  console.error("Error deleting passenger_contact_number:", error);
+                  return res.status(500).json({ error: "Failed to delete passenger contact number" });
+                }
+  
+                // Step 7: Delete the record from the ticket table (last step since it has foreign key constraints)
+                connection.query("DELETE FROM ticket WHERE ticket_id = ?", [ticketId], (error, result) => {
+                  if (error) {
+                    console.error("Error deleting ticket:", error);
+                    return res.status(500).json({ error: "Failed to delete ticket" });
+                  }
+  
+                  // All deletions were successful
+                  return res.status(200).json({ message: "Booking deleted successfully" });
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  });
+  
+
+
+
 
 
 // ***********************************

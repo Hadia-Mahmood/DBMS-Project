@@ -57,6 +57,9 @@
 
         <% customerflightPercentage=(customerFlightCount / customerCount) * 100; %>
 
+        <% const totalflights=100; // Total number of users (replace with actual total) const
+        flightPercentage=(flightcount / totalflights) * 100; %>
+
             <section id="data">
                 <div class="heading">
                     <h1>
@@ -92,7 +95,7 @@
                             <div class="title">
                                 <p class="title-text">
                                     Total Customers &nbsp; <i class="fa-sharp fa-solid fa-arrow-right"></i> &nbsp; <%=
-                                        customerFlightCount %>
+                                    customerFlightCount %>
                                 </p>
                             </div>
                             <div class="data">
@@ -113,14 +116,14 @@
                                 <div class="title">
                                     <p class="title-text">
                                         Toal Number of Flights &nbsp; <i class="fa-sharp fa-solid fa-arrow-right"></i> &nbsp; <%=
-                                            customerFlightCount %>
+                                            flightcount %>
                                     </p>
                                 </div>
                                 <div class="data">
                                     <img src="images/take-off.gif" alt="" width="35%" style="margin:auto">
         
                                     <div class="range">
-                                        <div class="fill" style="width: <%= customerflightPercentage.toFixed(2) %>%">
+                                        <div class="fill" style="width: <%= flightPercentage.toFixed(2) %>%">
                                         </div>
                                     </div>
                                 </div>
@@ -128,24 +131,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row container container-fluid" style="margin: auto; justify-content: center; width: 100%; margin-top: 5%;">
-                    <div class="card-data">
-                        <div class="title">
-                            <p class="title-text">
-                                Toal Number of Flights &nbsp; <i class="fa-sharp fa-solid fa-arrow-right"></i> &nbsp; <%=
-                                    customerFlightCount %>
-                            </p>
-                        </div>
-                        <div class="data">
-                            <img src="images/take-off.gif" alt="" width="35%" style="margin:auto">
-
-                            <div class="range">
-                                <div class="fill" style="width: <%= customerflightPercentage.toFixed(2) %>%">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </section>
 
             <div class="spinner" style="display: flex; justify-content: center; margin: auto;">

@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Comfortaa:wght@300;400;500;600;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+  @import url('https://fonts.googleapis.com/css2?family=Belanosima:wght@400;600;700&family=Comfortaa:wght@300;400;500;600;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Viga&display=swap');
+
 
 *,
 *::before,
@@ -20,7 +22,7 @@
 html,
 body {
   overflow-x: hidden;
-  background-color: #f1f6f9;
+  background-color: #e1f4ff;
   font-size: 10px;
   font-family: var(--primary-font);
   scroll-behavior: smooth;
@@ -35,13 +37,23 @@ body {
   padding: 3% 9%;
   height: 110vh;
   width: 100%;
-  background-image: url(../images/airplane-img.jpg);
+  background-image: url(/images/airport-terminal.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
   margin: 0;
 }
+
+.background-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Set the opacity by adjusting the alpha value (0.5 here) */
+}
+
 
 .navbar {
   opacity: 0.8;
@@ -117,29 +129,57 @@ h3 {
 } */
 
 
+/* CSS */
 .tagline {
-  margin-top: 28%;
+  text-align: center;
+  margin: auto;
+  margin-top: 22%;
 }
+
 .titletxt {
-  /* color: #00467f; */
-  color: aliceblue;
-  padding-right: 12%;
+  color: #141E30;
+  padding-right: 3%;
   padding-bottom: 2%;
-  font-family: var(--secondary-font);
+  font-family: 'Viga', sans-serif;
   font-weight: 600;
   font-size: 5.4rem;
+  position: relative;
+  animation: scaleAndFadeAnimation 3s infinite alternate, typewriterAnimation 3s steps(15) alternate;
+  transform-origin: center;
+  opacity: 0.9;
 }
 
 .titletxt .areality {
-  color: rgba(58, 117, 166, 0.7) !important;
+  color: #ffffff !important;
+  font-size: 7rem;
+  text-align: center;
+  font-weight:500;
 }
+
+@keyframes scaleAndFadeAnimation {
+  from {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  to {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+@keyframes typewriterAnimation {
+  to {
+    width: 100%; /* Show the entire text */
+  }
+}
+
 
 #SEARCH_PORTION {
   padding:2.5%;
   padding-bottom: 2.5%;
-  width: 80%;
+  width: 60%;
   margin: 5% auto;
-  margin-top: 3% !important;
+  margin-top: 1% !important;
   text-align: center;
   border: #151717 2px solid;
   /* background: linear-gradient(to right, #7F7FD5, #91EAE4); */
@@ -251,11 +291,12 @@ background-color: transparent;
 
 .textsearch {
   width: 50%;
+  margin-top: 8% !important;
   display: flex;
   justify-content: center;
   margin: auto;
   text-align: center;
-  margin-bottom: 3%;
+  margin-bottom: 0%;
 
 }
 
@@ -273,11 +314,21 @@ background-color: transparent;
   border: 1px solid #2d79f3;
 }
 
+#trending-flights{
+  margin-top: 9%;
+}
+
+
+
 .trending-flights {
     background: #141E30;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #243B55, #141E30);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to right, #243B55, #141E30); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     padding: 1% 15%;
+    background-image: url(/images/airport-terminal.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 
@@ -395,17 +446,21 @@ h1 {
 }
 
 .list-group-item {
-  font-family: var(--secondary-font);
-  color: white;
+  font-family: var(--primary-font);
+  color: rgb(0, 0, 0);
   font-size: 1.6rem;
   background-color: transparent;
   border: none;
 }
 
+.list-group-item:hover{
+  color: #00bbff;
+}
+
 .list-group {
   margin-top: 12%;
   padding: 5%;
-  background-color: rgba(58, 117, 166, 0.7) !important;
+  box-shadow: 4px 2px 0px rgba(0, 0, 0, 1);
 }
 
 .text-primary {
@@ -414,6 +469,7 @@ h1 {
 }
 
 .suggestion-box {
+
   max-height: 253px; /* Set the maximum height for the suggestion box */
   overflow-y: auto;
 }
@@ -422,7 +478,8 @@ h1 {
   width: 9px;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(transparent, #adffff);
+  opacity: 50%;
+  background: linear-gradient(transparent, #0181f9);
   border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -585,7 +642,7 @@ h1 {
 
 
 #dashboard{
-    margin-top: 3%;
+    margin-top: 8%;
 }
 
 
@@ -593,7 +650,7 @@ h1 {
 #dashboard .container{
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
     width: 90%;
-    border-radius: 60px;
+    border-radius: 30px;
     background-color:rgba(167, 239, 255,0.2);
 
 }
@@ -846,4 +903,82 @@ h1 {
  background-color: rgb(0, 238, 255);
  transform: scaleX(1.4) scaleY(1.5);
  opacity: 0;
+}
+
+
+
+.loader {
+  width: 16px;
+  height: 16px;
+  position: relative;
+  left: -32px;
+  border-radius: 50%;
+  color: #fff;
+  background: currentColor;
+  box-shadow: 32px 0 , -32px 0 ,  64px 0;
+}
+
+.loader::after {
+  content: '';
+  position: absolute;
+  left: -32px;
+  top: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 10px;
+  background: #FF3D00;
+  animation: move_351 3s linear infinite alternate;
+}
+
+@keyframes move_351 {
+  0% , 5% {
+    left: -32px;
+    width: 16px;
+  }
+
+  15% , 20% {
+    left: -32px;
+    width: 48px;
+  }
+
+  30% , 35% {
+    left: 0px;
+    width: 16px;
+  }
+
+  45% , 50% {
+    left: 0px;
+    width: 48px;
+  }
+
+  60% , 65% {
+    left: 32px;
+    width: 16px;
+  }
+
+  75% , 80% {
+    left: 32px;
+    width: 48px;
+  }
+
+  95%, 100% {
+    left: 64px;
+    width: 16px;
+  }
+}
+
+
+
+
+
+/* Add the 'reveal' class to elements initially hidden */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+/* Add the 'revealed' class to elements when they are in the viewport */
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
