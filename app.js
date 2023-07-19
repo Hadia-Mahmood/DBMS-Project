@@ -557,7 +557,7 @@ app.post("/createFlight",function(req,res){
 //  see all flights
 //  this page will be displayed after insertion 
 app.get('/admincrudoperations',validateToken,authenticateAdmin,function(req,res){
-    var sql = "select f.flight_id,f.source,f.destination,f.date, f.departure_time, f.arrival_time,f.airplane_name,f.status,f.terminal,c.class,c.total_seats,c.seats_left,c.price,c.discount from flight f , class c where f.flight_id=c.flight_id";
+    var sql = "select f.flight_id,f.source,f.destination,f.date, f.departure_time, f.arrival_time,f.airplane_name,f.status,f.terminal,c.class,c.total_seats,c.seats_left,c.price,c.discount from flight f , class c where f.flight_id=c.flight_id AND f.status='available'";
     connection.query(sql,function(error,result){
         if (error) {
             console.log(error);

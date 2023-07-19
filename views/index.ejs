@@ -138,11 +138,11 @@
 
   </section>
 
-  <div class="textsearch reveal" >
+  <div class="textsearch" >
     <h1>WHERE DO YOU WANT TO GO?</h1>
   </div>
 
-  <section id="SEARCH_PORTION" class="reveal">
+  <section id="SEARCH_PORTION" class=" ">
     <form action="/availableflights" method="get">
       <div class="search-bar row" style="margin-bottom: 5%;">
 
@@ -177,7 +177,7 @@
       
       <div class="trending-flights">
         <div class="one">
-          <h1 class="reveal">Trending Flights</h1>
+          <h1>Trending Flights</h1>
       </div>
         <% for (let i=0; i < flights.length; i++) { %>
           <% if (i % 3===0) { %>
@@ -187,7 +187,7 @@
                   <%const date=new Date(flights[i].date) %>
                     <% const formattedDate=`${date.getDate()} ${date.toLocaleString('default', { month: 'short' })}
                       ${date.getFullYear()}`; %>
-                      <div class="card reveal" style="width: 300px;">
+                      <div class="card" style="width: 300px;">
                         <img src="images/flights/<%= flights[i].destination %>.jpg" style="height: 30vh;"
                           class="card-img-top" alt="Sample Image">
                         <div class="card-body text-center">
@@ -671,52 +671,6 @@
 
 <!-- Your HTML content above -->
 
-<script>
-  // Function to check if an element is in the viewport
-  function isElementInViewport(element) {
-    const rect = element.getBoundingClientRect();
-    return rect.top >= 0 && rect.bottom <= window.innerHeight;
-  }
-
-  // Function to handle the intersection of elements
-  function handleIntersection(entries, observer) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("revealed");
-        observer.unobserve(entry.target);
-      }
-    });
-  }
-
-  // Set up the Intersection Observer
-  const observer = new IntersectionObserver(handleIntersection, {
-    root: null,
-    threshold: 0.2,
-  });
-
-  // Observe all elements with the 'reveal' class
-  const elements = document.querySelectorAll(".reveal");
-  elements.forEach((element) => {
-    // Check if the element is initially in the viewport
-    if (isElementInViewport(element)) {
-      element.classList.add("revealed");
-    } else {
-      observer.observe(element);
-    }
-  });
-
-  // Function to reset the state of elements when the user scrolls
-  function resetRevealedState() {
-    elements.forEach((element) => {
-      if (element.classList.contains("revealed") && !isElementInViewport(element)) {
-        element.classList.remove("revealed");
-        observer.observe(element); // Re-observe the element to trigger reveal again
-      }
-    });
-  }
-
-  // Listen for scroll events and call the reset function
-  window.addEventListener("scroll", resetRevealedState);
 </script>
 </body>
 
