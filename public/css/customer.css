@@ -660,7 +660,7 @@ h1 {
 
 .card-t {
     margin: 8% 5%;
-    height: 330px;
+    height: 350px;
     width: 550px;
     background: #000046;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #1CB5E0, #000046);  /* Chrome 10-25, Safari 5.1-6 */
@@ -968,17 +968,3 @@ h1 {
 }
 
 
-
-
-
-/* Add the 'reveal' class to elements initially hidden */
-.reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease, transform 1s ease;
-}
-/* Add the 'revealed' class to elements when they are in the viewport */
-.reveal.revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
